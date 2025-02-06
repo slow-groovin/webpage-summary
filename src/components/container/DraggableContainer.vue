@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, defineProps, HTMLAttributes } from 'vue';
+import { ref, onMounted,  HTMLAttributes } from 'vue';
 import { cn } from '@/src/utils/shadcn';
 
 const { class: clazz } = defineProps<{

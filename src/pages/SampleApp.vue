@@ -6,10 +6,10 @@ import HelloWorld from '@/src/components/HelloWorld.vue';
   <div class="flex flex-col items-center w-fit rounded m-4 top-0 text-red-400 border-2 border-black">
     <div class="border">
       <a href="https://wxt.dev" target="_blank">
-        <img src="@/public/wxt.svg" class="logo" alt="WXT logo" />
+        <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/master/icons/github.svg" class="logo" alt="WXT logo" />
       </a>
       <a href="https://vuejs.org/" target="_blank">
-        <img src="@/assets/vue.svg" class="logo vue" alt="Vue logo" />
+        <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/master/icons/github.svg" class="logo vue" alt="Vue logo" />
       </a>
     </div>
     <HelloWorld msg="WXT + Vue x" />

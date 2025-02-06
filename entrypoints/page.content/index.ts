@@ -10,6 +10,7 @@ import App from '@/src/components/debug/ContentDebugPanel.vue';
 
 export default defineContentScript({
   matches: [
+    '<all_urls>',
     '*://*.example.com/*',
     '*://*.baidu.com/*',
   ],
@@ -32,6 +33,7 @@ export default defineContentScript({
         app.mount(container);
         return app;
       },
+      
       onRemove: (app) => {
         // Unmount the app when the UI is removed
         app?.unmount();

@@ -6,5 +6,8 @@
   :root{
     @apply border-solid;
   }
+  button{
+    @apply border hover:cursor-pointer rounded px-1;
+  }
 
 }
