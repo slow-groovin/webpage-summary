@@ -1,0 +1,33 @@
+{
+  "name": "webpage-summary",
+  "description": "manifest.json description",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.1",
+    "vue": "^3.5.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.3",
+    "@types/chrome": "^0.0.280",
+    "@wxt-dev/module-vue": "^1.0.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.3",
+    "typescript": "5.6.3",
+    "vue-tsc": "^2.1.10",
+    "wxt": "^0.19.13"
+  }
+}

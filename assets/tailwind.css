@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+/* @import "tailwindcss/preflight"; */
+
+@layer base{
+  :root{
+    @apply border-solid;
+  }
+
+}
