@@ -3,13 +3,19 @@
 A browser extension for summarizing webpage text content via LLM api
 
 
-# functionality
+# features
 
 ## multi triggers
 1. keyboard shortcut
 2. option menu
 3. in-page button
 4. context menu
+
+## multi panel
+1. in-page float
+2. sidebar/side-panel
+3. popup
+4. in-page sidebar 
 
 ## multi scratch methods
 1. @mozilla/readability
@@ -28,7 +34,7 @@ A browser extension for summarizing webpage text content via LLM api
 2. webpage xpath selector
 
 ## network
-1. proxy
+1. proxy?
 2. endpoint
 
 ## inspect
