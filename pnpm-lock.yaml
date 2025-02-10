@@ -6,8 +6,11 @@ settings:
 
 importers:
 
-  .:
+  packages/ext:
     dependencies:
+      '@ai-sdk/deepseek':
+        specifier: ^0.1.8
+        version: 0.1.8(zod@3.24.1)
       '@ai-sdk/openai':
         specifier: ^1.1.9
         version: 1.1.9(zod@3.24.1)
@@ -23,6 +26,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      radash:
+        specifier: ^12.1.0
+        version: 12.1.0
       tailwind-merge:
         specifier: ^3.0.1
         version: 3.0.1
@@ -62,6 +68,18 @@ packages:
 
   '@1natsu/wait-element@4.1.2':
     resolution: {integrity: sha512-qWxSJD+Q5b8bKOvESFifvfZ92DuMsY+03SBNjTO34ipJLP6mZ9yK4bQz/vlh48aEQXoJfaZBqUwKL5BdI5iiWw==}
+
+  '@ai-sdk/deepseek@0.1.8':
+    resolution: {integrity: sha512-ZnugEqmkscB0an46I0Z6Ppor8YwOC2bIhWXkivkGbVdpQgpx43cPBrD3lyOyNEHIFwHtcrJF13S+4FNPzR0Gng==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
+  '@ai-sdk/openai-compatible@0.1.8':
+    resolution: {integrity: sha512-o2WeZmkOgaaEHAIZfAdlAASotNemhWBzupUp7ql/vBKIrPDctbQS4K7XOvG7EZ1dshn0TxB+Ur7Q8HoWSeWPmA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
 
   '@ai-sdk/openai@1.1.9':
     resolution: {integrity: sha512-t/CpC4TLipdbgBJTMX/otzzqzCMBSPQwUOkYPGbT/jyuC86F+YO9o+LS0Ty2pGUE1kyT+B3WmJ318B16ZCg4hw==}
@@ -2109,6 +2127,10 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
 
+  radash@12.1.0:
+    resolution: {integrity: sha512-b0Zcf09AhqKS83btmUeYBS8tFK7XL2e3RvLmZcm0sTdF1/UUlHSsjXdCcWNxe7yfmAlPve5ym0DmKGtTzP6kVQ==}
+    engines: {node: '>=14.18.0'}
+
   rc9@2.1.2:
     resolution: {integrity: sha512-btXCnMmRIBINM2LDZoEmOogIZU7Qe7zn4BpomSKZ/ykbLObuBdvG+mFq11DL6fjH1DRwHhrlgtYWG96bJiC7Cg==}
 
@@ -2694,6 +2716,19 @@ snapshots:
     dependencies:
       defu: 6.1.4
       many-keys-map: 2.0.1
+
+  '@ai-sdk/deepseek@0.1.8(zod@3.24.1)':
+    dependencies:
+      '@ai-sdk/openai-compatible': 0.1.8(zod@3.24.1)
+      '@ai-sdk/provider': 1.0.7
+      '@ai-sdk/provider-utils': 2.1.6(zod@3.24.1)
+      zod: 3.24.1
+
+  '@ai-sdk/openai-compatible@0.1.8(zod@3.24.1)':
+    dependencies:
+      '@ai-sdk/provider': 1.0.7
+      '@ai-sdk/provider-utils': 2.1.6(zod@3.24.1)
+      zod: 3.24.1
 
   '@ai-sdk/openai@1.1.9(zod@3.24.1)':
     dependencies:
@@ -4581,6 +4616,8 @@ snapshots:
   queue-microtask@1.2.3: {}
 
   quick-lru@5.1.1: {}
+
+  radash@12.1.0: {}
 
   rc9@2.1.2:
     dependencies:

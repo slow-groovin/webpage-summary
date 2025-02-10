@@ -1,5 +1,5 @@
 {
-  "name": "webpage-summary",
+  "name": "webpage-summary-ext",
   "description": "manifest.json description",
   "private": true,
   "version": "0.0.0",
@@ -16,11 +16,13 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.1.8",
     "@ai-sdk/openai": "^1.1.9",
     "@mozilla/readability": "^0.5.0",
     "@webext-core/messaging": "^2.2.0",
     "ai": "^4.1.21",
     "clsx": "^2.1.1",
+    "radash": "^12.1.0",
     "tailwind-merge": "^3.0.1",
     "vue": "^3.5.12"
   },

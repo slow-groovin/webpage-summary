@@ -1,28 +1,38 @@
+<!-- content entry, as a router -->
 <script lang="ts" setup>
+import DraggableContainer from '@/src/components/container/DraggableContainer.vue'
+import Summary from '@/src/pages/Summary.vue'
+import { Component, defineAsyncComponent, ref } from 'vue'
+let ContentDebugPanel:Component|null = null // 用于存储异步组件
+const isDebugPanelComponentLoaded=ref(false)
+async function openDebugPanel() {
+  if (!ContentDebugPanel) {
+    // 异步导入组件
+    ContentDebugPanel =defineAsyncComponent(() => import('@/src/components/debug/ContentDebugPanel.vue'))
+    isDebugPanelComponentLoaded.value = true // 设置组件加载状态
+  }else{
+    isDebugPanelComponentLoaded.value=!isDebugPanelComponentLoaded.value
+  }
+}
 </script>
 
 <template>
+  <DraggableContainer class="z-[9999]">
+    <template #header>
+      <div class=" h-8 min-w-64 bg-gray-200 flex flex-row-reverse">
+        <button @click="openDebugPanel">debug panel</button>
+
+      </div>
+    </template>
+    <div>
+      <Summary></Summary>
+    </div>
+
+  </DraggableContainer>
   <div>
-    <a href="https://wxt.dev" target="_blank">
-      <img src="/wxt.svg" class="logo" alt="WXT logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="@/assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <ContentDebugPanel v-if="isDebugPanelComponentLoaded"/>
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #54bc4ae0);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

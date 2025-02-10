@@ -28,6 +28,7 @@ async function getStorage() {
   const _item = await storage.getItem<number>('local:debug-item');
   item.value=_item
   console.log('[suc] getItem(local:debug-item)',_item); 
+  
   //👇exception
   // const item2= await storage.getItem<number>('session:debug-item');
   // console.log('[suc] getItem(session:debug-item)',item2); 
