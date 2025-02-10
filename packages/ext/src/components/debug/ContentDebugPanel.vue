@@ -5,11 +5,13 @@ import SimpleTabsContainer from '../container/SimpleTabsContainer.vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ReadabilityDebug from './ReadabilityDebug.vue';
 import VercelAICoreDebug from './VercelAICoreDebug.vue';
+import MessageDebug from './MessageDebug.vue';
+import StorageDebug from './StorageDebug.vue';
 
 
 
 
-const components = [DragShadowRoot, ReadabilityDebug,VercelAICoreDebug, ]
+const components = [DragShadowRoot, ReadabilityDebug,VercelAICoreDebug, MessageDebug, StorageDebug]
 </script>
 
 <template>
