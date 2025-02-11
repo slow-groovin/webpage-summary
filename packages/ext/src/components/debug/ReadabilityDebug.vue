@@ -50,8 +50,14 @@ function readParse() {
   console.log(articleUrl, author, authorLink, domain)
   console.log(_article.title)
   console.log(_article.content)
-  reRenderElem.value!.innerHTML=_article.content
-
+  let showText=''
+  for(let key of Object.keys(_article)){
+    if(key==='content' || key==='textContent'){
+      continue
+    }
+    showText+=`<br>${key}: ${(_article as any)[key]}`
+  }
+  reRenderElem.value!.innerHTML=showText+'<br>'+_article.content
 }
 
 // readParse()

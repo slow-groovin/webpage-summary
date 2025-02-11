@@ -18,6 +18,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.1.9",
     "@mozilla/readability": "^0.5.0",
+    "@webext-core/messaging": "^2.2.0",
     "ai": "^4.1.21",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.0.1",
