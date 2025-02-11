@@ -7,7 +7,7 @@ A browser extension for summarizing webpage text content via LLM api
 
 ## multi triggers
 1. keyboard shortcut
-2. option menu
+2. popup menu
 3. in-page button
 4. context menu
 

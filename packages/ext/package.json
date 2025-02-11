@@ -22,13 +22,18 @@
     "@webext-core/messaging": "^2.2.0",
     "ai": "^4.1.21",
     "clsx": "^2.1.1",
+    "markdown-it": "^14.1.0",
+    "mustache": "^4.2.0",
     "radash": "^12.1.0",
     "tailwind-merge": "^3.0.1",
-    "vue": "^3.5.12"
+    "vue": "^3.5.12",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.3",
     "@types/chrome": "^0.0.280",
+    "@types/markdown-it": "^14.1.2",
+    "@types/mustache": "^4.2.5",
     "@wxt-dev/module-vue": "^1.0.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
