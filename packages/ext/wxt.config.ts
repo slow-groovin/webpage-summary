@@ -1,10 +1,30 @@
 import { defineConfig } from 'wxt';
-
+import autoprefixer from 'autoprefixer'
+import tailwind from 'tailwindcss'
+import { fileURLToPath, URL } from 'node:url'
 // See https://wxt.dev/api/config.html
+// console.log(`fileURLToPath(new URL('./', import.meta.url))`,fileURLToPath(new URL('./', import.meta.url)))
 export default defineConfig({
   extensionApi: 'chrome',
   modules: ['@wxt-dev/module-vue'],
   imports: false,
+  vite: () => ({
+    // Override config here, same as `defineConfig({ ... })`
+    // inside vite.config.ts files
+    plugins: [
+    
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./', import.meta.url))
+      }
+    },
+    css: {
+      postcss:{
+        plugins:[tailwind(), autoprefixer()]
+      }
+    },
+  }),
   manifest: {
     name: 'webpage-summary-M',
     description: 'OSS web page summary , any llm api',

@@ -19,27 +19,32 @@
     "@ai-sdk/deepseek": "^0.1.8",
     "@ai-sdk/openai": "^1.1.9",
     "@mozilla/readability": "^0.5.0",
+    "@vueuse/core": "^12.5.0",
     "@webext-core/messaging": "^2.2.0",
     "ai": "^4.1.21",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.475.0",
     "markdown-it": "^14.1.0",
     "mustache": "^4.2.0",
     "radash": "^12.1.0",
+    "radix-vue": "^1.9.13",
     "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.12",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.3",
     "@types/chrome": "^0.0.280",
     "@types/markdown-it": "^14.1.2",
     "@types/mustache": "^4.2.5",
     "@wxt-dev/module-vue": "^1.0.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
-    "tailwindcss": "^4.0.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.6.3",
     "vue-tsc": "^2.1.10",
     "wxt": "^0.19.13"
-  }
+  },
+  "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }
