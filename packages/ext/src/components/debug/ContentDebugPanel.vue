@@ -11,7 +11,10 @@ import StorageDebug from './StorageDebug.vue';
 
 
 
-const components = [DragShadowRoot, ReadabilityDebug,VercelAICoreDebug, MessageDebug, StorageDebug]
+const components = [
+  DragShadowRoot,
+  ReadabilityDebug, VercelAICoreDebug, MessageDebug, StorageDebug
+]
 </script>
 
 <template>
@@ -21,7 +24,8 @@ const components = [DragShadowRoot, ReadabilityDebug,VercelAICoreDebug, MessageD
       </div>
     </template>
     <template #default>
-      <SimpleTabsContainer :tabs="components.map(t => ({ name: t.__name ?? '', label: t.__name ?? '' }))" class="p-4 bg-gray-100">
+      <SimpleTabsContainer :tabs="components.map(t => ({ name: t.__name ?? '', label: t.__name ?? '' }))"
+        class="p-4 bg-gray-100">
         <template v-for="(t) in components" v-slot:[t.__name]>
           <component :is="t" />
         </template>

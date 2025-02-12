@@ -7,10 +7,17 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig({
   extensionApi: 'chrome',
   modules: ['@wxt-dev/module-vue'],
+  // vue:{
+  //   // @ts-ignore
+  //   sourceMap:true,
+  // },
   imports: false,
   vite: () => ({
     // Override config here, same as `defineConfig({ ... })`
     // inside vite.config.ts files
+    build:{
+      sourcemap: true
+    },
     plugins: [
     
     ],
@@ -36,5 +43,11 @@ export default defineConfig({
       64: '/icon/64.png',
       128: '/icon/128.png',
     },
+    web_accessible_resources: [
+      {
+        matches: ['<all_urls>'],
+        resources: ['content-scripts/*.map'],
+      },
+    ],
   }
 });

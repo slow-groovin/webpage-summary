@@ -19,6 +19,7 @@
     "@ai-sdk/deepseek": "^0.1.8",
     "@ai-sdk/openai": "^1.1.9",
     "@mozilla/readability": "^0.5.0",
+    "@vee-validate/zod": "^4.15.0",
     "@vueuse/core": "^12.5.0",
     "@webext-core/messaging": "^2.2.0",
     "ai": "^4.1.21",
@@ -31,7 +32,9 @@
     "radix-vue": "^1.9.13",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "vee-validate": "^4.15.0",
     "vue": "^3.5.12",
+    "vue-router": "4",
     "zod": "^3.24.2"
   },
   "devDependencies": {
