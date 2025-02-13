@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import OptionsLayout from './layout/OptionsLayout.vue'
+import { RouterView } from 'vue-router';
+import Toaster from '@/src/components/ui/toast/Toaster.vue'
 </script>
 
 <template>
-  <OptionsLayout/>
+  <RouterView/>
+  <Toaster />
 </template>
 
 <style scoped>

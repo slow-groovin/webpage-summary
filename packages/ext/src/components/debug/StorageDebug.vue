@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { storage } from 'wxt/storage';
 
 import { sendMessage } from '@/messaging';
 import { browser } from 'wxt/browser';
+import { computedAsync } from '@vueuse/core';
+import useWxtStorage from '@/src/composables/useWxtStorage';
 const item = ref<any>()
 const backgroundItem=ref<any>()
 const allItems=ref<any>()
@@ -11,6 +13,10 @@ onMounted(async () => {
   // ✅ This is good
   item.value = await storage.getItem<number>('local:debug-item');
 })
+
+const defineItem=storage.defineItem<number>('local:debug-item')
+const computeDefineItem=computedAsync(async ()=> await defineItem.getValue()) //❌ not a reactive value
+const {state,isLoading,isReady}=useWxtStorage('local:debug-item',0)
 async function setStorage() {
   await storage.setItem('local:debug-item', Date.now());
   console.log('[suc] setItem(local:debug-item)')
@@ -52,10 +58,15 @@ async function getAllConfig(){
   <div>
     item: {{  item }} 
   </div>
+  <div> computeDefineItem: {{ computeDefineItem }} (❌not a reactive value)</div>
+  <div> useWxtStorage.state: {{ state }}  isLoading: {{ isLoading }} isReady:{{ isReady }} (✔ reactive)</div>
+  
+  
   <div>
     backgroundItem: {{ backgroundItem }}
   </div>
  
+
   <blockquote>backgroundItem is equal to item, demonstrate: no need to send message to background</blockquote>
   <div>
     <button @click="setStorage">setStorage</button>

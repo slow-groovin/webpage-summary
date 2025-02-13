@@ -6,7 +6,6 @@ import '@/assets/tailwind.css'
 // 1. Import the style
 // import './style.css';
 import { createApp } from 'vue';
-// import App from '@/src/components/debug/ContentDebugPanel.vue';
 import App from './App.vue';
 
 export default defineContentScript({

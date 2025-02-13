@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Button from '@/src/components/ui/button/Button.vue';
+import { MODEL_CONFIG_KEY } from '@/src/constants/storage-key';
 import { modelProviderPresets } from '@/src/presets/model-providers';
 import { onMounted, ref } from 'vue';
 import { storage } from 'wxt/storage';
 
 
 const modelConfigs = storage.defineItem<ModelConfigItem[]>(
-  'local:modelConfigs',
+  MODEL_CONFIG_KEY,
   {
     fallback: [],
   },

@@ -21,6 +21,7 @@ const groups = [
     name: 'other',
     chapters: [
       { name: 'export/import', path: '/models' },
+      { name: 'debug', path: '/debug' },
       { name: 'about', path: '/models' },
 
     ]

@@ -1,8 +1,9 @@
+<!-- prompt config entry page  -->
+<script setup lang="ts">
+
+</script>
 <template>
-  <h1>prompts setting</h1>
-  <div class="flex gap-4">
-    <RouterLink to="/prompts/create">create</RouterLink>
-    <RouterLink to="/prompts/edit">edit</RouterLink>
-  </div>
-  <RouterView/>
+  <h1 class="m-4 p-4 text-3xl font-bold">Prompts</h1>
+  
+  <RouterView />
 </template>

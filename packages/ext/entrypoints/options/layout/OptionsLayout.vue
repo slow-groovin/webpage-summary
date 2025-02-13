@@ -17,9 +17,6 @@ import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
 import { Separator } from '@/src/components/ui/separator';
 import OptionsSidebar from './OptionSidebar.vue'
-const storeName = ref('');
-const pluginsDirectory = ref('/content/plugins');
-const allowAdminChangeDirectory = ref(true);
 </script>
 
 <template>

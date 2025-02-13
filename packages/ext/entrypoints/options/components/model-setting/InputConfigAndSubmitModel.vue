@@ -17,6 +17,7 @@ import { z } from 'zod';
 import EditControlInput from '@/src/components/custom-ui/EditControlInput.vue';
 import { storage } from 'wxt/storage';
 import { uid } from 'radash';
+import { MODEL_CONFIG_KEY } from '@/src/constants/storage-key';
 const { providerType } = defineProps<{
   providerType: string,
 }>()
@@ -54,7 +55,7 @@ const onSubmit = handleSubmit(async (values) => {
     at: Date.now()
   }
   const modelConfigs = storage.defineItem<ModelConfigItem[]>(
-    'local:modelConfigs',
+    MODEL_CONFIG_KEY,
     {
       fallback: [],
     },
