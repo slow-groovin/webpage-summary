@@ -9,6 +9,7 @@ import PromptCreate from './components/prompt-setting/PromptCreate.vue'
 import PromptList from './components/prompt-setting/PromptList.vue'
 import OptionsLayout from './layout/OptionsLayout.vue'
 import DebugPanelEntry from './pages/DebugPanelEntry.vue'
+import PromptEdit from './components/prompt-setting/PromptEdit.vue'
 
 export const settingRoutes: (RouteRecordRaw & { name: string, icon: string })[] = [
   { path: '/models', component: ModelProviderSetting, name: 'model provider', icon: '' },
@@ -36,7 +37,7 @@ export const router = createRouter({
           children: [
             { path: '', component: PromptList },
             { path: 'create', component: PromptCreate },
-            { path: 'edit', component: PromptsSetting },
+            { path: 'edit', component: PromptEdit },
           ]
         },
 

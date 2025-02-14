@@ -23,7 +23,6 @@ const groups = [
       { name: 'export/import', path: '/models' },
       { name: 'debug', path: '/debug' },
       { name: 'about', path: '/models' },
-
     ]
   }
 ]
@@ -34,10 +33,12 @@ const groups = [
     <div class="text-xl p-2 font-light">
       <h3>{{ group.name }}</h3>
     </div>
+
+
     <div class="flex flex-col gap-2">
       <div v-for="chapter in group.chapters">
         <RouterLink :to="chapter.path" class="flex items-center py-2 px-4 text-sm font-medium rounded-md bg-gray-100"
-          :class="{ 'text-green-500 bg-gray-200': currentPath === chapter.path }">
+          :class="{ 'text-green-500 bg-gray-200': currentPath.startsWith(chapter.path) }">
           <span class="mr-2"></span>
           <span class="ml-1">{{ chapter.name }}</span>
         </RouterLink>

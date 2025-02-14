@@ -31,7 +31,7 @@ import OptionsSidebar from './OptionSidebar.vue'
       </nav>
 
       <!-- Main Content -->
-      <main class="flex-1 p-4 max-w-5xl mx-auto">
+      <main class="flex-1 p-4 max-w-5xl ml-8">
         
         <RouterView/>
         <div class=" h-[100vh] w-3"></div>

@@ -20,14 +20,17 @@ import { storage } from 'wxt/storage';
 import { uid } from 'radash';
 import { MODEL_CONFIG_KEY } from '@/src/constants/storage-key';
 import { PromptConfigItem } from '@/src/types/config/prompt';
+import { MoveLeftIcon } from 'lucide-vue-next';
 import Textarea from '@/src/components/ui/textarea/Textarea.vue';
 import { presetPrompts } from '@/src/presets/prompts';
 import { usePromptConfigStorage, usePromptDefaultPreset } from '@/src/composables/prompt';
 import AutoResizeTextarea from '@/src/components/custom-ui/AutoResizeTextarea.vue';
-const {isNameExist}=usePromptConfigStorage()
+import { useRouter } from 'vue-router';
+const { isNameExist } = usePromptConfigStorage()
+const {back}=useRouter()
 const { item } = defineProps<{
   item?: PromptConfigItem,
-  isDisable?:boolean
+  isDisable?: boolean
 }>()
 const emits = defineEmits<{
   submit: [string, string, string]
@@ -35,19 +38,19 @@ const emits = defineEmits<{
 
 
 const formSchema = toTypedSchema(z.object({
-  name: z.string().min(1).refine(async (name)=>{
+  name: z.string().min(1).refine(async (name) => {
     return !(await isNameExist(name))
   }, { message: 'Name already exists' }),
   systemMessage: z.string().min(1),
   userMessage: z.string().min(1),
 }))
-const defaultPrompt=usePromptDefaultPreset()
+const defaultPrompt = usePromptDefaultPreset()
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: formSchema,
-  initialValues:{
-    name: 'My prompt',
-    systemMessage:  item?.systemMessage ?? defaultPrompt.systemMessage,
+  initialValues: {
+    name: item?.name ?? 'My prompt',
+    systemMessage: item?.systemMessage ?? defaultPrompt.systemMessage,
     userMessage: item?.userMessage ?? defaultPrompt.userMessage,
   }
 })
@@ -66,14 +69,19 @@ const onSubmit = handleSubmit(async (values) => {
 
 </script>
 <template>
-
-  <div class="flex flex-col space-y-4 items-stretch w-[100em]">
+  <div class="flex flex-col space-y-4 items-stretch">
+    <div>
+      <MoveLeftIcon @click="back" class="border p-1 w-8 h-8 rounded border-primary hover:ring-2"/>
+    </div>
+    <div>
+      <slot name="header"></slot>
+    </div>
     <form @submit="onSubmit">
       <FormField v-slot="{ componentField }" name="name">
         <FormItem>
           <FormLabel>Prompt Config Item Name</FormLabel>
           <FormControl>
-            <Input type="text" placeholder="my prompt 1" v-bind="componentField"  :disable="isDisable"/>
+            <Input type="text" placeholder="my prompt 1" v-bind="componentField" :disable="isDisable" />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -83,9 +91,10 @@ const onSubmit = handleSubmit(async (values) => {
         <FormItem>
           <FormLabel>System Message</FormLabel>
           <FormControl>
-            <AutoResizeTextarea type="text" placeholder="system message" class="text-lg" spellcheck="false"  v-bind="componentField"  />
+            <AutoResizeTextarea type="text" placeholder="system message" class="text-lg" spellcheck="false"
+              v-bind="componentField" />
           </FormControl>
-          
+
           <FormMessage />
         </FormItem>
       </FormField>
@@ -94,7 +103,8 @@ const onSubmit = handleSubmit(async (values) => {
         <FormItem>
           <FormLabel>User Message</FormLabel>
           <FormControl>
-            <AutoResizeTextarea type="text" placeholder="user message" class=" text-lg" spellcheck="false"  v-bind="componentField"  />
+            <AutoResizeTextarea type="text" placeholder="user message" class=" text-lg" spellcheck="false"
+              v-bind="componentField" />
           </FormControl>
 
           <FormMessage />
@@ -106,6 +116,7 @@ const onSubmit = handleSubmit(async (values) => {
       </Button>
     </form>
   </div>
+
 
 </template>
 <style lang="postcss" scoped></style>

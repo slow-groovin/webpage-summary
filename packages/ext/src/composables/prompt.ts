@@ -7,6 +7,24 @@ import { uid } from "radash"
 import useWxtStorage from "./useWxtStorage"
 import { presetPrompts } from "../presets/prompts"
 
+
+
+/**
+ * return reactive prompt config items using WxtStorage.
+ *
+ * This hook provides the state, error, loading status, and readiness status
+ * of the prompt configurations stored in WxtStorage.
+ *
+ * @return  `state`: The current state of the prompt configurations.
+ * @return `error`: Any error encountered while loading the prompt configurations.
+ * @return `isLoading`: A boolean indicating if the prompt configurations are currently being loaded.
+ * @return `isReady`: A boolean indicating if the prompt configurations are ready to be used.
+ */
+export function usePromptConfigs() {
+  const { state, error, isLoading, isReady } = useWxtStorage<PromptConfigItem[]>(PROMPT_CONFIG_KEY, [])
+  return { state, error, isLoading, isReady }
+}
+
 /**
  * Manages prompt configuration items in storage.
  */
@@ -65,17 +83,17 @@ export function usePromptConfigStorage() {
 
     // If the prompt configuration item was not found, return false.
     if (index === -1) {
-      return {isSuc:false, msg:`item record not found`}
+      return { isSuc: false, msg: `item record not found` }
     }
     // If a prompt with the same name already exists, add a number to the name.
     if (prompts.findIndex(p => p.name === configItem.name) !== -1) {
-      return {isSuc:false, msg:`name:<${configItem.name}> already exists`}
+      return { isSuc: false, msg: `name:<${configItem.name}> already exists` }
     }
     // Update the prompt configuration item in the list.
     prompts[index] = configItem
     //write back
     promptStorage.setValue(prompts)
-    return {isSuc: true, msg:`success!`};
+    return { isSuc: true, msg: `success!` };
   }
 
   /**
@@ -97,17 +115,17 @@ export function usePromptConfigStorage() {
     // Find the index of the prompt configuration item to delete.
     const index = prompts.findIndex(p => p.id === id)
     // If the prompt configuration item was not found, return false.
-    if (index !== -1) {
-      prompts.splice(index, 1)
-      return true
+    if (index === -1) {
+      return false
     }
+    prompts.splice(index, 1)
     // If there are no more prompts, set the default prompt item ID to null.
     if (prompts.length === 0) {
       defaultPromptItemIdStorage.setValue(null)
     }
     // write back
     promptStorage.setValue(prompts)
-    return false
+    return true
   }
 
   /**
@@ -133,7 +151,7 @@ export function usePromptConfigStorage() {
     prompts[index] = prompts[exchangeIndex]
     prompts[exchangeIndex] = temp
 
-    
+
     // write back
     promptStorage.setValue(prompts)
     return true
@@ -156,13 +174,26 @@ export function usePromptConfigStorage() {
     return true
   }
 
+
+  async function getDefaultItem() {
+    const defaultId = await defaultPromptItemIdStorage.getValue()
+    if(!defaultId){
+      return null
+    }
+    return getItem(defaultId)
+  }
+
+  async function getItem(id:string) {
+    const prompts = await promptStorage.getValue()
+    return prompts.find(p => p.id === id)
+  }
   // Return the functions to manage prompt configuration items.
-  return { isNameExist,createItem, updateItem, listItem, deleteItem, updateConfigOrder, updateDefaultConfig: setDefaultItemId }
+  return { isNameExist,getItem, createItem, updateItem, listItem, deleteItem, updateConfigOrder, setDefaultItemId, getDefaultItem }
 }
 
 
-export function usePromptDefaultPreset(){
-  const basic=presetPrompts['basic']
+export function usePromptDefaultPreset() {
+  const basic = presetPrompts['basic']
   return {
     systemMessage: basic[0].content as string,
     userMessage: basic[1].content as string
