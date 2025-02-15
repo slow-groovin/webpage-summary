@@ -16,6 +16,8 @@ interface ProtocolMap {
    * @param data 
    */
   streamText(input: {messages:CoreMessage[],modelName:keyof typeof models, connectId:string}): Promise<unknown>;
+
+	openOptionPage(url:string): Promise<any>;
 }
 
 export const { sendMessage, onMessage } = defineExtensionMessaging<ProtocolMap>();

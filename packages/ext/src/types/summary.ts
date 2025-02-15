@@ -1,4 +1,4 @@
-import {z} from 'zod'
+import { z } from 'zod'
 export type SummaryInput = {
   /**
    * user language
@@ -56,8 +56,17 @@ export type SummaryInput = {
    */
   title?: string
 }
-export const SummaryInputSchema:z.ZodType<Pick<Partial<SummaryInput>,'spokenLanguage'|'maxLength'|'article'>>=z.object({
-  spokenLanguage:z.string().default('english'),
+
+
+export const SummaryInputSchema: z.ZodType<Pick<Partial<SummaryInput>, 'spokenLanguage' | 'maxLength' | 'article'>> = z.object({
+  spokenLanguage: z.string().default('english'),
   maxLength: z.number().default(1000),
   article: z.string(),
 })
+
+export type TokenUsage={
+  inputToken: number,
+  outputToken: number,
+  cost?: number,
+  unit?: string
+}
