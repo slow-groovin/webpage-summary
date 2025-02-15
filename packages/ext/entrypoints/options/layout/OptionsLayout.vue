@@ -20,7 +20,7 @@ import OptionsSidebar from './OptionSidebar.vue'
 </script>
 
 <template>
-  <div class="h-screen bg-gray-100 flex flex-col">
+  <div class=" flex flex-col">
     <header class="bg-white shadow-md p-4">
       <h1 class="text-2xl font-semibold">[NAME] Settings</h1>
     </header>

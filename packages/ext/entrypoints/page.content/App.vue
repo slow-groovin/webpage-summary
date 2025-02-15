@@ -1,7 +1,7 @@
 <!-- content entry, as a router -->
 <script lang="ts" setup>
 import DraggableContainer from '@/src/components/container/DraggableContainer.vue'
-import ContentDebugPanelEntry from '@/src/components/debug/ContentDebugPanelEntry.vue'
+// import ContentDebugPanelEntry from '@/src/components/debug/ContentDebugPanelEntry.vue'
 import ErrorComponent from '@/src/components/status/ErrorComponent.vue'
 import LoadingComponent from '@/src/components/status/LoadingComponent.vue'
 import Summary from '@/src/pages/Summary.vue'
@@ -26,7 +26,7 @@ async function openDebugPanel() {
 
   </DraggableContainer>
   <div>
-    <ContentDebugPanelEntry v-if="open"></ContentDebugPanelEntry>
+    <!-- <ContentDebugPanelEntry v-if="open"></ContentDebugPanelEntry> -->
   </div>
 </template>
 

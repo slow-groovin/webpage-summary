@@ -1,4 +1,4 @@
-type ModelConfigItem= {
+export type ModelConfigItem= {
   /**
    * 16-bit uuid
    */
@@ -17,6 +17,6 @@ type ModelConfigItem= {
   modelName: string,
 
   apiKey: string,
-  baseURL: string,
+  baseURL?: string,
   at: number
 }

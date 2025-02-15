@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', payload: string | number): void;
+  (e: 'edit'): void;
 }>();
 
 const isEditing = ref(false);
@@ -16,6 +17,7 @@ const internalValue = ref(props.modelValue || props.defaultValue || '');
 
 const toggleEditing = () => {
   isEditing.value = !isEditing.value;
+  emit('edit')
 };
 
 const confirmEdit = () => {
@@ -31,6 +33,7 @@ const inputClass = computed(() => {
 <template>
   <div class="flex items-center">
     <Input
+      v-bind="$attrs"
       :model-value="internalValue"
       :class="inputClass"
       :disabled="!isEditing"

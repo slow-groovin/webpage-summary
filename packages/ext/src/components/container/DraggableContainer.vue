@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted,  HTMLAttributes } from 'vue';
+import { ref, onMounted, HTMLAttributes } from 'vue';
 import { cn } from '@/src/utils/shadcn';
 
 const { class: clazz } = defineProps<{
@@ -65,6 +65,7 @@ onMounted(() => {
   }
 });
 
+//
 </script>
 
 <template>
@@ -73,7 +74,6 @@ onMounted(() => {
       <slot name="header">
         <div class="h-8 bg-gray-500 w-full rounded">
         </div>
-
       </slot>
     </div>
 
@@ -82,4 +82,5 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

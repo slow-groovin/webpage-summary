@@ -80,7 +80,7 @@ const handleLocate = (id: string | undefined) => {
 </script>
 <template>
   <div>
-    <!-- button -->
+    <!-- create button -->
     <div>
       <RouterLink to="/prompts/create">
         <Button>create one</Button>

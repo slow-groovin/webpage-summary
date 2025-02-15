@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import DraggableContainer from '../container/DraggableContainer.vue';
 
-
-
 </script>
 
 <template>
@@ -16,8 +14,6 @@ import DraggableContainer from '../container/DraggableContainer.vue';
 
         <div class="">
           <h1>Drag shadow root sample</h1>
-
-
         </div>
 
       </div>
