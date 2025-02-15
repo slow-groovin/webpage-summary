@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Chat Dialog Component -->
+    <!-- Chat InputBox Component -->
   </div>
 </template>
 

@@ -8,7 +8,7 @@ import MessageDebug from './MessageDebug.vue';
 import StorageDebug from './StorageDebug.vue';
 import { useRoute,useRouter } from 'vue-router';
 import { ErrorMessage } from 'vee-validate';
-import SummaryHeaderDebug from './SummaryHeaderDebug.vue';
+import SummaryHeaderDebug from './SummaryBoxDebug.vue';
 import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 const { query: { index } } = useRoute()
 const {replace}=useRouter()

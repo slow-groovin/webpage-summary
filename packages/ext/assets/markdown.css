@@ -1,0 +1,27 @@
+
+.markdown{
+  pre  {
+    @apply border  p-2 rounded-lg
+  }
+
+  p > code {
+    @apply border bg-hover rounded
+  }
+  table,tr,th,td{
+    @apply border
+  }
+
+  blockquote{
+    @apply border-l-4 border-primary p-2 my-2 bg-hover
+  }
+
+  h1{
+    @apply text-2xl font-bold mb-2
+  }
+  h2{
+    @apply text-xl font-bold mb-2
+  }
+  h3{
+    @apply text-lg font-bold mb-2
+  }
+}
