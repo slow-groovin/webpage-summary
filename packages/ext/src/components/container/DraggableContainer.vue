@@ -70,7 +70,7 @@ onMounted(() => {
 
 <template>
   <div ref="dragContainer" :class="cn('fixed top-0 right-0 w-fit', clazz)">
-    <div :class="{ 'cursor-grabbing': isDragging }" @mousedown="startDrag">
+    <div class="hover:cursor-move" :class="{ 'cursor-grabbing hover:cursor-grabbing': isDragging }" @mousedown="startDrag">
       <slot name="header">
         <div class="h-8 bg-gray-500 w-full rounded">
         </div>

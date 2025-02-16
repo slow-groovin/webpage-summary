@@ -6,9 +6,9 @@ import { registerLLMMessages } from "./llm";
 import { registerControlMessages } from "./control";
 export default defineBackground(() => {
   console.log('Hello background!', { id: browser.runtime.id });
-
+  
+  registerControlMessages()
   registerConfigCenterMessages()
   registerLLMMessages()
-  registerControlMessages()
 });
 

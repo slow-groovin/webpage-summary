@@ -10,15 +10,16 @@ export type SummaryInput = {
   maxLength: number,
 
   /**
-   * mix of @mozilla/readability parsed all fields(except `content`)
+   * text Content
    */
-  article: string,
+  textContent?: string,
 
 
   /**
-   * @mozilla/readability parsed field: articleUrl
+   * webpage URL
    */
   articleUrl?: string,
+  
   /**
    * @mozilla/readability parsed field: byline
    */
@@ -47,10 +48,7 @@ export type SummaryInput = {
    * @mozilla/readability parsed field: siteName
    */
   siteName?: string,
-  /**
-   * @mozilla/readability parsed field: textContent
-   */
-  textContent?: string,
+
   /**
    * @mozilla/readability parsed field: title
    */
@@ -58,7 +56,7 @@ export type SummaryInput = {
 }
 
 
-export const SummaryInputSchema: z.ZodType<Pick<Partial<SummaryInput>, 'spokenLanguage' | 'maxLength' | 'article'>> = z.object({
+export const SummaryInputSchema: z.ZodType<Pick<Partial<SummaryInput>, 'spokenLanguage' | 'maxLength' | 'textContent'>> = z.object({
   spokenLanguage: z.string().default('english'),
   maxLength: z.number().default(1000),
   article: z.string(),

@@ -1,46 +1,49 @@
 <template>
-  <div class="flex items-center justify-between px-1 py-1  border-b border">
-    <div class="flex items-center space-x-4">
-      <div class="flex items-center ">
-        <img :src="iconUrl" alt="Extension Icon" class="w-4 h-4 rounded" />
-        <div> {{ name }}</div>
+  <div class="flex items-center justify-between flex-wrap px-1 py-1  border-b border" ref="headerRef">
+    <div class="flex items-center flex-wrap space-x-4">
+      <div class="flex items-center text-nowrap">
+        <img :src="icon" alt="Extension Icon" class="w-4 h-4 rounded" />
+        <!-- <div> {{ name }}</div> -->
+        <slot name="left-buttons"></slot>
       </div>
 
       <!-- model select -->
       <div class="rounded" v-if="currentModelConfig">
-        <Select :default-value="currentModelConfig?.id" @update:model-value="selectCurrentModel">
+        <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig.id">
           <!-- Select Trigger has bug in headless, so use style to force setting it  -->
-          <SelectTrigger class="h-fit" style="background-color: transparent;color:var(--primary)">
-            <SelectValue placeholder="Select a model">
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
+          <template #trigger class="h-fit">
+            <ModelConfigInlineItem :item="currentModelConfig" :is-selected="true" />
+          </template>
+
+          <template #content>
             <template v-for="configItem in modelConfigs" :key="configItem.id">
               <SelectItem :value="configItem.id">
-                <ModelConfigInlineItem :item="configItem" :is-selected="currentModelConfig?.id === configItem.id" />
+                <ModelConfigInlineItem :item="configItem" :is-selected="false" />
               </SelectItem>
             </template>
-          </SelectContent>
+          </template>
+
         </Select>
       </div>
 
       <!-- prompt select -->
       <div class="rounded" v-if="currentPromptConfig">
-        <Select :default-value="currentPromptConfig?.id" @update:model-value="selectCurrentPrompt">
-          <!-- Select Trigger has bug in headless, so use style to force setting it  -->
-          <SelectTrigger class="h-fit" style="background-color: transparent;color:var(--primary)">
-            <SelectValue placeholder="Select a model">
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
+        <Select @update:model-value="selectCurrentPrompt" :model-value="currentPromptConfig.id">
+          <!-- Select Trigger has bug in headless, so use style to force setting it -->
+          <template #trigger class="h-fit" style="background-color: transparent;color:var(--primary)">
+            <PromptConfigInlineItem :item="currentPromptConfig!" />
+          </template>
+
+          <template #content="value">
             <template v-for="configItem in promptConfigs" :key="configItem.id">
               <SelectItem :value="configItem.id">
-                <PromptConfigInlineItem :item="configItem" :is-selected="currentPromptConfig?.id === configItem.id" />
+                <PromptConfigInlineItem :item="configItem" />
               </SelectItem>
             </template>
-          </SelectContent>
+          </template>
         </Select>
       </div>
+
 
 
       <div class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
@@ -52,11 +55,11 @@
 
     <!-- right button area -->
     <div class="flex items-center space-x-2">
-      <slot name="buttons"></slot>
+      <slot name="right-buttons"></slot>
       <!-- <div>[Pin Icon]</div> -->
-       <Button variant="github" size="icon" @click="openExtSettingPage()">
-         <SettingsIcon class="" />
-       </Button>
+      <Button variant="github" size="icon" @click="openExtSettingPage()">
+        <SettingsIcon class="" />
+      </Button>
 
     </div>
   </div>
@@ -68,7 +71,7 @@ import { useModelConfigStorage } from '@/src/composables/model-config';
 import { ModelConfigItem } from '@/src/types/config/model';
 import { onMounted, ref } from 'vue';
 import { SettingsIcon } from 'lucide-vue-next';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, SelectLabel } from '@/src/components/ui/select'
+import { Select, SelectItem } from '@/src/components/custom-ui/select'
 import ModelConfigInlineItem from '../model/ModelConfigInlineItem.vue';
 import { usePromptConfigStorage } from '@/src/composables/prompt';
 import { PromptConfigItem } from '@/src/types/config/prompt';
@@ -77,6 +80,8 @@ import { TokenUsage } from '@/src/types/summary';
 import TokenUsageItem from './TokenUsageItem.vue';
 import Button from '../ui/button/Button.vue';
 import { sendMessage } from '@/messaging';
+import icon from '~/assets/16.png';
+
 
 defineProps<{
   tokenUsage?: TokenUsage
@@ -102,8 +107,8 @@ async function selectCurrentPrompt(id: string) {
   currentPromptConfig.value = promptConfigs.value.find(i => i.id === id)
 }
 
-function openExtSettingPage(){
-  sendMessage('openOptionPage','/')
+function openExtSettingPage() {
+  sendMessage('openOptionPage', '/options.html#/')
 }
 
 onMounted(async () => {

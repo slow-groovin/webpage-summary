@@ -29,7 +29,7 @@ async function simpleSummary() {
   renderMessages(messages, {
     spokenLanguage: 'Chinese',
     maxLength: 1000,
-    article: JSON.stringify(rest)
+    textContent: JSON.stringify(rest)
   })
 
 

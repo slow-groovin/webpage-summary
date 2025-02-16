@@ -15,9 +15,9 @@ export default defineConfig({
   vite: () => ({
     // Override config here, same as `defineConfig({ ... })`
     // inside vite.config.ts files
-    build:{
-      sourcemap: true
-    },
+    // build:{
+    //   // sourcemap: true
+    // },
     plugins: [
     
     ],
@@ -46,7 +46,7 @@ export default defineConfig({
     web_accessible_resources: [
       {
         matches: ['<all_urls>'],
-        resources: ['content-scripts/*.map'],
+        resources: ['content-scripts/*.map','llm-icons/*'],
       },
     ],
   }
