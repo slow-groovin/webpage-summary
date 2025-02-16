@@ -47,7 +47,7 @@ A browser extension for summarizing webpage text content via LLM api
 
 ## advanced
 1. two-round summary: low-price rough summary + high-price summary
-
+2. ? one-page simple rag: call embedding to store vectors in indexedDB(using dexie.js), chat with vector-searched results.
 ## other
 1. export as chat history
 2. store and manage history in indexedDB

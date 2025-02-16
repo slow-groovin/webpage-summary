@@ -6,9 +6,8 @@ import { browser, Runtime } from "wxt/browser";
 import allModels from '@/src/model-providers'
 
 
-const queue: Map<string,PortListener>=new Map()
+const portsMap: Map<string,PortListener>=new Map()
 export function registerLLMMessages(){
-  
   onMessage('streamText',async (message)=>{
     console.debug('[streamText]', message.data)
     const {messages,modelName,connectId}=message.data
@@ -32,11 +31,11 @@ export function registerLLMMessages(){
 
       console.log('[disconnect]',connectId)
       port.onMessage.removeListener(newPortListener)
-      queue.delete(connectId)
+      portsMap.delete(connectId)
 
     }
 
-    queue.set(connectId,newPortListener)
+    portsMap.set(connectId,newPortListener)
 
     const {usage,finishReason,warnings}=result
     return {
@@ -49,11 +48,11 @@ export function registerLLMMessages(){
 
   //center
   const listener = (port:Runtime.Port) => {
-    console.debug('[onConnect][listener]name:',port.name,queue.has(port.name))
-    if(!queue.has(port.name)){
+    console.debug('[onConnect][listener]name:',port.name,portsMap.has(port.name))
+    if(!portsMap.has(port.name)){
       return
     }
-    port.onMessage.addListener(queue.get(port.name)!)
+    port.onMessage.addListener(portsMap.get(port.name)!)
   };
   browser.runtime.onConnect.addListener(listener)
   

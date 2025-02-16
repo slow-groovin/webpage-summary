@@ -72,6 +72,7 @@ import { PromptConfigItem } from '@/src/types/config/prompt';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import { PlayIcon } from 'lucide-vue-next';
 import { useWebpageContent } from '@/src/composables/readability';
+import { useCallLLMViaMessage } from '@/src/composables/useStreamSummary';
 
 const modelStorage = useModelConfigStorage()
 const promptStorage = usePromptConfigStorage()
@@ -83,7 +84,7 @@ modelStorage.getDefaultItem().then(r => currentModel.value = r)
 promptStorage.getDefaultItem().then(r => currentPrompt.value = r)
 
 const  {summaryInput}=useWebpageContent()
-
+const {isStreaming,startStreamSummary,sumResult,sumResultHtml}=useCallLLMViaMessage()
 const tokenUsage = ref<TokenUsage>({
   inputToken: 13515,
   outputToken: 535,
@@ -100,7 +101,12 @@ async function submitUserInput(content: string) {
 }
 
 async function  execSummary() {
-  
+  startStreamSummary({
+    modelName: currentModel.value?.providerType,
+    messages:[
+
+    ],
+  })
 }
 </script>
 
