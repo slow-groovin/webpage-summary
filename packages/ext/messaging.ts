@@ -8,16 +8,26 @@ interface ProtocolMap {
    * @deprecated
    */
   getGlobalConfig(key:string):Promise<string|null>;
-  getAllGlobalConfig():Promise<Record<string,unknown>>;
-  getStringLength(str:string): number;
 
-  /**
-   * content.js --> background streamText()
-   * @param data 
-   */
-  streamText(input: {messages:CoreMessage[],modelName:keyof typeof models, connectId:string}): Promise<unknown>;
+
 
 	openOptionPage(url:string): Promise<any>;
+
+  /**
+   * for onConnectMessage and sendConnectMessage
+   * @param key
+   */
+  _connectEstablish(key:string):string;
+
+  /*
+   * tests  
+   */
+  getStringLength(str:string): number;
+  /**
+   * content.js --> background streamText() test
+   * @param data 
+   */
+  streamTextTest(input: {messages:CoreMessage[],modelName:keyof typeof models, connectId:string}): Promise<unknown>;
 }
 
 export const { sendMessage, onMessage } = defineExtensionMessaging<ProtocolMap>();

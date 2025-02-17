@@ -47,7 +47,7 @@ const typeschema = toTypedSchema(z.object({
   apiKey: z.string(),
   baseURL: z.string().nullable().optional().refine((v) => {
     // only when provider has defaultApiBase, baseURL can be empty
-    const isValid = !!provider.value.defaultApiBase || (v !== null && v !== undefined && v === '')
+    const isValid = !!provider.value.defaultApiBase || (v !== null && v !== undefined && v !== '')
     console.log('baseURL', v, isValid)
     return isValid
 

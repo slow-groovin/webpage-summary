@@ -5,7 +5,7 @@
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class=""
-          :token-usage="tokenUsage">
+          :token-usage="curTokenUsage">
           <template #left-buttons>
             <Button  @click="execSummary"
             
@@ -61,7 +61,7 @@ import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
 import { useModelConfigStorage } from '@/src/composables/model-config';
 import { ModelConfigItem } from '@/src/types/config/model';
 import { TokenUsage } from '@/src/types/summary';
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import SummaryDialog from '../summary/SummaryDialog.vue';
 import MessageItem from '../summary/MessageItem.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
@@ -72,7 +72,13 @@ import { PromptConfigItem } from '@/src/types/config/prompt';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import { PlayIcon } from 'lucide-vue-next';
 import { useWebpageContent } from '@/src/composables/readability';
-import { useCallLLMViaMessage } from '@/src/composables/useStreamSummary';
+import { sendConnectMessage } from '@/connect-messaging';
+import { toast } from '../ui/toast';
+import { CoreMessage } from 'ai';
+import { renderMessages } from '@/src/utils/prompt';
+
+const isChatDialogOpen = ref(false)
+
 
 const modelStorage = useModelConfigStorage()
 const promptStorage = usePromptConfigStorage()
@@ -84,28 +90,44 @@ modelStorage.getDefaultItem().then(r => currentModel.value = r)
 promptStorage.getDefaultItem().then(r => currentPrompt.value = r)
 
 const  {summaryInput}=useWebpageContent()
-const {isStreaming,startStreamSummary,sumResult,sumResultHtml}=useCallLLMViaMessage()
-const tokenUsage = ref<TokenUsage>({
+const curTokenUsage = ref<TokenUsage>({
   inputToken: 13515,
   outputToken: 535,
   cost: 0.00515,
   unit: "$"
 })
 
-const isChatDialogOpen = ref(false)
+type Message={ type: 'user' | 'llm', content: Ref<string> }
+const msgs = ref<Message[]>([])
 
-const msgs = ref<{ type: 'user' | 'llm', content: string }[]>([])
 
 async function submitUserInput(content: string) {
-  msgs.value.push({ type: 'user', content: content })
+  msgs.value.push({ type: 'user', content: ref(content) })
 }
 
 async function  execSummary() {
-  startStreamSummary({
-    modelName: currentModel.value?.providerType,
-    messages:[
+console.log(summaryInput.value)
 
-    ],
+  if(!currentModel.value || !currentPrompt.value || !summaryInput.value){
+    toast({title:'no config yet.', variant:'warning'})
+    return 
+  }
+  
+  const messages:CoreMessage[]=[
+    { role:'system', content: currentPrompt.value.systemMessage},
+    { role:'user', content: currentPrompt.value.userMessage},
+  ]
+
+  renderMessages(messages,summaryInput.value )
+  const {textStream,tokenUsage}=await sendConnectMessage('beginSummary',{
+    modelConfig:currentModel.value,
+    messages: messages,
+  })
+  tokenUsage.then((_r)=>{curTokenUsage.value=_r})
+  const summaryResult=ref<string>('')
+  msgs.value.push({type:'llm',content: summaryResult})
+  textStream.onChunk((c)=>{
+    summaryResult.value+=c
   })
 }
 </script>

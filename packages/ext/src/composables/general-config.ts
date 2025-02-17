@@ -12,9 +12,10 @@ async function getAllExtConfigs() {
     { key: MAX_LENGTH_KEY, fallback: 8192 }
   ]);
 
+  // console.log(result)
   return {
-    spokenLanguage: result[0].value as string,
-    maxLength: result[1].value as number
+    spokenLanguage: result[0].value ??'en',  //.getItems(...) has bugs: setting fallback has no effect
+    maxLength: result[1].value ??4096  
   }
 }
 export function useGeneralConfig(){

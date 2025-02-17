@@ -59,7 +59,7 @@ export type SummaryInput = {
 export const SummaryInputSchema: z.ZodType<Pick<Partial<SummaryInput>, 'spokenLanguage' | 'maxLength' | 'textContent'>> = z.object({
   spokenLanguage: z.string().default('english'),
   maxLength: z.number().default(1000),
-  article: z.string(),
+  textContent: z.string(),
 })
 
 export type TokenUsage={

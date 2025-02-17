@@ -100,7 +100,8 @@ export function useModelConfigStorage() {
 
     
     // If a model with the same name and providerType already exists, return false.
-    if ((await findByName(configItem.name))?.id!==configItem.id) {
+    const sameNameOne=await findByName(configItem.name)
+    if (sameNameOne && sameNameOne.id!==configItem.id) {
       return { isSuc: false, msg: `name:<${configItem.name}> already exists` };
     }
     // Update the model configuration item in the list.

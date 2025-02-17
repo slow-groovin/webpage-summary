@@ -11,6 +11,7 @@ import { ErrorMessage } from 'vee-validate';
 import SummaryHeaderDebug from './SummaryBoxDebug.vue';
 import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 import CustomSelectDebug from './CustomSelectDebug.vue';
+import ConnectMessageDebug from './ConnectMessageDebug.vue';
 const { query: { index } } = useRoute()
 const {replace}=useRouter()
 const components = [
@@ -21,8 +22,8 @@ const components = [
   StorageDebug,
   SummaryHeaderDebug,
   ShadcnThemeColorVisual,
-  CustomSelectDebug
-
+  CustomSelectDebug,
+  ConnectMessageDebug,
 ]
 </script>
 

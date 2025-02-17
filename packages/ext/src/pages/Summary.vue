@@ -38,7 +38,7 @@ async function simpleSummary() {
 
 
   //todo Encaps
-  const result = await sendMessage('streamText', {
+  const result = await sendMessage('streamTextTest', {
     messages: messages,
     modelName: 'GLM48B_SiliconFlow',
     connectId: randId
