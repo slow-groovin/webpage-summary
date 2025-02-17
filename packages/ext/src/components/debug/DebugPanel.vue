@@ -12,6 +12,7 @@ import SummaryHeaderDebug from './SummaryBoxDebug.vue';
 import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 import CustomSelectDebug from './CustomSelectDebug.vue';
 import ConnectMessageDebug from './ConnectMessageDebug.vue';
+import ResizableDebug from './ResizableDebug.vue';
 const { query: { index } } = useRoute()
 const {replace}=useRouter()
 const components = [
@@ -24,6 +25,7 @@ const components = [
   ShadcnThemeColorVisual,
   CustomSelectDebug,
   ConnectMessageDebug,
+  ResizableDebug
 ]
 </script>
 

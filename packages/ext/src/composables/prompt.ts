@@ -38,12 +38,12 @@ export function usePromptConfigStorage() {
    * @param name The name of the prompt configuration to check.
    * @returns A boolean indicating whether a prompt configuration with the given name exists.
    */
-  async function isNameExist(name: string): Promise<boolean> {
+  async function isNameExist(name: string, id?: string): Promise<boolean> {
     // Retrieve the current prompt configurations from storage
     const prompts = await promptStorage.getValue()
 
     // Check if any of the prompts have the provided name
-    return prompts.some(prompt => prompt.name === name)
+    return prompts.some(prompt => prompt.name === name && (id && prompt.id !== id))
   }
   /**
    * Creates a new prompt configuration item.
@@ -86,7 +86,7 @@ export function usePromptConfigStorage() {
       return { isSuc: false, msg: `item record not found` }
     }
     // If a prompt with the same name already exists, add a number to the name.
-    if (prompts.findIndex(p => p.name === configItem.name) !== -1) {
+    if (prompts.findIndex(p => p.name === configItem.name && p.id !== configItem.id) !== -1) {
       return { isSuc: false, msg: `name:<${configItem.name}> already exists` }
     }
     // Update the prompt configuration item in the list.
@@ -177,18 +177,18 @@ export function usePromptConfigStorage() {
 
   async function getDefaultItem() {
     const defaultId = await defaultPromptItemIdStorage.getValue()
-    if(!defaultId){
+    if (!defaultId) {
       return null
     }
     return getItem(defaultId)
   }
 
-  async function getItem(id:string) {
+  async function getItem(id: string) {
     const prompts = await promptStorage.getValue()
     return prompts.find(p => p.id === id)
   }
   // Return the functions to manage prompt configuration items.
-  return { isNameExist,getItem, createItem, updateItem, listItem, deleteItem, updateConfigOrder, setDefaultItemId, getDefaultItem }
+  return { isNameExist, getItem, createItem, updateItem, listItem, deleteItem, updateConfigOrder, setDefaultItemId, getDefaultItem }
 }
 
 

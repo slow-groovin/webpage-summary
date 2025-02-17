@@ -1,16 +1,16 @@
 <template>
   <template class="" v-if="currentModel && currentPrompt">
 
-    <DraggableContainer class="">
+
+    <DraggableContainer class="max-w-[40rem] max-h-[66vh]">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class=""
           :token-usage="curTokenUsage">
           <template #left-buttons>
-            <Button  @click="execSummary"
-            
-            variant="outline" size="icon" class="w-fit px-1 gap-0 flex items-center h-8 leading-8">
-              <PlayIcon/>Summary
+            <Button @click="execSummary" variant="outline" size="icon"
+              class="w-fit px-1 gap-0 flex items-center h-8 leading-8">
+              <PlayIcon />Summary
             </Button>
           </template>
         </SummaryHeader class="">
@@ -18,11 +18,13 @@
       </template>
 
       <template #default>
-        <SummaryDialog class="mt-[-1px] h-[50vh]">
-          <div class="flex flex-col gap-4 ">
+
+        <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[50vh]" style="overflow-anchor: auto;" ref="summaryDialog">
+          <div class="flex flex-col gap-4">
             <template v-for="(msg, index) in msgs" :key="index">
               <MessageItem :message="{ type: msg.type, content: msg.content }" />
             </template>
+            <div id="dialog-bottom-anchor"></div>
           </div>
         </SummaryDialog>
 
@@ -61,7 +63,7 @@ import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
 import { useModelConfigStorage } from '@/src/composables/model-config';
 import { ModelConfigItem } from '@/src/types/config/model';
 import { TokenUsage } from '@/src/types/summary';
-import { Ref, ref } from 'vue';
+import { Ref, ref, useTemplateRef } from 'vue';
 import SummaryDialog from '../summary/SummaryDialog.vue';
 import MessageItem from '../summary/MessageItem.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
@@ -76,6 +78,8 @@ import { sendConnectMessage } from '@/connect-messaging';
 import { toast } from '../ui/toast';
 import { CoreMessage } from 'ai';
 import { renderMessages } from '@/src/utils/prompt';
+import ResizableContainer from '../container/ResizableContainer.vue';
+import { scrollToId } from '@/src/utils/document';
 
 const isChatDialogOpen = ref(false)
 
@@ -89,7 +93,7 @@ const currentPrompt = ref<PromptConfigItem | null>()
 modelStorage.getDefaultItem().then(r => currentModel.value = r)
 promptStorage.getDefaultItem().then(r => currentPrompt.value = r)
 
-const  {summaryInput}=useWebpageContent()
+const { summaryInput } = useWebpageContent()
 const curTokenUsage = ref<TokenUsage>({
   inputToken: 13515,
   outputToken: 535,
@@ -97,37 +101,40 @@ const curTokenUsage = ref<TokenUsage>({
   unit: "$"
 })
 
-type Message={ type: 'user' | 'llm', content: Ref<string> }
-const msgs = ref<Message[]>([])
+type Message = { type: 'user' | 'llm', content: Ref<string> }
 
+const msgs = ref<Message[]>([])
+const summaryDialog=useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 
 async function submitUserInput(content: string) {
   msgs.value.push({ type: 'user', content: ref(content) })
+  scrollToId('dialog-bottom-anchor')
 }
 
-async function  execSummary() {
-console.log(summaryInput.value)
+async function execSummary() {
+  console.log(summaryInput.value)
 
-  if(!currentModel.value || !currentPrompt.value || !summaryInput.value){
-    toast({title:'no config yet.', variant:'warning'})
-    return 
+  if (!currentModel.value || !currentPrompt.value || !summaryInput.value) {
+    toast({ title: 'no config yet.', variant: 'warning' })
+    return
   }
-  
-  const messages:CoreMessage[]=[
-    { role:'system', content: currentPrompt.value.systemMessage},
-    { role:'user', content: currentPrompt.value.userMessage},
+
+  const messages: CoreMessage[] = [
+    { role: 'system', content: currentPrompt.value.systemMessage },
+    { role: 'user', content: currentPrompt.value.userMessage },
   ]
 
-  renderMessages(messages,summaryInput.value )
-  const {textStream,tokenUsage}=await sendConnectMessage('beginSummary',{
-    modelConfig:currentModel.value,
+  renderMessages(messages, summaryInput.value)
+  const { textStream, tokenUsage } = await sendConnectMessage('beginSummary', {
+    modelConfig: currentModel.value,
     messages: messages,
   })
-  tokenUsage.then((_r)=>{curTokenUsage.value=_r})
-  const summaryResult=ref<string>('')
-  msgs.value.push({type:'llm',content: summaryResult})
-  textStream.onChunk((c)=>{
-    summaryResult.value+=c
+  tokenUsage.then((_r) => { curTokenUsage.value = _r })
+  const summaryResult = ref<string>('')
+  msgs.value.push({ type: 'llm', content: summaryResult })
+  textStream.onChunk((c) => {
+    summaryResult.value += c
+    scrollToId('dialog-bottom-anchor')
   })
 }
 </script>

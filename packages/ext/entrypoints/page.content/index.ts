@@ -25,7 +25,9 @@ export default defineContentScript({
       position: 'inline',
       anchor: 'body',
   		append: "last",
-      mode: 'open',
+      mode: 'open',  //enable document.select('webpage-summary').shadowRoot
+      
+    
 
       onMount: (container, _shadow, shadowHost) => {
         // console.log(container,_shadow,shadowHost)

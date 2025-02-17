@@ -4,9 +4,15 @@
  */
 export function scrollToId(id: string) {
 	const element = document.getElementById(id)
+  
 	if (element) {
 		element.scrollIntoView({ behavior: 'smooth' })
-	}
+	}else{
+    const shadowElement=document.querySelector('webpage-summary')?.shadowRoot?.getElementById(id)
+    console.log(shadowElement)
+    if(shadowElement)
+		  shadowElement.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 
 export function getLineHeightOfElement(e:HTMLElement):number{

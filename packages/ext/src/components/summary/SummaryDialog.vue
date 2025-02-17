@@ -1,22 +1,28 @@
 <template>
   <!-- Summary Dialog Component -->
 
-  
-  <div class="w-full  relative" ><!-- wrapper  -->
+
+  <div class="relative "><!-- wrapper  -->
     <!-- top-right buttons -->
-    <div class="absolute right-4 top-1  flex flex-row gap-1 z-[1000]">
+    <div class="sticky top-1  flex justify-end pr-5 flex-row gap-1">
       <Button variant="github" size="sm-icon">
         <CopyIcon />
       </Button>
     </div>
 
     <!-- dialog block -->
-    <div class="border pt-2 pl-2 pr-8 pb-9 w-full min-h-32 h-full overflow-y-auto">
-      <div id="dialog-anchor"></div>
-      <slot></slot>
+    <div class="border pt-2 pl-2 pr-8 pb-9 ">
+      <div id="dialog-top-anchor"></div>
+
+      <slot id="dialog-bottom-anchor"></slot>
+      <div id=""></div>
+
     </div>
-    <GoTop class="absolute w-6 h-6 p-0 right-6 bottom-2" :top-anchor-id="'dialog-anchor'"/>
-    
+    <div class="sticky bottom-2  flex justify-end pr-5 flex-row gap-1">
+
+      <GoTop class="static w-6 h-6 p-0" :top-anchor-id="'dialog-top-anchor'" />
+    </div>
+
   </div>
 </template>
 
@@ -25,7 +31,9 @@ import { CopyIcon, MessageCirclePlusIcon } from 'lucide-vue-next';
 import Button from '../ui/button/Button.vue';
 import GoTop from '../common/GoTop.vue';
 
-const isChatDialogOpen = defineModel<boolean>('isChatDialogOpen', { default: false })
+
+
+
 </script>
 
 <style scoped>

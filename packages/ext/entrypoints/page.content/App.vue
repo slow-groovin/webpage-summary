@@ -13,8 +13,8 @@ async function openDebugPanel() {
 </script>
 
 <template>
-  <div>
-    <DraggableContainer v-if="false" class="z-[9999]">
+  <div class="relative z-[9999]">
+    <DraggableContainer v-if="false" >
       <template #header>
         <div class=" h-8 min-w-64 bg-gray-200 flex flex-row-reverse">
           <button @click="openDebugPanel">debug panel: {{ open }}</button>

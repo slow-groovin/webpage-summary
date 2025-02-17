@@ -1,8 +1,8 @@
 <template>
-  <div class="flex items-center justify-between flex-wrap px-1 py-1  border-b border" ref="headerRef">
-    <div class="flex items-center flex-wrap space-x-4">
+  <div class="flex items-center justify-between flex-nowrap px-1 py-1  border-b border" ref="headerRef">
+    <div class="flex items-center flex-nowrap space-x-4">
       <div class="flex items-center text-nowrap">
-        <img :src="icon" alt="Extension Icon" class="w-4 h-4 rounded" />
+        <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded mr-2 select-none" draggable="false"  />
         <!-- <div> {{ name }}</div> -->
         <slot name="left-buttons"></slot>
       </div>
@@ -46,15 +46,15 @@
 
 
 
-      <div class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
+      <!-- <div class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
         Tokens:
         <TokenUsageItem v-if="tokenUsage" :usage="tokenUsage" />
-      </div>
+      </div> -->
 
     </div>
 
     <!-- right button area -->
-    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-2 ml-3">
       <slot name="right-buttons"></slot>
       <!-- <div>[Pin Icon]</div> -->
       <Button variant="github" size="icon" @click="openExtSettingPage()">
@@ -99,11 +99,13 @@ const currentPromptConfig = defineModel<PromptConfigItem | null>('current-prompt
 
 
 
-async function selectCurrentModel(id: string) {
+async function selectCurrentModel(id?: string) {
+  if (!id) return
   currentModelConfig.value = modelConfigs.value.find(i => i.id === id)
 }
 
-async function selectCurrentPrompt(id: string) {
+async function selectCurrentPrompt(id?: string) {
+  if (!id) return
   currentPromptConfig.value = promptConfigs.value.find(i => i.id === id)
 }
 

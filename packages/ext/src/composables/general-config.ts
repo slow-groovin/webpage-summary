@@ -14,7 +14,8 @@ async function getAllExtConfigs() {
 
   // console.log(result)
   return {
-    spokenLanguage: result[0].value ??'en',  //.getItems(...) has bugs: setting fallback has no effect
+    spokenLanguage: result[0].value ??'cn',  //.getItems(...) has bugs: setting fallback has no effect
+    
     maxLength: result[1].value ??4096  
   }
 }
