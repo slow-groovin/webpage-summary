@@ -15,5 +15,6 @@ export default defineBackground(() => {
 
   registerLLMMessages()
   
+  
 });
 

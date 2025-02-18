@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between flex-nowrap px-1 py-1  border-b border" ref="headerRef">
     <div class="flex items-center flex-nowrap space-x-4">
       <div class="flex items-center text-nowrap">
-        <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded mr-2 select-none" draggable="false"  />
+        <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded mr-2 select-none" draggable="false" />
         <!-- <div> {{ name }}</div> -->
         <slot name="left-buttons"></slot>
       </div>
@@ -46,10 +46,7 @@
 
 
 
-      <!-- <div class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
-        Tokens:
-        <TokenUsageItem v-if="tokenUsage" :usage="tokenUsage" />
-      </div> -->
+
 
     </div>
 
@@ -60,8 +57,8 @@
       <Button variant="github" size="icon" @click="openExtSettingPage()">
         <SettingsIcon class="" />
       </Button>
-
     </div>
+
   </div>
 </template>
 
@@ -84,7 +81,6 @@ import icon from '~/assets/16.png';
 
 
 defineProps<{
-  tokenUsage?: TokenUsage
 }>()
 
 const { iconUrl, name } = useExtInfo()

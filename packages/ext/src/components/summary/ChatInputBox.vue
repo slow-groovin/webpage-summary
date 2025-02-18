@@ -11,7 +11,7 @@
       placeholder="Type your message here..." @input="adjustHeight" @focusin="focusin" @focusout="focusout"></textarea>
 
     <!-- Send button -->
-    <Button variant="default" class="py-2 h-fit" @click="handleSubmit">
+    <Button variant="default" class="py-2 h-fit" @click="handleSubmit" :disabled="$attrs.disabled">
       <SendHorizonalIcon class="" />
     </Button>
 
@@ -29,7 +29,7 @@ defineProps<{
   class?: HTMLAttributes['class'];
 }>();
 const emit=defineEmits<{
-  (e: 'submit', msg: string): void;
+  (e: 'submit', msg: string, onSuc: ()=>void): void;
 }>()
 
 const inputValue = ref('')
@@ -59,8 +59,9 @@ function adjustHeight(event: Event) {
 
 async function handleSubmit() {
   if(inputValue.value){
-    emit('submit',inputValue.value)
-    inputValue.value=''
+    emit('submit',inputValue.value,()=>{
+      inputValue.value=''
+    })
   }
 }
 

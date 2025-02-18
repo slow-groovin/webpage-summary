@@ -14,7 +14,7 @@ import { TokenUsage } from "./src/types/summary";
  * Each key represents a different message type, and the corresponding value is a function that defines the input and output types for that message.
  */
 interface ProtocolMap {
-  beginSummary(input: {
+  streamTextViaConnect(input: {
     messages: CoreMessage[],
     modelConfig: ModelConfigItem,
   }): {
@@ -50,7 +50,7 @@ type FirstParameter<T extends (args: any) => any> = T extends (args: infer P) =>
 // This type is used for handling streaming data, where onChunk is called for each chunk of data, and onComplete is called when the stream is finished.
 type ChunkConsumer = {
   onChunk: (callback: (v: unknown) => void) => void;
-  onComplete: (callback: () => void) => void;
+  onChunkComplete: (callback: () => void) => void;
 };
 
 // Define the OnMessage type, which is used to register message handlers.

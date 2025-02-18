@@ -4,7 +4,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 
 export function registerLLMMessages() {
-  onConnectMessage('beginSummary',async  ({messages,modelConfig}, { chunk, chunkEnd, complete, markReturn, resolve }) => {
+  onConnectMessage('streamTextViaConnect',async  ({messages,modelConfig}, { chunk, chunkEnd, complete, markReturn, resolve }) => {
     const {usage,textStream}=streamText({
       messages: messages,
       model: createOpenAI({

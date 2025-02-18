@@ -6,8 +6,8 @@
     </SummaryHeader class="">
     <SummaryDialog class="mt-[-1px] h-[50vh]">
       <div class="flex flex-col gap-4 ">
-        <MessageItem :message="{ type: 'llm', content: mockMarkdownMsg }" />
-        <MessageItem :message="{ type: 'llm', content: mockSystemMsg }" />
+        <MessageItem :message="{ type: 'system', content: mockMarkdownMsg }" />
+        <MessageItem :message="{ type: 'system', content: mockSystemMsg }" />
         <MessageItem :message="{ type: 'user', content: mockUserMsg }" />
         <MessageItem :message="{ type: 'user', content: 'ok then ...' }" />
         <MessageItem :message="{ type: 'user', content: mockMarkdownMsg }" />

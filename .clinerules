@@ -1,3 +1,6 @@
+### important
+不要显示思考链, 而是直接应用
+
 ### `.vue` component generation notice
 if user ask to generate a vue component single file:
 使用vue3(version3.5+),组合式,tailwind,typescript,flex布局

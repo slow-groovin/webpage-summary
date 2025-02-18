@@ -119,7 +119,7 @@ export function registerStreamMessageTest() {
 
   //center
   const listener = (port: Runtime.Port) => {
-    console.debug('[onConnect][listener]name:', port.name, portsMap.has(port.name))
+    // console.debug('[onConnect][listener]name:', port.name, portsMap.has(port.name))
     if (!portsMap.has(port.name)) {
       return
     }

@@ -2,23 +2,24 @@
   <!-- Summary Dialog Component -->
 
 
-  <div class="relative "><!-- wrapper  -->
+  <div class="relative border"><!-- wrapper  -->
     <!-- top-right buttons -->
-    <div class="sticky top-1  flex justify-end pr-5 flex-row gap-1">
+    <div class="sticky top-1  flex justify-end pr-1 flex-row gap-1">
+      <!-- copy btn -->
       <Button variant="github" size="sm-icon">
         <CopyIcon />
       </Button>
     </div>
 
     <!-- dialog block -->
-    <div class="border pt-2 pl-2 pr-8 pb-9 ">
+    <div class="pt-2 pl-2 pr-8 pb-9 mt-[-1.5rem]">
       <div id="dialog-top-anchor"></div>
 
       <slot id="dialog-bottom-anchor"></slot>
       <div id=""></div>
 
     </div>
-    <div class="sticky bottom-2  flex justify-end pr-5 flex-row gap-1">
+    <div class="sticky bottom-2  flex justify-end pr-1 flex-row gap-1">
 
       <GoTop class="static w-6 h-6 p-0" :top-anchor-id="'dialog-top-anchor'" />
     </div>

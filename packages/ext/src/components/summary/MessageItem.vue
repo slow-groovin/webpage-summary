@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-stretch w-full text-base markdown">
     <!-- LLM message -->
-    <div v-if="message.type === 'llm'" class="w-full text-left ">
+    <div v-if="message.type === 'system' || message.type === 'assistant'" class="w-full text-left ">
       <div v-html="renderedContent"></div>
     </div>
 
@@ -35,7 +35,7 @@ const md = markdownit({
 })
 
 interface Message {
-  type: 'llm' | 'user';
+  type: 'system' | 'user' | 'assistant';
   content: string;
 }
 
@@ -45,5 +45,5 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const renderedContent=computed(()=>md.render(props.message.content))
+const renderedContent = computed(() => md.render(props.message.content))
 </script>

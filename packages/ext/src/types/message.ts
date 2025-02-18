@@ -1,5 +1,8 @@
-type UIMessage={
-  content:string,
+import { Ref } from "vue"
+
+export type UIMessage={
+  content: Ref<string>,
   at: number,
-  role: 'system'|'assist'|'user'
+  role: 'system'|'assistant'|'user'
 }
+
