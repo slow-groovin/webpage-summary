@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <!-- 显示 token 使用情况的容器 -->
-  <div :class="cn('flex items-center gap-2 font-xs', $props.class)">
+  <div :class="cn('flex items-center gap-2 text-xs', $props.class)">
     
     <!-- 显示 Tokens 使用情况 -->
     <span class="flex items-center">

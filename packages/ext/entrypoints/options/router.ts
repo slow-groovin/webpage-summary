@@ -1,18 +1,18 @@
-import { createMemoryHistory, createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Summary from '@/src/pages/Summary.vue'
-import PageReadSetting from './pages/PageReadSetting.vue'
-import TriggerSetting from './pages/TriggerSetting.vue'
-import PromptsSetting from './pages/PromptsSetting.vue'
-import PromptCreate from './components/prompt-setting/PromptCreate.vue'
-import PromptList from './components/prompt-setting/PromptList.vue'
-import OptionsLayout from './layout/OptionsLayout.vue'
-import DebugPanelEntry from './pages/DebugPanelEntry.vue'
-import PromptEdit from './components/prompt-setting/PromptEdit.vue'
-import ModelConfigsSetting from './pages/ModelConfigsSetting.vue'
-import ModelConfigsList from './components/model-setting/ModelConfigsList.vue'
 import ModelConfigCreate from './components/model-setting/ModelConfigCreate.vue'
 import ModelConfigsEdit from './components/model-setting/ModelConfigsEdit.vue'
+import ModelConfigsList from './components/model-setting/ModelConfigsList.vue'
+import PromptCreate from './components/prompt-setting/PromptCreate.vue'
+import PromptEdit from './components/prompt-setting/PromptEdit.vue'
+import PromptList from './components/prompt-setting/PromptList.vue'
+import OptionsLayout from './layout/OptionsLayout.vue'
+import BasicSetting from './pages/BasicSetting.vue'
+import DebugPanelEntry from './pages/DebugPanelEntry.vue'
+import ModelConfigsSetting from './pages/ModelConfigsSetting.vue'
+import PromptsSetting from './pages/PromptsSetting.vue'
+import TriggerSetting from './pages/TriggerSetting.vue'
+
 
 
 export const router = createRouter({
@@ -22,7 +22,7 @@ export const router = createRouter({
       path: '/',
       component: OptionsLayout,
       children: [
-        { path: '/pages', component: PageReadSetting },
+        { path: '/basic', component: BasicSetting },
         { path: '/trigger', component: TriggerSetting },
         {
           path: '/models',
@@ -43,14 +43,14 @@ export const router = createRouter({
           ]
         },
 
-        { path: '/', component: PageReadSetting },
+        { path: '/', component: BasicSetting},
         { path: '/debug', component: DebugPanelEntry },
-        { path: '/p1', component: PageReadSetting },
-        { path: '/p2', component: PageReadSetting },
-        { path: '/p3', component: PageReadSetting },
-        { path: '/p4', component: PageReadSetting },
-        { path: '/p5', component: PageReadSetting },
-        { path: '/about', component: PageReadSetting },
+        { path: '/p1', component: BasicSetting},
+        { path: '/p2', component: BasicSetting},
+        { path: '/p3', component: BasicSetting},
+        { path: '/p4', component: BasicSetting},
+        { path: '/p5', component: BasicSetting},
+        { path: '/about', component: BasicSetting},
 
       ]
     }

@@ -16,3 +16,6 @@
  * 
  */
 export const IS_SELECTED_KEY='COMPONENT_IS_SELECT'
+
+
+export const USER_CUSTOM_CSS_VAR_PREFIX='--webpage-summary-user-'

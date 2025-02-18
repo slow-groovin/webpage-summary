@@ -38,7 +38,7 @@ const emit = defineEmits<{
   </template>
 
   <template v-else-if="status === 'ready' && isFirstClickDone">
-    <Button variant="outline" size="icon" class="w-fit px-1 gap-0 flex items-center h-8 leading-8"
+    <Button variant="outline" size="icon" class="aspect-square px-1 gap-0 flex items-center h-8 leading-8"
       @click="emit('refresh')">
 
       <RotateCwIcon />

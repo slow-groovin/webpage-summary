@@ -2,7 +2,7 @@
   <template class="" v-if="currentModel && currentPrompt">
 
 
-    <DraggableContainer class="max-w-[40rem] max-h-[66vh] bg-white rounded-t-xl">
+    <DraggableContainer class="max-w-[var(--webpage-summary-user-float-window-max-width)] max-h-[66vh] bg-white rounded-t-xl">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -50,9 +50,10 @@
             </Button>
           </div>
 
-          
-          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status!=='ready'"/>
+
+          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status !== 'ready'" />
         </div>
+
 
 
       </template>
@@ -67,9 +68,9 @@
 import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
 import { useSummary } from '@/src/composables/useSummary';
-import { scrollToId } from '@/src/utils/document';
+import { getShadowRootAsync, injectUserSettingCssVariables, scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, MessageCirclePlusIcon } from 'lucide-vue-next';
-import { ref, useTemplateRef } from 'vue';
+import { ref, useHost, useShadowRoot, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
@@ -81,16 +82,16 @@ import TokenUsageItem from './TokenUsageItem.vue';
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, summaryInput, tokenUsage,onChunkHook } = useSummary()
-
-onChunkHook(()=>{
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, summaryInput, tokenUsage, onChunkHook } = useSummary()
+const {getALl}=useExtConfig()
+onChunkHook(() => {
   scrollToId('dialog-bottom-anchor')
 })
 
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 
-async function submitUserInput(content: string, onSuc:()=>void) {
-  if(!content || status.value!=='ready') return
+async function submitUserInput(content: string, onSuc: () => void) {
+  if (!content || status.value !== 'ready') return
   append(content, 'user')
   scrollToId('dialog-bottom-anchor')
   onSuc()
@@ -102,5 +103,6 @@ async function viewFailedReason() {
 
 }
 </script>
+
 
 <style scoped></style>

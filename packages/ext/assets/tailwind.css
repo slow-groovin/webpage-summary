@@ -77,12 +77,17 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base;
+  }
+/* webpage-summary */
+  :root {
+    /*  */
+    --webpage-summary-user-float-window-max-width: 50rem;
   }
 }
 
-@layer components{
-  button.btn   {
+@layer components {
+  button.btn {
     /* Add your styles here */
     /* for default button style */
     @apply border border-black rounded p-1 mx-1 bg-primary text-primary-foreground shadow hover:bg-primary/90;

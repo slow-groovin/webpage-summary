@@ -9,9 +9,6 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
-  (e: 'select', value: any): void;
-}>();
 
 const handleSelect = inject('select')
 const selectedValue=inject<Ref<any>>('selected-value')

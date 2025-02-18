@@ -14,7 +14,7 @@ async function openDebugPanel() {
 </script>
 
 <template>
-  <div class="relative z-[9999]">
+  <div class="relative z-[9999] user-setting-style">
     <!-- <DraggableContainer v-if="false" >
       <template #header>
         <div class=" h-8 min-w-64 bg-gray-200 flex flex-row-reverse">
