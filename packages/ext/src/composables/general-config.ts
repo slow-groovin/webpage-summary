@@ -18,18 +18,16 @@ async function getAllExtConfigs() {
     { key: ENABLE_SUMMARY_WINDOW_DEFAULT, fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT },
     { key: SUMMARY_INPUT_EXCEED_BEHAVIOUR, fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR }
   ]);
-
-  console.log(result)
+  
   return {
-    spokenLanguage: result[0].value ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
-
-    maxLength: result[1].value ?? DefaultConfig.MAX_LENGTH,
-    userCustomStyle: result[2].value ?? DefaultConfig.USER_CUSTOM_STYLE,
-    enableTokanUsageView: result[3].value ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
-    enableUserChatDefault: result[4].value ?? DefaultConfig.ENABLE_USER_CHAT_DEFAULT,
-    enableAutoBeginSummary: result[5].value ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY,
-    enableSummaryWindowDefault: result[6].value ?? DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT,
-    summaryInputExceedBehaviour: result[7].value ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR
+    spokenLanguage: result[0].value as string ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
+    maxLength: result[1].value as number ?? DefaultConfig.MAX_LENGTH,
+    userCustomStyle: result[2].value as string ?? DefaultConfig.USER_CUSTOM_STYLE,
+    enableTokanUsageView: result[3].value as boolean ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
+    enableUserChatDefault: result[4].value as boolean ?? DefaultConfig.ENABLE_USER_CHAT_DEFAULT,
+    enableAutoBeginSummary: result[5].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY,
+    enableSummaryWindowDefault: result[6].value as boolean ?? DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT,
+    summaryInputExceedBehaviour: result[7].value as string ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR
   }
 }
 export function useGeneralConfig() {
@@ -40,8 +38,8 @@ export function useGeneralConfig() {
  * Reactive spoken language config.
  */
 export function useSpokenLanguage() {
-  const { state: spokenLanuage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
-  return { spokenLanuage, ...other }
+  const { state: spokenLanguage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
+  return { spokenLanguage, ...other }
 }
 
 /**

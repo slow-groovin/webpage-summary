@@ -1,23 +1,17 @@
 // packages/ext/src/composables/useStreamSummary.ts
-import { ref, computed, onUnmounted, onMounted } from 'vue';
-import { sendMessage } from '@/messaging';
-import { browser, Runtime } from 'wxt/browser';
-import { uid } from 'radash';
-import markdownit from 'markdown-it';
-import type { Ref } from 'vue';
-import modelProviders from '../model-providers';
-import { CoreMessage } from 'ai';
 import { sendConnectMessage } from '@/connect-messaging';
+import { CoreMessage } from 'ai';
+import { computed, onMounted, ref } from 'vue';
+import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
+import { UIMessage } from '../types/message';
+import { TokenUsage } from '../types/summary';
+import { renderMessages } from '../utils/prompt';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
-import { toast } from '../components/ui/toast';
-import { TokenUsage } from '../types/summary';
 import { useWebpageContent } from './readability';
-import { renderMessages } from '../utils/prompt';
-import { assert, watchOnce } from '@vueuse/core';
-import { UIMessage } from '../types/message';
+import { useSpokenLanguage } from './general-config';
 
 
 export function useSummary() {
@@ -60,10 +54,17 @@ export function useSummary() {
     unit: '$',
   })
 
-  const { summaryInput } = useWebpageContent()
+  const { webpageContent } = useWebpageContent()
 
-  let chunkHooks:((c:unknown)=>void)[]=[]
-  function onChunkHook(func: typeof chunkHooks[0]){
+  let onReadyResolve: ((u?: unknown) => void) | null = null
+  let onReadyReject: (() => void) | null = null
+  let onReadyPromise = new Promise((resolve, reject) => {
+    onReadyResolve = resolve
+    onReadyReject = reject
+  })
+  let chunkHooks: ((c: unknown) => void)[] = []
+
+  function onChunkHook(func: typeof chunkHooks[0]) {
     chunkHooks.push(func)
   }
   function verfiyReady() {
@@ -79,46 +80,42 @@ export function useSummary() {
     return false
   }
 
-  function initMessages() {
+  async function initMessages() {
     messages.value = [
       { role: 'system', content: currentPrompt.value?.systemMessage ?? promptPreset.systemMessage },
       { role: 'user', content: currentPrompt.value?.userMessage ?? promptPreset.userMessage },
     ]
-    if (summaryInput.value) {
-      renderMessages(messages.value, summaryInput.value)
+    const { spokenLanguage, then } = useSpokenLanguage()
+    await then
+
+    if (webpageContent) {
+      const summaryInput = {
+        ...webpageContent,
+        spokenLanguage: spokenLanguage.value
+      }
+      renderMessages(messages.value, summaryInput)
     } else {
-      throw new Error('summary input value is null')
+      throw new Error('webpage content is empty')
     }
   }
 
-  function initUIMessages(){
-    uiMessages.value=[]
+  function initUIMessages() {
+    uiMessages.value = []
 
   }
+  console.log('onMounted')
   onMounted(async () => {
     currentModel.value = await modelStorage.getDefaultItem()
     currentPrompt.value = await promptStorage.getDefaultItem()
-
-    const onSummaryInputAssigned = () => {
-      isFailed.value = !(currentModel.value && currentPrompt.value && summaryInput.value)
-      initMessages()
-      isPreparing.value = false
-    }
-    if (summaryInput.value) {
-      onSummaryInputAssigned()
-    } else {
-      watchOnce(summaryInput, (value) => {
-        if (!value) {
-          throw new Error('summary input value is null')
-        }
-        onSummaryInputAssigned()
-      })
-    }
-
+    isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
+    isPreparing.value = false
+    await initMessages()
+    onReadyResolve!()
   })
+  console.log('onMounted .')
 
   async function refreshSummary() {
-    initMessages()
+    await initMessages()
     initUIMessages()
     append('', 'assistant')
   }
@@ -147,7 +144,7 @@ export function useSummary() {
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
-      chunkHooks.forEach(hookFunc=>hookFunc(c))
+      chunkHooks.forEach(hookFunc => hookFunc(c))
     })
     textStream.onChunkComplete(async () => {
       isRunning.value = false
@@ -161,5 +158,5 @@ export function useSummary() {
     })
   }
 
-  return { status, uiMessages, summaryInput, append, refreshSummary, currentModel, currentPrompt, tokenUsage, onChunkHook }
+  return { status, uiMessages, webpageContent, onReady: onReadyPromise, append, refreshSummary, currentModel, currentPrompt, tokenUsage, onChunkHook }
 }

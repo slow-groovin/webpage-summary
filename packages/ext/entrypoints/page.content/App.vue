@@ -6,6 +6,7 @@ import SeparationComponentInContentDebug from '@/src/components/debug/Separation
 import ErrorComponent from '@/src/components/status/ErrorComponent.vue'
 import LoadingComponent from '@/src/components/status/LoadingComponent.vue'
 import Summary from '@/src/components/summary/Summary.vue'
+import Toaster from '@/src/components/ui/toast/Toaster.vue'
 import { defineAsyncComponent, ref } from 'vue'
 const open = ref(false)
 async function openDebugPanel() {
@@ -15,6 +16,7 @@ async function openDebugPanel() {
 
 <template>
   <div class="relative z-[9999] user-setting-style">
+    <Toaster />
     <!-- <DraggableContainer v-if="false" >
       <template #header>
         <div class=" h-8 min-w-64 bg-gray-200 flex flex-row-reverse">
@@ -22,13 +24,12 @@ async function openDebugPanel() {
 
         </div>
       </template>
-      <div>
-        <Summary></Summary>
-      </div>
+<div>
+  <Summary></Summary>
+</div>
 
-    </DraggableContainer> -->
-
-    <Summary class="top-16 right-16" />
+</DraggableContainer> -->
+      <Summary class="top-16 right-16" />
 
     <!-- <div class="fixed top-[50vh] right-[50vw] bg-white min-h-96 min-w-96 border rounded">
       <SeparationComponentInContentDebug/>

@@ -3,11 +3,12 @@
     @description: Chat input box component for typing and sending messages.
     @Prompt: An input box with a send button.
   -->
-  <div class="relative flex flex-row flex-nowrap items-end border p-2 h-fit "
-    :class="{ 'border-primary': isTextAreaFocus }">
+  <div
+    :class="cn('relative flex flex-row flex-nowrap items-end border p-2 h-fit', isTextAreaFocus ? 'border-primary' : '', props.class)">
+    <!-- :class="{ 'border-primary': isTextAreaFocus }"> -->
     <!-- Input box -->
     <textarea v-model="inputValue"
-      :class="cn('w-full h-12 min-h-4  rounded-md border-none text-base focus-visible:outline-none resize-none caret-current bg-transparent', $attrs.class as HTMLAttributes['class'])"
+      :class="cn('w-full h-12 min-h-4  rounded-md border-none text-base focus-visible:outline-none resize-none caret-current bg-transparent', props.class)"
       placeholder="Type your message here..." @input="adjustHeight" @focusin="focusin" @focusout="focusout"></textarea>
 
     <!-- Send button -->
@@ -25,11 +26,11 @@ import { ref, type HTMLAttributes } from 'vue';
 import { SendHorizonalIcon } from 'lucide-vue-next';
 import Button from '../ui/button/Button.vue';
 import { getLineHeightOfElement } from '@/src/utils/document';
-defineProps<{
+const props = defineProps<{
   class?: HTMLAttributes['class'];
 }>();
-const emit=defineEmits<{
-  (e: 'submit', msg: string, onSuc: ()=>void): void;
+const emit = defineEmits<{
+  (e: 'submit', msg: string, onSuc: () => void): void;
 }>()
 
 const inputValue = ref('')
@@ -58,9 +59,9 @@ function adjustHeight(event: Event) {
 }
 
 async function handleSubmit() {
-  if(inputValue.value){
-    emit('submit',inputValue.value,()=>{
-      inputValue.value=''
+  if (inputValue.value) {
+    emit('submit', inputValue.value, () => {
+      inputValue.value = ''
     })
   }
 }

@@ -7,6 +7,7 @@ import '@/assets/tailwind.css'
 // import './style.css';
 import { createApp } from 'vue';
 import App from './App.vue';
+import { toast } from "@/src/components/ui/toast";
 
 export default defineContentScript({
   matches: [
@@ -33,6 +34,10 @@ export default defineContentScript({
         // console.log(container,_shadow,shadowHost)
         // Define how your UI will be mounted inside the container
         const app = createApp(App);
+        app.config.errorHandler = (err:any) => {
+          /* 处理错误 */
+          toast({ title: 'Error', description: err.message ,variant:'destructive'});
+        }
         app.mount(container);
         return app;
       },

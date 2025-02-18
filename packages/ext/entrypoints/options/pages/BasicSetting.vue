@@ -6,7 +6,7 @@ import Switch from '@/src/components/ui/switch/Switch.vue';
 import { useSpokenLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle } from '@/src/composables/general-config';
 import { browser } from 'wxt/browser';
 
-const { spokenLanuage } = useSpokenLanguage()
+const { spokenLanguage } = useSpokenLanguage()
 const {enableAutoBeginSummary}=useEnableAutoBeginSummary()
 const {enableSummaryWindowDefault}=useEnableSummaryWindowDefault()
 const {enableTokenUsageView}=useEnableTokenUsageView()
@@ -48,7 +48,7 @@ const {userCustomStyle}=useUserCustomStyle()
         <div class="description">select the language of the summary that you want to read</div>
       </div>
       <div>
-        <Input v-model="spokenLanuage" />
+        <Input v-model="spokenLanguage" />
       </div>
     </div>
 

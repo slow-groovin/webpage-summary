@@ -2,7 +2,8 @@
   <template class="" v-if="currentModel && currentPrompt">
 
 
-    <DraggableContainer class="max-w-[var(--webpage-summary-user-float-window-max-width)] max-h-[66vh] bg-white rounded-t-xl">
+    <DraggableContainer
+      class="max-w-[var(--webpage-summary-user-float-window-max-width)] max-h-[66vh] bg-white rounded-t-xl rounded-b-xl">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -11,7 +12,8 @@
             <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary" />
           </template>
           <template #right-buttons>
-            <div class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
+            <div v-if="enableTokenUsageView" class="flex items-center gap-1 border rounded p-1 bg-gray-200"
+              title="Token Usage">
               <TokenUsageItem v-if="tokenUsage && tokenUsage.inputToken" :usage="tokenUsage" />
             </div>
           </template>
@@ -24,7 +26,7 @@
         <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[50vh]" style="overflow-anchor: auto;"
           ref="summaryDialog">
           <div class="flex flex-col gap-4">
-            <PageWordCount v-if="summaryInput" :summary-input="summaryInput"
+            <PageWordCount v-if="webpageContent" :webpage-content="webpageContent"
               class="p-0.5 text-sm border-none underline decoration-dashed" />
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem :message="{ type: msg.role, content: msg.content }" />
@@ -51,7 +53,8 @@
           </div>
 
 
-          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status !== 'ready'" />
+          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status !== 'ready'"
+            class="rounded-b-xl" />
         </div>
 
 
@@ -70,7 +73,7 @@ import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
 import { useSummary } from '@/src/composables/useSummary';
 import { getShadowRootAsync, injectUserSettingCssVariables, scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, MessageCirclePlusIcon } from 'lucide-vue-next';
-import { ref, useHost, useShadowRoot, useTemplateRef } from 'vue';
+import { onMounted, ref, useHost, useShadowRoot, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
@@ -78,12 +81,22 @@ import SummaryDialog from '../summary/SummaryDialog.vue';
 import Button from '../ui/button/Button.vue';
 import PageWordCount from './PageWordCount.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
-
+import { useEnableAutoBeginSummary, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig } from '@/src/composables/general-config'
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, summaryInput, tokenUsage, onChunkHook } = useSummary()
-const {getALl}=useExtConfig()
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, webpageContent, tokenUsage, onChunkHook } = useSummary()
+const { getAllExtConfigs } = useGeneralConfig()
+const { enableAutoBeginSummary, then: autoBeginSummaryThen } = useEnableAutoBeginSummary()
+const { enableTokenUsageView } = useEnableTokenUsageView()
+const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
+autoBeginSummaryThen(() => {
+  refreshSummary()
+
+})
+enableUserChatDefaultThen(() => {
+  isChatDialogOpen.value = enableUserChatDefault.value
+})
 onChunkHook(() => {
   scrollToId('dialog-bottom-anchor')
 })
@@ -100,8 +113,8 @@ async function submitUserInput(content: string, onSuc: () => void) {
 
 async function viewFailedReason() {
   alert('not impl')
-
 }
+
 </script>
 
 

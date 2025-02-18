@@ -1,14 +1,5 @@
 import { z } from 'zod'
-export type SummaryInput = {
-  /**
-   * user language
-   */
-  spokenLanguage: string,
-  /**
-   * user expected max summary result length
-   */
-  maxLength: number,
-
+export type WebpageContent = {
   /**
    * text Content
    */
@@ -19,7 +10,7 @@ export type SummaryInput = {
    * webpage URL
    */
   articleUrl?: string,
-  
+
   /**
    * @mozilla/readability parsed field: byline
    */
@@ -55,14 +46,13 @@ export type SummaryInput = {
   title?: string
 }
 
-
-export const SummaryInputSchema: z.ZodType<Pick<Partial<SummaryInput>, 'spokenLanguage' | 'maxLength' | 'textContent'>> = z.object({
-  spokenLanguage: z.string().default('english'),
-  maxLength: z.number().default(1000),
+export type SummaryInput = WebpageContent & { spokenLanguage: string }
+export const SummaryInputSchema: z.ZodType<SummaryInput> = z.object({
   textContent: z.string(),
+  spokenLanguage: z.string().min(2)
 })
 
-export type TokenUsage={
+export type TokenUsage = {
   inputToken: number,
   outputToken: number,
   cost?: number,

@@ -11,16 +11,15 @@
 
 <script setup lang="ts">
 import { cn } from "@/src/utils/shadcn";
-import { useWebpageContent } from "@/src/composables/readability";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { HTMLAttributes } from 'vue';
-import { SummaryInput } from "@/src/types/summary";
+import { WebpageContent } from "@/src/types/summary";
 
 defineOptions({
   inheritAttrs: false
 })
 const props = defineProps<{
-  summaryInput: SummaryInput,
+  webpageContent: WebpageContent,
   class?: HTMLAttributes['class']
 }>()
 
@@ -32,7 +31,7 @@ let timer: number | NodeJS.Timeout | undefined;
 
 // Calculate the text displayed word by word
 const fullText = computed(() =>
-  ("Word count of page summary context: " + props.summaryInput.textContent?.length.toString() || "0")
+  ("Word count of page summary context: " + props.webpageContent.textContent?.length.toString() || "0")
 );
 
 // Word-by-word display effect
