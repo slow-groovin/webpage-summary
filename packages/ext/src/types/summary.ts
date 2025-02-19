@@ -58,3 +58,5 @@ export type TokenUsage = {
   cost?: number,
   unit?: string
 }
+
+export type ContentTokensExceedStrategy='clip'|'exit'

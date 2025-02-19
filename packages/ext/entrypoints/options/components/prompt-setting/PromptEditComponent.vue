@@ -71,9 +71,6 @@ const onSubmit = handleSubmit(async (values) => {
 <template>
   <div class="flex flex-col space-y-4 items-stretch">
     <div>
-      <MoveLeftIcon @click="back" class="border p-1 w-8 h-8 rounded border-primary hover:ring-2"/>
-    </div>
-    <div>
       <slot name="header"></slot>
     </div>
     <form @submit="onSubmit">

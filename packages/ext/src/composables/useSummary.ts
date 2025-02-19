@@ -1,7 +1,7 @@
 // packages/ext/src/composables/useStreamSummary.ts
 import { sendConnectMessage } from '@/connect-messaging';
 import { CoreMessage } from 'ai';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
@@ -11,8 +11,13 @@ import { renderMessages } from '../utils/prompt';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
-import { getEnableAutoBeginSummary, getSpokenLanguage } from './general-config';
-import {EventEmitter} from 'eventemitter3'
+import { getEnableAutoBeginSummary, getSpokenLanguage, getSummaryInputExceedBehaviour } from './general-config';
+import { EventEmitter } from 'eventemitter3'
+import { Tiktoken } from "js-tiktoken/lite";
+import base from "js-tiktoken/ranks/o200k_base";
+import { handleExceededContent } from '../utils/page-read';
+
+const enc = new Tiktoken(base);
 
 export function useSummary() {
   onMounted(async () => {
@@ -22,8 +27,8 @@ export function useSummary() {
     isPreparing.value = false
     await initMessages()
     event.emit('ready')
-    if(await getEnableAutoBeginSummary()){
-      append('','assistant')
+    if (await getEnableAutoBeginSummary()) {
+      append('', 'assistant')
     }
   })
   const uiMessages = ref<UIMessage[]>([])
@@ -49,6 +54,11 @@ export function useSummary() {
     return 'ready'
   })
 
+  const inputTiktokenResult = reactive<{
+    totalLength?: number,
+    clipedLength?: number,
+  }>({})
+
 
   const modelStorage = useModelConfigStorage()
   const promptStorage = usePromptConfigStorage()
@@ -66,15 +76,21 @@ export function useSummary() {
   })
 
   const { webpageContent } = useWebpageContent()
+  const begin = Date.now()
+  const rs = enc.encode(webpageContent.textContent ?? "")
+  const cost = Date.now() - begin
+  console.log('[tiktoken]cost:', cost, ' len:', rs.length, 'text:', webpageContent.textContent?.length)
 
-  const event=new EventEmitter()
-  
-  function onReady(onReadyHook: ()=>void) {
-    event.once('ready',onReadyHook)
+
+
+  const event = new EventEmitter()
+
+  function onReady(onReadyHook: () => void) {
+    event.once('ready', onReadyHook)
   }
 
-  function onChunk(onChunkHook: (chunk:unknown)=>void) {
-    event.on('chunk',onChunkHook)
+  function onChunk(onChunkHook: (chunk: unknown) => void) {
+    event.on('chunk', onChunkHook)
   }
   function verfiyReady() {
     if (status.value === 'ready') {
@@ -90,12 +106,30 @@ export function useSummary() {
   }
 
   async function initMessages() {
+    if (!currentModel.value || !currentPrompt.value) {
+      throw new Error("Model or Prompt is not ready")
+    }
     messages.value = [
       { role: 'system', content: currentPrompt.value?.systemMessage ?? promptPreset.systemMessage },
       { role: 'user', content: currentPrompt.value?.userMessage ?? promptPreset.userMessage },
     ]
-
     if (webpageContent) {
+      if (!webpageContent.textContent) webpageContent.textContent = ''
+      const maxTokens = currentModel.value.maxTokens * 1024
+      const exceedBehaviour = await getSummaryInputExceedBehaviour()
+
+      const tokens = enc.encode(webpageContent.textContent)
+      inputTiktokenResult.totalLength = tokens.length
+
+      if (tokens.length > maxTokens) {
+        const handledTokens = handleExceededContent(tokens, maxTokens, exceedBehaviour)
+        inputTiktokenResult.clipedLength = tokens.length - handledTokens.length
+        webpageContent.textContent = enc.decode(handledTokens)
+      }
+
+
+
+
       const summaryInput = {
         ...webpageContent,
         spokenLanguage: await getSpokenLanguage()
@@ -109,7 +143,7 @@ export function useSummary() {
   function initUIMessages() {
     uiMessages.value = []
   }
-  
+
 
   async function refreshSummary() {
     await initMessages()
@@ -141,7 +175,7 @@ export function useSummary() {
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
-      event.emit('chunk',c)
+      event.emit('chunk', c)
     })
     textStream.onChunkComplete(async () => {
       isRunning.value = false
@@ -155,5 +189,5 @@ export function useSummary() {
     })
   }
 
-  return { status, uiMessages, webpageContent, onReady, append, refreshSummary, currentModel, currentPrompt, tokenUsage, onChunk }
+  return { status, uiMessages, webpageContent, onReady, append, refreshSummary, currentModel, currentPrompt, tokenUsage, inputTiktokenResult, onChunk }
 }

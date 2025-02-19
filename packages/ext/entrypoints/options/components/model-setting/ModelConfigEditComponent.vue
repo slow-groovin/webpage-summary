@@ -1,9 +1,6 @@
 <script setup lang="ts">
+import EditControlInput from '@/src/components/custom-ui/EditControlInput.vue'
 import Button from '@/src/components/ui/button/Button.vue'
-import { modelProviderPresets } from '@/src/presets/model-providers'
-import { computed, ref, watch } from 'vue'
-import { Input } from '@/src/components/ui/input'
-import { InfoIcon } from 'lucide-vue-next'
 import {
   FormControl,
   FormDescription,
@@ -12,22 +9,18 @@ import {
   FormLabel,
   FormMessage
 } from '@/src/components/ui/form'
-import EditControlInput from '@/src/components/custom-ui/EditControlInput.vue'
-import { useModelConfigStorage } from '@/src/composables/model-config'
-import { ModelConfigItem } from '@/src/types/config/model'
-import { uid } from 'radash'
-import { toast, ToastAction } from '@/src/components/ui/toast'
-import { useRouter } from 'vue-router'
-import { h } from 'vue'
-import ModelProviderSelect from './ModelProviderSelect.vue'
-import { toTypedSchema } from '@vee-validate/zod'
-import { z } from 'zod'
-import { useForm } from 'vee-validate'
-import { HoverCardRoot } from 'radix-vue'
 import HoverCard from '@/src/components/ui/hover-card/HoverCard.vue'
-import HoverCardTrigger from '@/src/components/ui/hover-card/HoverCardTrigger.vue'
 import HoverCardContent from '@/src/components/ui/hover-card/HoverCardContent.vue'
-import ModelConfigItemComponent from './ModelConfigItem.vue'
+import HoverCardTrigger from '@/src/components/ui/hover-card/HoverCardTrigger.vue'
+import { Input } from '@/src/components/ui/input'
+import { modelProviderPresets } from '@/src/presets/model-providers'
+import { ModelConfigItem } from '@/src/types/config/model'
+import { toTypedSchema } from '@vee-validate/zod'
+import { InfoIcon } from 'lucide-vue-next'
+import { useForm } from 'vee-validate'
+import { computed, ref, watch } from 'vue'
+import { z } from 'zod'
+import ModelProviderSelect from './ModelProviderSelect.vue'
 
 
 const { item } = defineProps<{
@@ -52,6 +45,7 @@ const typeschema = toTypedSchema(z.object({
     return isValid
 
   }),
+  maxTokens: z.number().min(1),
 }))
 const { handleSubmit, setFieldValue, values } = useForm({
   validationSchema: typeschema,
@@ -59,12 +53,13 @@ const { handleSubmit, setFieldValue, values } = useForm({
     name: item?.name ?? provider.value.providerType,
     baseURL: item?.baseURL ?? undefined,
     apiKey: item?.apiKey ?? undefined,
-    modelName: item?.modelName ?? undefined
+    modelName: item?.modelName ?? undefined,
+    maxTokens: item?.maxTokens ?? undefined,
   },
 })
 //modifying form when select different provider
 watch(provider, (newProvider) => {
-  if(item){
+  if (item) {
     return
   }
   // console.log(newProvider)
@@ -82,6 +77,7 @@ const onSubmit = handleSubmit(async (values) => {
     modelName: values.modelName,
     providerType: providerType.value,
     baseURL: values.baseURL ?? undefined,
+    maxTokens: values.maxTokens,
     at: Date.now(),
   })
 })
@@ -114,6 +110,27 @@ const onSubmit = handleSubmit(async (values) => {
             Model name.
           </FormDescription>
           <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ componentField }" name="maxTokens">
+        <FormItem>
+          <FormLabel>Max Tokens (kilo)</FormLabel>
+          <FormControl>
+            <div class="flex flex-row items-center">
+              <Input type="number" placeholder="8" v-bind="componentField" class="w-20" />
+              <div v-if="componentField.modelValue" class="ml-8 rounded bg-gray-200 px-2 py-1">
+                <span>{{ componentField.modelValue+'K' }}</span> 
+                <span>  =  </span>  
+                {{ componentField.modelValue *1024 }}
+              </div>
+            </div>
+
+          </FormControl>
+          <FormDescription>
+            Max webpage content input token count (unit: kilo),<br /> [webpage summary input tokens] + [other prompt
+            tokens] < [max tokens] </FormDescription>
+              <FormMessage />
         </FormItem>
       </FormField>
 

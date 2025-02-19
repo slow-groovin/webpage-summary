@@ -30,14 +30,20 @@ function hiddenApiKey(apiKey:string){
     </CardHeader>
     <hr>
     <CardContent class=" space-y-4 py-4">
-      <div class="flex flex-col items-start space-y-4">
+      <div class="flex flex-col items-start space-y-2">
 
         <div class="flex items-center space-x-1">
           <img v-if="modelProviderPresets[item.providerType].icon" :src="modelProviderPresets[item.providerType].icon"
             alt="Model Icon" class="w-6 h-6 text-primary" />
           <div class="text-lg font-semibold">{{ item.providerType }}</div>
+
         </div>
-        <div class="">{{ item.modelName }}</div>
+        <div class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-transparent bg-clip-text">{{ item.modelName }}</div>
+
+        <div class="">
+          <span class="">Max Tokens:</span> &nbsp;&nbsp;
+          <span class="font-bold" >{{ item.maxTokens }}  K</span>
+        </div>
 
         <div class="underline decoration-dotted" v-if="item.baseURL">{{ item.baseURL}}</div>
         <div v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>

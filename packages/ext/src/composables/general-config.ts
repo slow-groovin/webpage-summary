@@ -2,6 +2,7 @@ import { storage } from "wxt/storage";
 import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
+import { ContentTokensExceedStrategy } from "../types/summary";
 
 /**
  * get all general configs value
@@ -83,8 +84,8 @@ export function useEnableAutoBeginSummary() {
   const { state: enableAutoBeginSummary, ...other } = useWxtStorage(ENABLE_AUTO_BEGIN_SUMMARY, DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY)
   return { enableAutoBeginSummary, ...other }
 }
-export async function getEnableAutoBeginSummary(){
-  return await storage.getItem(ENABLE_AUTO_BEGIN_SUMMARY, {fallback:DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY})
+export async function getEnableAutoBeginSummary() {
+  return await storage.getItem(ENABLE_AUTO_BEGIN_SUMMARY, { fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY })
 }
 
 /**
@@ -101,4 +102,8 @@ export function useEnableSummaryWindowDefault() {
 export function useSummaryInputExceedBehaviour() {
   const { state: summaryInputExceedBehaviour, ...other } = useWxtStorage(SUMMARY_INPUT_EXCEED_BEHAVIOUR, DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR)
   return { summaryInputExceedBehaviour, ...other }
+}
+
+export async function getSummaryInputExceedBehaviour() {
+  return await storage.getItem<ContentTokensExceedStrategy>(SUMMARY_INPUT_EXCEED_BEHAVIOUR, { fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR })
 }

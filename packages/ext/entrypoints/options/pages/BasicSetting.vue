@@ -115,7 +115,7 @@ const {userCustomStyle}=useUserCustomStyle()
         <div class="description">custom css settings to modify the style  </div>
       </div>
       <div>
-        <textarea v-model="userCustomStyle" class="border min-h-32 w-64 resize" placeholder="css variables... example:  --webpage-summary-user-float-window-max-width: 50rem;">
+        <textarea v-model="userCustomStyle" class="border min-h-32 w-64 resize" placeholder="css variables... example:  --webpage-summary-user-float-window-width: 50rem;">
 
         </textarea>
       </div>

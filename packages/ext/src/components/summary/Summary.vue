@@ -3,7 +3,7 @@
 
 
     <DraggableContainer
-      class="max-w-[var(--webpage-summary-user-float-window-max-width)] max-h-[66vh] bg-white rounded-t-xl rounded-b-xl">
+      class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -26,8 +26,8 @@
         <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[50vh]" style="overflow-anchor: auto;"
           ref="summaryDialog">
           <div class="flex flex-col gap-4">
-            <PageWordCount v-if="webpageContent" :webpage-content="webpageContent"
-              class="p-0.5 text-sm border-none underline decoration-dashed" />
+            <InputTiktokenResultItem class="p-0.5 text-sm border-none"
+              v-if="inputTiktokenResult.totalLength" :result="inputTiktokenResult" />
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem :message="{ type: msg.role, content: msg.content }" />
             </template>
@@ -79,14 +79,15 @@ import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
 import SummaryDialog from '../summary/SummaryDialog.vue';
 import Button from '../ui/button/Button.vue';
-import PageWordCount from './PageWordCount.vue';
+import PageWordCount from './InputTiktokenResultItem.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import { useEnableAutoBeginSummary, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig } from '@/src/composables/general-config'
 import { sleep } from 'radash';
+import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, webpageContent, tokenUsage, onChunk } = useSummary()
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, inputTiktokenResult, tokenUsage, onChunk } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 
@@ -94,9 +95,9 @@ enableUserChatDefaultThen(() => {
   isChatDialogOpen.value = enableUserChatDefault.value
 })
 
-onChunk(() => {
-  scrollToId('dialog-bottom-anchor')
-})
+// onChunk(() => {
+//   scrollToId('dialog-bottom-anchor')
+// })
 
 
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')

@@ -6,12 +6,15 @@
 import { PlayIcon, RotateCwIcon, InfoIcon } from 'lucide-vue-next';
 import { Button } from '../ui/button';
 import { cn } from '@/src/utils/shadcn';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import EllipsisAnim from '../status/EllipsisAnim.vue';
+import { useEnableAutoBeginSummary } from '@/src/composables/general-config';
 const props = defineProps<{
   status: 'preparing' | 'ready' | 'running' | 'failed';
 }>();
+const {enableAutoBeginSummary}=useEnableAutoBeginSummary()
 const isFirstClickDone = ref(false)
+const showRefresh=computed(()=>enableAutoBeginSummary.value || isFirstClickDone.value)
 const emit = defineEmits<{
   (e: 'click'): void;
   (e: 'refresh'): void;
@@ -37,7 +40,7 @@ const emit = defineEmits<{
     <div class="w-6 h-6 border-2 border-t-2  border-t-green-800 border-solid rounded-full animate-spin"></div>
   </template>
 
-  <template v-else-if="status === 'ready' && isFirstClickDone">
+  <template v-else-if="status === 'ready' && showRefresh">
     <Button variant="outline" size="icon" class="aspect-square px-1 gap-0 flex items-center h-8 leading-8"
       @click="emit('refresh')">
 
@@ -47,7 +50,7 @@ const emit = defineEmits<{
 
   </template>
 
-  <template v-else-if="status === 'ready' && !isFirstClickDone">
+  <template v-else-if="status === 'ready' && !showRefresh">
     <Button variant="outline" size="icon" class="w-fit px-1 gap-0 flex items-center h-8 leading-8"
       @click="()=>{isFirstClickDone=true;emit('refresh')}">
       <PlayIcon />Summary

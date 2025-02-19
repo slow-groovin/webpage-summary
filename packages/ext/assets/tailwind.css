@@ -82,7 +82,7 @@
 /* webpage-summary */
   :root {
     /*  */
-    --webpage-summary-user-float-window-max-width: 50rem;
+    --webpage-summary-user-float-window-width: 50rem;
   }
 }
 
