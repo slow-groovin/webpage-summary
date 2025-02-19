@@ -21,11 +21,11 @@ const calcIconUrl = (assetUrl: string) => browser.runtime.getURL(assetUrl as Pub
 
 
     <div class="flex flex-col text-xs max-w-32 ">
-      <div class="overflow-x-hidden text-nowrap text-ellipsis" :title="item.modelName + `(${item.maxTokens}K)`">
+      <div class="overflow-x-hidden text-nowrap text-ellipsis" :title="item.modelName + `(${item.maxContentLength}K)`">
         {{ item.name }}
       </div>
       <div v-if="!isSelected" class="overflow-x-hidden text-nowrap text-ellipsis"
-        :title="item.modelName + `(${item.maxTokens}K)`">
+        :title="item.modelName + `(${item.maxContentLength}K)`">
         {{ item.modelName }}
       </div>
 

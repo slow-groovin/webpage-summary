@@ -13,6 +13,7 @@ import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 import CustomSelectDebug from './CustomSelectDebug.vue';
 import ConnectMessageDebug from './ConnectMessageDebug.vue';
 import ResizableDebug from './ResizableDebug.vue';
+import SeparationComponentInContentDebug from './SeparationComponentInContentDebug.vue';
 const { query: { index } } = useRoute()
 const {replace}=useRouter()
 const components = [
@@ -25,7 +26,7 @@ const components = [
   ShadcnThemeColorVisual,
   CustomSelectDebug,
   ConnectMessageDebug,
-  ResizableDebug
+  ResizableDebug,
 ]
 </script>
 

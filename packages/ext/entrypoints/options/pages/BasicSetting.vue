@@ -4,23 +4,23 @@ import SelectItem from '@/src/components/custom-ui/select/SelectItem.vue';
 import Input from '@/src/components/ui/input/Input.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
 import { useSpokenLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle } from '@/src/composables/general-config';
+import { allInputContentLengthExceededStrategys } from '@/src/presets/strategy';
 import { browser } from 'wxt/browser';
 
 const { spokenLanguage } = useSpokenLanguage()
-const {enableAutoBeginSummary}=useEnableAutoBeginSummary()
-const {enableSummaryWindowDefault}=useEnableSummaryWindowDefault()
-const {enableTokenUsageView}=useEnableTokenUsageView()
-const {enableUserChatDefault}=useEnableUserChatDefault()
-const {maxLength}=useMaxLength()
-const {summaryInputExceedBehaviour}=useSummaryInputExceedBehaviour()
-const {userCustomStyle}=useUserCustomStyle()
+const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
+const { enableSummaryWindowDefault } = useEnableSummaryWindowDefault()
+const { enableTokenUsageView } = useEnableTokenUsageView()
+const { enableUserChatDefault } = useEnableUserChatDefault()
+const { summaryInputExceedBehaviour } = useSummaryInputExceedBehaviour()
+const { userCustomStyle } = useUserCustomStyle()
 
 
 
 </script>
 <template>
   <h1 class="text-2xl mb-4">Basic Setting</h1>
-  <div class="mr-auto flex flex-col gap-8 items-stretch">
+  <div class="mr-auto flex flex-col gap-8 items-stretch" v-if="enableAutoBeginSummary">
     <!-- SAMPLE -->
     <!-- <div class="line">
       <div>
@@ -56,17 +56,23 @@ const {userCustomStyle}=useUserCustomStyle()
       <div>
         <div class="title">Summary input content length exceed behaviour</div>
         <div class="description">what to do when the input(content of webpage) length exceed the model limit</div>
+        <div class="description text-amber-600">{{ summaryInputExceedBehaviour }}: {{
+          allInputContentLengthExceededStrategys[summaryInputExceedBehaviour].desc }}</div>
+
       </div>
       <div>
-        <Select>
-          <template #trigger v-model="summaryInputExceedBehaviour">
+        <Select v-model="summaryInputExceedBehaviour">
+          <template #trigger>
             {{ summaryInputExceedBehaviour }}
           </template>
           <template #content>
-            <SelectItem value="clip" title="Split the content, discard the behind part to meet the maximum length requirement">clip</SelectItem>
+            <template v-for="(value, key) in allInputContentLengthExceededStrategys">
+              <SelectItem :value="key" :title="value.desc">{{ value.name }} </SelectItem>
+            </template>
           </template>
         </Select>
       </div>
+
     </div>
 
     <div class="line">
@@ -75,7 +81,7 @@ const {userCustomStyle}=useUserCustomStyle()
         <div class="description">Auto begin to summary after openning the summary window </div>
       </div>
       <div>
-        <Switch v-model:checked="enableAutoBeginSummary"/>
+        <Switch v-model:checked="enableAutoBeginSummary" />
       </div>
     </div>
 
@@ -85,17 +91,19 @@ const {userCustomStyle}=useUserCustomStyle()
         <div class="description">always open summary window on a new webpage</div>
       </div>
       <div>
-        <Switch v-model:checked="enableSummaryWindowDefault"/>
+        <Switch v-model:checked="enableSummaryWindowDefault" />
       </div>
     </div>
 
     <div class="line">
       <div>
         <div class="title">Always open chat box</div>
-        <div class="description">always open chat box(for user to ask llm after summary with summary context) in the bottom of the summary window</div>
+        <div class="description">always open chat box(for user to ask llm after summary with summary context) in the
+          bottom
+          of the summary window</div>
       </div>
       <div>
-        <Switch v-model:checked="enableUserChatDefault"/>
+        <Switch v-model:checked="enableUserChatDefault" />
       </div>
     </div>
 
@@ -105,24 +113,25 @@ const {userCustomStyle}=useUserCustomStyle()
         <div class="description">show token usage information in summary window header</div>
       </div>
       <div>
-        <Switch v-model:checked="enableTokenUsageView"/>
+        <Switch v-model:checked="enableTokenUsageView" />
       </div>
     </div>
 
     <div class="line">
       <div>
         <div class="title">Custom css variables</div>
-        <div class="description">custom css settings to modify the style  </div>
+        <div class="description">custom css settings to modify the style </div>
       </div>
       <div>
-        <textarea v-model="userCustomStyle" class="border min-h-32 w-64 resize" placeholder="css variables... example:  --webpage-summary-user-float-window-width: 50rem;">
+        <textarea v-model="userCustomStyle" class="border min-h-32 w-64 resize"
+          placeholder="css variables... example:  --webpage-summary-user-float-window-width: 50rem;">
 
-        </textarea>
+    </textarea>
       </div>
     </div>
   </div>
 
-  
+
 
 </template>
 <style lang="postcss" scoped>

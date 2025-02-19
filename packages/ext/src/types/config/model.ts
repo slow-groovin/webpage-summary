@@ -20,8 +20,8 @@ export type ModelConfigItem= {
   baseURL?: string,
 
   /**
-   * maximum token count of webpage content, unit: kilo
+   * maximum content length webpage content
    */
-  maxTokens: number,
+  maxContentLength: number,
   at: number
 }

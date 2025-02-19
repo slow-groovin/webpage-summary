@@ -1,10 +1,10 @@
 import { CoreMessage } from 'ai';
 import  Mustache from 'mustache';
-import { WebpageContent, SummaryInputSchema } from '../types/summary';
+import {  SummaryInputSchema, SummaryInput } from '../types/summary';
 
 
 
-export function renderMessages(messages: CoreMessage[], value:WebpageContent & {}){
+export function renderMessages(messages: CoreMessage[], value:SummaryInput){
   SummaryInputSchema.parse(value)
   messages.forEach(m=>{
     if(typeof m.content==='string')

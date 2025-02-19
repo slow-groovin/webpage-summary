@@ -40,7 +40,7 @@
       </Tooltip>
     </TooltipProvider>
 
-    <div>
+    <div class="border p-2 my-2">
       <h2>teleport test</h2>
       <div>
         <div class="flex flex-col">
@@ -59,7 +59,58 @@
         </div>
       </div>
     </div>
+
+    <div class="flex flex-row ">
+      <CustomHoverCard>
+        <template #trigger>
+          <Button>CustomHoverCard</Button>
+        </template>
+        <template #content>
+          <Card>
+            <CardHeader>
+              <CardTitle>Card Title</CardTitle>
+              <CardDescription>Card Description</CardDescription>
+            </CardHeader>
+            <CardContent>
+              Card Content
+            </CardContent>
+            <CardFooter>
+              Card Footer
+            </CardFooter>
+          </Card>
+        </template>
+      </CustomHoverCard>
+
+      <CustomHoverCard>
+        <template #trigger>
+          <CircleAlertIcon/>
+        </template>
+        <template #content>
+          <pre>1.a
+2.b
+3.c            
+          </pre>
+        </template>
+      </CustomHoverCard>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          Card Content
+        </CardContent>
+        <CardFooter>
+          Card Footer
+        </CardFooter>
+      </Card>
+
+
+    </div>
   </div>
+
+
   <Toaster />
 
 </template>
@@ -75,11 +126,15 @@ import PopoverTrigger from '../ui/popover/PopoverTrigger.vue';
 import { toast } from '../ui/toast';
 import Toaster from '../ui/toast/Toaster.vue';
 import { HoverCardPortal } from 'radix-vue';
+import { Card, CardTitle, CardContent, CardDescription, CardHeader } from '../ui/card'
 import Tooltip from '../ui/tooltip/Tooltip.vue';
 
 import TooltipTrigger from '../ui/tooltip/TooltipTrigger.vue';
 import TooltipContent from '../ui/tooltip/TooltipContent.vue';
 import TooltipProvider from '../ui/tooltip/TooltipProvider.vue';
+
+import CustomHoverCard from '../custom-ui/HoverCard.vue'
+import { CircleAlertIcon } from 'lucide-vue-next';
 const debugRef = ref<HTMLElement | null>()
 const debugRefByDocument = ref<HTMLElement>()
 tryQueryShadowElement()

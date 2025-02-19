@@ -40,10 +40,7 @@ function hiddenApiKey(apiKey:string){
         </div>
         <div class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-transparent bg-clip-text">{{ item.modelName }}</div>
 
-        <div class="">
-          <span class="">Max Tokens:</span> &nbsp;&nbsp;
-          <span class="font-bold" >{{ item.maxTokens }}  K</span>
-        </div>
+       
 
         <div class="underline decoration-dotted" v-if="item.baseURL">{{ item.baseURL}}</div>
         <div v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -51,6 +48,10 @@ function hiddenApiKey(apiKey:string){
 
         <div class="underline decoration-dotted" v-if="item.apiKey">API_KEY: &nbsp; {{ hiddenApiKey(item.apiKey) }}</div>
 
+        <div class="font-light" v-if="item.maxContentLength">
+          <span class="font-extralight italic">max content length:  </span>
+          <span class="" >{{ item.maxContentLength }} </span>
+        </div>
       </div>
 
     </CardContent>

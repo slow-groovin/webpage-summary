@@ -25,11 +25,12 @@ const props = defineProps<{
   },
   class?: HTMLAttributes['class']
 }>()
+
 const displayText = ref('')
 // Get page content
-let text = `Total tokens: ${props.result.totalLength}`
+let text = `Total content length: ${props.result.totalLength}`
 if (props.result.clipedLength)
-  text += `, Final tokens of input content: ${(props.result.totalLength ?? 0) - (props.result!.clipedLength ?? 0)},   ${props.result.clipedLength} tokens are clipped,`
+  text += `, Tnput content length: ${(props.result.totalLength ?? 0) - (props.result!.clipedLength ?? 0)}, Clipped content length:  ${props.result.clipedLength}`
 async function* generateText(text: string) {
   const words = text.split(' ')
   for (const word of words) {

@@ -12,10 +12,11 @@ const selectedValue = ref();
 </script>
 
 <template>
-  <Select v-model="selectedValue">
+  <Select v-model="selectedValue" placeholder="something...">
     <template v-slot:trigger="value">
       
-        {{ value }}
+      <div v-if="value">{{ value }}</div>
+        
 
     </template>
 

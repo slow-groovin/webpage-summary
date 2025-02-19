@@ -28,7 +28,6 @@ async function simpleSummary() {
   const messages = presetPrompts['basic']
   renderMessages(messages, {
     spokenLanguage: 'Chinese',
-    maxLength: 1000,
     textContent: JSON.stringify(rest)
   })
 

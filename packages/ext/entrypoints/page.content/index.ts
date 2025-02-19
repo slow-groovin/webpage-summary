@@ -35,8 +35,7 @@ export default defineContentScript({
         // Define how your UI will be mounted inside the container
         const app = createApp(App);
         app.config.errorHandler = (err:any) => {
-          /* 处理错误 */
-          toast({ title: 'Error', description: err.message ,variant:'destructive'});
+          // toast({ title: 'Error', description: err.message ,variant:'destructive'}); //don't run this line, it may affect user's browsering
         }
         app.mount(container);
         return app;

@@ -1,5 +1,5 @@
 import { Readability } from "@mozilla/readability";
-import { ContentTokensExceedStrategy } from "../types/summary";
+import { InputContentLengthExceededStrategy } from "../types/summary";
 
 
 
@@ -26,11 +26,13 @@ export function simpleParseRead() {
   
 }
 
-export function handleExceededContent(tokens: number[], maxTokens:number, strategy: ContentTokensExceedStrategy):number[] {
-  if(strategy==='clip'){
-    return tokens.slice(0,maxTokens)
-  }else if(strategy==='exit'){
-    throw new Error(`The tokens count of webpage summary input is ${tokens.length}, which exceeds the model setting's max count ${maxTokens}`)
+export function handleExceedContent(content: string, maxContentLength:number, strategy: InputContentLengthExceededStrategy):string {
+  if(strategy==='split'){
+    return content.slice(0, maxContentLength)
+  }else if(strategy==='error'){
+    throw new Error(`The length count of webpage summary input is ${content.length}, which exceeds the model setting's max length ${maxContentLength}`)
+  }else if(strategy==='ignore'){
+    return content
   }
-  return tokens
+  return content
 }

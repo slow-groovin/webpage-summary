@@ -9,7 +9,7 @@
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
           <template #left-buttons>
-            <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary" />
+            <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary" @stop="stop" />
           </template>
           <template #right-buttons>
             <div v-if="enableTokenUsageView" class="flex items-center gap-1 border rounded p-1 bg-gray-200"
@@ -27,7 +27,7 @@
           ref="summaryDialog">
           <div class="flex flex-col gap-4">
             <InputTiktokenResultItem class="p-0.5 text-sm border-none"
-              v-if="inputTiktokenResult.totalLength" :result="inputTiktokenResult" />
+              v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength!==undefined" :result="inputContentLengthInfo" />
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem :message="{ type: msg.role, content: msg.content }" />
             </template>
@@ -84,10 +84,11 @@ import TokenUsageItem from './TokenUsageItem.vue';
 import { useEnableAutoBeginSummary, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig } from '@/src/composables/general-config'
 import { sleep } from 'radash';
 import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
+import { toast } from '../ui/toast';
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, inputTiktokenResult, tokenUsage, onChunk } = useSummary()
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady,stop, inputContentLengthInfo, tokenUsage, onChunk,error } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 
@@ -111,7 +112,7 @@ async function submitUserInput(content: string, onSuc: () => void) {
 }
 
 async function viewFailedReason() {
-  alert('not impl')
+  toast({title:"ERROR", description:error.value, variant:"destructive"})
 }
 
 onMounted(() => {

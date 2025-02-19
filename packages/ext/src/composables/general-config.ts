@@ -2,7 +2,7 @@ import { storage } from "wxt/storage";
 import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
-import { ContentTokensExceedStrategy } from "../types/summary";
+import { InputContentLengthExceededStrategy } from "../types/summary";
 
 /**
  * get all general configs value
@@ -100,10 +100,10 @@ export function useEnableSummaryWindowDefault() {
  * Reactive summary input exceed behaviour config.
  */
 export function useSummaryInputExceedBehaviour() {
-  const { state: summaryInputExceedBehaviour, ...other } = useWxtStorage(SUMMARY_INPUT_EXCEED_BEHAVIOUR, DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR)
+  const { state: summaryInputExceedBehaviour, ...other } = useWxtStorage<InputContentLengthExceededStrategy>(SUMMARY_INPUT_EXCEED_BEHAVIOUR, DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR)
   return { summaryInputExceedBehaviour, ...other }
 }
 
 export async function getSummaryInputExceedBehaviour() {
-  return await storage.getItem<ContentTokensExceedStrategy>(SUMMARY_INPUT_EXCEED_BEHAVIOUR, { fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR })
+  return await storage.getItem<InputContentLengthExceededStrategy>(SUMMARY_INPUT_EXCEED_BEHAVIOUR, { fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR })
 }

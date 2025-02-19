@@ -46,7 +46,9 @@ export default defineConfig({
     web_accessible_resources: [
       {
         matches: ['<all_urls>'],
-        resources: ['content-scripts/*.map','llm-icons/*'],
+        resources: [
+          // 'content-scripts/*.map',
+          'llm-icons/*'],
       },
     ],
   }

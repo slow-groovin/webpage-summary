@@ -13,11 +13,10 @@ import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
 import { getEnableAutoBeginSummary, getSpokenLanguage, getSummaryInputExceedBehaviour } from './general-config';
 import { EventEmitter } from 'eventemitter3'
-import { Tiktoken } from "js-tiktoken/lite";
-import base from "js-tiktoken/ranks/o200k_base";
-import { handleExceededContent } from '../utils/page-read';
+import { handleExceedContent } from '../utils/page-read';
+import { parseVercelSDKError } from '../utils/error-parse';
 
-const enc = new Tiktoken(base);
+
 
 export function useSummary() {
   onMounted(async () => {
@@ -41,20 +40,23 @@ export function useSummary() {
   const isPreparing = ref(true)
 
   const status = computed<'preparing' | 'failed' | 'ready' | 'running'>(() => {
-    if (isFailed.value) {
-      return 'failed'
-    }
     if (isRunning.value) {
       return 'running'
     }
+
+    if (isFailed.value) {
+      return 'failed'
+    }
+    
     if (isPreparing.value) {
       return 'preparing'
     }
 
     return 'ready'
   })
-
-  const inputTiktokenResult = reactive<{
+  const error=ref<any>()
+  let stopFunction:CallableFunction|null=null
+  const inputContentLengthInfo = reactive<{
     totalLength?: number,
     clipedLength?: number,
   }>({})
@@ -76,10 +78,6 @@ export function useSummary() {
   })
 
   const { webpageContent } = useWebpageContent()
-  const begin = Date.now()
-  const rs = enc.encode(webpageContent.textContent ?? "")
-  const cost = Date.now() - begin
-  console.log('[tiktoken]cost:', cost, ' len:', rs.length, 'text:', webpageContent.textContent?.length)
 
 
 
@@ -98,11 +96,10 @@ export function useSummary() {
     }
     if (status.value === 'preparing') {
       toast({ title: "Please wait for the config-reading to be ready", variant: 'warning' })
-    } else if (status.value === 'failed') {
-      toast({ title: "Config is not valid, please check the config", variant: 'warning' })
     } else if (status.value === 'running') {
+      return false
     }
-    return false
+    return true
   }
 
   async function initMessages() {
@@ -115,20 +112,16 @@ export function useSummary() {
     ]
     if (webpageContent) {
       if (!webpageContent.textContent) webpageContent.textContent = ''
-      const maxTokens = currentModel.value.maxTokens * 1024
-      const exceedBehaviour = await getSummaryInputExceedBehaviour()
 
-      const tokens = enc.encode(webpageContent.textContent)
-      inputTiktokenResult.totalLength = tokens.length
-
-      if (tokens.length > maxTokens) {
-        const handledTokens = handleExceededContent(tokens, maxTokens, exceedBehaviour)
-        inputTiktokenResult.clipedLength = tokens.length - handledTokens.length
-        webpageContent.textContent = enc.decode(handledTokens)
+      const maxContentLength = currentModel.value.maxContentLength
+      inputContentLengthInfo.totalLength = webpageContent.textContent.length
+      if (maxContentLength) {
+        const exceedBehaviour = await getSummaryInputExceedBehaviour()
+        if (webpageContent.textContent.length > maxContentLength) {
+          webpageContent.textContent = handleExceedContent(webpageContent.textContent, maxContentLength, exceedBehaviour)
+        }
+        inputContentLengthInfo.clipedLength = inputContentLengthInfo.totalLength - webpageContent.textContent.length
       }
-
-
-
 
       const summaryInput = {
         ...webpageContent,
@@ -168,10 +161,25 @@ export function useSummary() {
     uiMessages.value.push({ role: 'assistant', content: '', at: Date.now() })
 
     isRunning.value = true
-    const { textStream, tokenUsage: newTokenUsage } = await sendConnectMessage('streamTextViaConnect', {
-      modelConfig: currentModel.value!,
-      messages: messages.value,
-    })
+    const { textStream, tokenUsage: newTokenUsage, stop } = await sendConnectMessage(
+      'streamTextViaConnect',
+      {
+        modelConfig: currentModel.value!,
+        messages: messages.value,
+      },
+      {
+        onError: (e)=>{
+          isRunning.value=false
+          isPreparing.value=false
+          isFailed.value=true
+          error.value=parseVercelSDKError(e)
+          toast({ title: 'Error', description: error.value, variant: 'destructive' })
+          
+
+        }
+      }
+    )
+    stopFunction=stop
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
@@ -189,5 +197,28 @@ export function useSummary() {
     })
   }
 
-  return { status, uiMessages, webpageContent, onReady, append, refreshSummary, currentModel, currentPrompt, tokenUsage, inputTiktokenResult, onChunk }
+  async function stop() {
+    if(!stopFunction){
+      console.error("stop function is not defined")
+      return 
+    }
+    stopFunction()
+    isRunning.value=false
+  }
+
+  return {
+    status,
+    error,
+    uiMessages,
+    webpageContent,
+    onChunk,
+    onReady,
+    append,
+    stop,
+    refreshSummary,
+    currentModel,
+    currentPrompt,
+    tokenUsage,
+    inputContentLengthInfo,
+  }
 }

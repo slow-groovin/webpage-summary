@@ -9,14 +9,12 @@ import {
   FormLabel,
   FormMessage
 } from '@/src/components/ui/form'
-import HoverCard from '@/src/components/ui/hover-card/HoverCard.vue'
-import HoverCardContent from '@/src/components/ui/hover-card/HoverCardContent.vue'
-import HoverCardTrigger from '@/src/components/ui/hover-card/HoverCardTrigger.vue'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/src/components/ui/hover-card'
 import { Input } from '@/src/components/ui/input'
 import { modelProviderPresets } from '@/src/presets/model-providers'
 import { ModelConfigItem } from '@/src/types/config/model'
 import { toTypedSchema } from '@vee-validate/zod'
-import { InfoIcon } from 'lucide-vue-next'
+import { CircleAlertIcon, InfoIcon } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
@@ -45,7 +43,7 @@ const typeschema = toTypedSchema(z.object({
     return isValid
 
   }),
-  maxTokens: z.number().min(1),
+  maxContentLength: z.number().min(1),
 }))
 const { handleSubmit, setFieldValue, values } = useForm({
   validationSchema: typeschema,
@@ -54,7 +52,7 @@ const { handleSubmit, setFieldValue, values } = useForm({
     baseURL: item?.baseURL ?? undefined,
     apiKey: item?.apiKey ?? undefined,
     modelName: item?.modelName ?? undefined,
-    maxTokens: item?.maxTokens ?? undefined,
+    maxContentLength: item?.maxContentLength ?? undefined,
   },
 })
 //modifying form when select different provider
@@ -77,7 +75,7 @@ const onSubmit = handleSubmit(async (values) => {
     modelName: values.modelName,
     providerType: providerType.value,
     baseURL: values.baseURL ?? undefined,
-    maxTokens: values.maxTokens,
+    maxContentLength: values.maxContentLength,
     at: Date.now(),
   })
 })
@@ -89,7 +87,7 @@ const onSubmit = handleSubmit(async (values) => {
     <ModelProviderSelect v-model:provider-type="providerType">
     </ModelProviderSelect>
 
-    <form @submit="onSubmit" class="w-fit">
+    <form @submit="onSubmit" class="w-fit flex flex-col gap-4">
       <FormField v-slot="{ componentField }" name="name">
         <FormItem>
           <FormLabel>Config Name</FormLabel>
@@ -113,24 +111,34 @@ const onSubmit = handleSubmit(async (values) => {
         </FormItem>
       </FormField>
 
-      <FormField v-slot="{ componentField }" name="maxTokens">
+      <FormField v-slot="{ componentField }" name="maxContentLength">
         <FormItem>
-          <FormLabel>Max Tokens (kilo)</FormLabel>
-          <FormControl>
-            <div class="flex flex-row items-center">
-              <Input type="number" placeholder="8" v-bind="componentField" class="w-20" />
-              <div v-if="componentField.modelValue" class="ml-8 rounded bg-gray-200 px-2 py-1">
-                <span>{{ componentField.modelValue+'K' }}</span> 
-                <span>  =  </span>  
-                {{ componentField.modelValue *1024 }}
-              </div>
-            </div>
+          <FormLabel class="flex flex-row items-center gap-2">
+            Max Content Length
+            <HoverCard :close-delay="1500">
+              <HoverCardTrigger>
+                <CircleAlertIcon class="text-gray-500 h-5 w-5" />
+              </HoverCardTrigger>
+              <HoverCardContent class="min-w-[50em]">
+                设置0则为不限制<br>
+                内容长度由String.length计算,<br/>
+                
+                为什么不直接使用tiktokenizer计算token数量进行限制? 因为不同模型的tokenizer差异很大, <br/>
+                所以请根据您的语言的实际情况进行调整<br>(比如,中文一个length对应一个token,英文一个word的length对应一个token)<br/>
+                保证最终的输出不超过模型的context 大小即可
 
+              </HoverCardContent>
+            </HoverCard>
+
+          </FormLabel>
+          <FormControl>
+            <Input type="number" placeholder="8192" v-bind="componentField" class="w-20" />
           </FormControl>
           <FormDescription>
-            Max webpage content input token count (unit: kilo),<br /> [webpage summary input tokens] + [other prompt
-            tokens] < [max tokens] </FormDescription>
-              <FormMessage />
+            限制提取的网页内容(发送给llm之前)的最大长度
+
+          </FormDescription>
+          <FormMessage />
         </FormItem>
       </FormField>
 

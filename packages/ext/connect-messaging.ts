@@ -20,7 +20,7 @@ interface ProtocolMap {
   }): {
     tokenUsage: Promise<TokenUsage>,
     textStream: ChunkConsumer,
-    
+
   }
 
   /**for test */
@@ -53,7 +53,7 @@ type ChunkConsumer = {
   onChunkComplete: (callback: () => void) => void;
 };
 
-// Define the OnMessage type, which is used to register message handlers.
+// Define the OnMessage type, which is used to register message handlers in background.js.
 // This type represents a function that registers a callback function (func) to be executed when a message with a specific key is received.
 type OnMessage = <T extends keyof ProtocolMap>(
   key: T,
@@ -70,21 +70,30 @@ type OnMessage = <T extends keyof ProtocolMap>(
       chunk: <K extends keyof ReturnType<ProtocolMap[T]>>(key: K, value: unknown) => void;
       // Callback to indicate the end of a chunked data stream.  This signals the end of a streaming response.
       chunkEnd: <K extends keyof ReturnType<ProtocolMap[T]>>(key: K) => void;
+      error: (error: Error) => void;
     }
   ) => void,
 ) => void;
 
 // Define the SendMessage type, which is used to send messages.
 // This type represents a function that sends a message with a specific key and input, and returns a promise that resolves to the response.
-type SendMessage = <T extends keyof ProtocolMap>(key: T, input: FirstParameter<ProtocolMap[T]>) => Promise<ReturnType<ProtocolMap[T]>>;
+type SendMessage = <T extends keyof ProtocolMap>(
+  key: T,
+  input: FirstParameter<ProtocolMap[T]>,
+  opts?: {
+    onError?: (e: any) => void
+  }
+) => Promise<ReturnType<ProtocolMap[T]> & {stop:CallableFunction}>;
 
-// Define the ConnectMessage type for internal communication.
+// Define the ConnectMessage type for .postMessage()
 // This type represents the structure of messages exchanged internally between the sender and receiver.
 type ConnectMessage = {
-  type: 'markReturn' | 'resolve' | 'chunk' | 'chunkEnd';
+  type: 'markReturn' | 'resolve' | 'chunk' | 'chunkEnd' | 'error' | 'stop';
   key: string;
   value: unknown;
 };
+
+
 
 // Define the MarkReturnValue type to specify the type of each return value.
 // This type is used to indicate whether a field in the response is a raw value, a promise, or a chunked stream.
@@ -161,7 +170,10 @@ function defineConnectMessage(): {
             port.postMessage({ type: 'resolve', key: key, value: val });
           };
 
-          callbackFunc(input, { markReturn, complete, chunk, chunkEnd, resolve });
+          const error = (e: Error) => {
+            port.postMessage({ type: 'error', key: 'error', value: e })
+          }
+          callbackFunc(input, { markReturn, complete, chunk, chunkEnd, resolve, error });
         };
         port.onMessage.addListener(onMessageListener);
       });
@@ -173,7 +185,7 @@ function defineConnectMessage(): {
      * @param input - The input data.  This is the data to send with the message.
      * @returns A promise that resolves to the return value of the message handler.
      */
-    sendConnectMessage: (key, input) => {
+    sendConnectMessage: (key, input, opt) => {
       const NAME_KEY = `onConnectMessage:${key}`;
       const connectPort = browser.runtime.connect({ name: NAME_KEY });
       /*
@@ -184,11 +196,12 @@ function defineConnectMessage(): {
       let returnValuePromiseMap: Record<string, (v: any) => void> = {}; // Map of promise keys to their resolve functions.
       let returnValueChunkFuncMap: Record<string, (v: any) => void> = {}; // Map of chunk keys to their chunk functions.
       let returnValueChunkCompleteFuncMap: Record<string, (v: any) => void> = {}; // Map of chunk keys to their completion functions.
+      let onErrorHook = opt?.onError
       const result = new Promise<any>((resolve, reject) => {
         markReturnResolve = resolve; // Assign the resolve function to markReturnResolve.
       });
 
-      connectPort.onMessage.addListener((_msg: any) => {
+      connectPort.onMessage.addListener((_msg: any,port) => {
         const msg = _msg as ConnectMessage;
         if (msg.type === 'markReturn') {
           // Handle the 'markReturn' message, which indicates the structure of the response.
@@ -214,7 +227,13 @@ function defineConnectMessage(): {
             }
           }
           // Resolve the main promise with the constructed return value object.
-          markReturnResolve(returnValue);
+          markReturnResolve({
+            ...returnValue,
+            stop: ()=>{
+              console.log('mannual stop port.',port.name)
+              port.disconnect()
+            }
+          });
         } else if (msg.type === 'resolve') {
           // Handle the 'resolve' message, which resolves a promise in the response.
           returnValuePromiseMap[msg.key]!(msg.value);
@@ -224,6 +243,13 @@ function defineConnectMessage(): {
         } else if (msg.type === 'chunkEnd') {
           // Handle the 'chunkEnd' message, which signals the end of a chunked stream.
           returnValueChunkCompleteFuncMap[msg.key]!(msg.value);
+        } else if (msg.type === 'error') {
+          console.log('onError', msg)
+          if(onErrorHook){
+            onErrorHook(msg.value)
+          }else{
+            throw msg.value
+          }
         } else {
           throw new Error("Unexpected msg.type:" + msg.type);
         }

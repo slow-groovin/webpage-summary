@@ -7,5 +7,5 @@ export const DefaultConfig = {
   ENABLE_USER_CHAT_DEFAULT: false,
   ENABLE_AUTO_BEGIN_SUMMARY: false,
   ENABLE_SUMMARY_WINDOW_DEFAULT: true,
-  SUMMARY_INPUT_EXCEED_BEHAVIOUR: 'clip', //'clip' 
+  SUMMARY_INPUT_EXCEED_BEHAVIOUR: 'split', //'clip' 
 } as const
