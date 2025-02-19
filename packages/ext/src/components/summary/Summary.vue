@@ -82,24 +82,22 @@ import Button from '../ui/button/Button.vue';
 import PageWordCount from './PageWordCount.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import { useEnableAutoBeginSummary, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig } from '@/src/composables/general-config'
+import { sleep } from 'radash';
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, webpageContent, tokenUsage, onChunkHook } = useSummary()
-const { getAllExtConfigs } = useGeneralConfig()
-const { enableAutoBeginSummary, then: autoBeginSummaryThen } = useEnableAutoBeginSummary()
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, webpageContent, tokenUsage, onChunk } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
-autoBeginSummaryThen(() => {
-  refreshSummary()
 
-})
 enableUserChatDefaultThen(() => {
   isChatDialogOpen.value = enableUserChatDefault.value
 })
-onChunkHook(() => {
+
+onChunk(() => {
   scrollToId('dialog-bottom-anchor')
 })
+
 
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 
@@ -115,6 +113,9 @@ async function viewFailedReason() {
   alert('not impl')
 }
 
+onMounted(() => {
+
+})
 </script>
 
 

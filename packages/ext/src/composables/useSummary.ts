@@ -11,10 +11,21 @@ import { renderMessages } from '../utils/prompt';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
-import { useSpokenLanguage } from './general-config';
-
+import { getEnableAutoBeginSummary, getSpokenLanguage } from './general-config';
+import {EventEmitter} from 'eventemitter3'
 
 export function useSummary() {
+  onMounted(async () => {
+    currentModel.value = await modelStorage.getDefaultItem()
+    currentPrompt.value = await promptStorage.getDefaultItem()
+    isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
+    isPreparing.value = false
+    await initMessages()
+    event.emit('ready')
+    if(await getEnableAutoBeginSummary()){
+      append('','assistant')
+    }
+  })
   const uiMessages = ref<UIMessage[]>([])
   const messages = ref<CoreMessage[]>([])
 
@@ -56,16 +67,14 @@ export function useSummary() {
 
   const { webpageContent } = useWebpageContent()
 
-  let onReadyResolve: ((u?: unknown) => void) | null = null
-  let onReadyReject: (() => void) | null = null
-  let onReadyPromise = new Promise((resolve, reject) => {
-    onReadyResolve = resolve
-    onReadyReject = reject
-  })
-  let chunkHooks: ((c: unknown) => void)[] = []
+  const event=new EventEmitter()
+  
+  function onReady(onReadyHook: ()=>void) {
+    event.once('ready',onReadyHook)
+  }
 
-  function onChunkHook(func: typeof chunkHooks[0]) {
-    chunkHooks.push(func)
+  function onChunk(onChunkHook: (chunk:unknown)=>void) {
+    event.on('chunk',onChunkHook)
   }
   function verfiyReady() {
     if (status.value === 'ready') {
@@ -85,13 +94,11 @@ export function useSummary() {
       { role: 'system', content: currentPrompt.value?.systemMessage ?? promptPreset.systemMessage },
       { role: 'user', content: currentPrompt.value?.userMessage ?? promptPreset.userMessage },
     ]
-    const { spokenLanguage, then } = useSpokenLanguage()
-    await then
 
     if (webpageContent) {
       const summaryInput = {
         ...webpageContent,
-        spokenLanguage: spokenLanguage.value
+        spokenLanguage: await getSpokenLanguage()
       }
       renderMessages(messages.value, summaryInput)
     } else {
@@ -101,18 +108,8 @@ export function useSummary() {
 
   function initUIMessages() {
     uiMessages.value = []
-
   }
-  console.log('onMounted')
-  onMounted(async () => {
-    currentModel.value = await modelStorage.getDefaultItem()
-    currentPrompt.value = await promptStorage.getDefaultItem()
-    isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
-    isPreparing.value = false
-    await initMessages()
-    onReadyResolve!()
-  })
-  console.log('onMounted .')
+  
 
   async function refreshSummary() {
     await initMessages()
@@ -144,7 +141,7 @@ export function useSummary() {
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
-      chunkHooks.forEach(hookFunc => hookFunc(c))
+      event.emit('chunk',c)
     })
     textStream.onChunkComplete(async () => {
       isRunning.value = false
@@ -158,5 +155,5 @@ export function useSummary() {
     })
   }
 
-  return { status, uiMessages, webpageContent, onReady: onReadyPromise, append, refreshSummary, currentModel, currentPrompt, tokenUsage, onChunkHook }
+  return { status, uiMessages, webpageContent, onReady, append, refreshSummary, currentModel, currentPrompt, tokenUsage, onChunk }
 }

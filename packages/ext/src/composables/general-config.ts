@@ -18,7 +18,7 @@ async function getAllExtConfigs() {
     { key: ENABLE_SUMMARY_WINDOW_DEFAULT, fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT },
     { key: SUMMARY_INPUT_EXCEED_BEHAVIOUR, fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR }
   ]);
-  
+
   return {
     spokenLanguage: result[0].value as string ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
     maxLength: result[1].value as number ?? DefaultConfig.MAX_LENGTH,
@@ -41,7 +41,9 @@ export function useSpokenLanguage() {
   const { state: spokenLanguage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
   return { spokenLanguage, ...other }
 }
-
+export async function getSpokenLanguage() {
+  return await storage.getItem(SPOKEN_LANG_KEY, { fallback: DefaultConfig.SPOKEN_LANG })
+}
 /**
  * Reactive max length config.
  */
@@ -63,7 +65,7 @@ export function useUserCustomStyle() {
  */
 export function useEnableTokenUsageView() {
   const { state: enableTokenUsageView, ...other } = useWxtStorage(ENABLE_TOKAN_USAGE_VIEW, DefaultConfig.ENABLE_TOKAN_USAGE_VIEW)
-  return {  enableTokenUsageView, ...other }
+  return { enableTokenUsageView, ...other }
 }
 
 /**
@@ -80,6 +82,9 @@ export function useEnableUserChatDefault() {
 export function useEnableAutoBeginSummary() {
   const { state: enableAutoBeginSummary, ...other } = useWxtStorage(ENABLE_AUTO_BEGIN_SUMMARY, DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY)
   return { enableAutoBeginSummary, ...other }
+}
+export async function getEnableAutoBeginSummary(){
+  return await storage.getItem(ENABLE_AUTO_BEGIN_SUMMARY, {fallback:DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY})
 }
 
 /**
