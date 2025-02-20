@@ -2,7 +2,7 @@
   "name": "webpage-summary-ext",
   "description": "manifest.json description",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -11,6 +11,7 @@
     "build:edge": "wxt build -b edge",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
+    "zip:edge": "wxt zip -b edge",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare"

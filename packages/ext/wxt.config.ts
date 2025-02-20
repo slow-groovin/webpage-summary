@@ -33,8 +33,8 @@ export default defineConfig({
     },
   }),
   manifest: {
-    name: 'webpage-summary-M',
-    description: 'OSS web page summarize , via any llm api',
+    name: 'Webpage Summary',
+    description: 'OpenSource webpage summarize tool, via any llm api, support prompt-template/site customization.',
     permissions: ['storage'],
     icons: {
       // 16: '/icon/16.png',
