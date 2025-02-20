@@ -1,7 +1,5 @@
 <template>
   <template class="" v-if="currentModel && currentPrompt">
-
-
     <DraggableContainer
       class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl">
       <template #header>

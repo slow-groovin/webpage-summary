@@ -34,10 +34,12 @@ export function registerLLMMessages() {
       chunkEnd('textStream')
 
     } catch (e: any) {
-      if(e.message==='Attempting to use a disconnected port object'){
-        //send side call port.disconnect()
+      console.log('[streamTextViaConnect]occurs error', e,e instanceof TypeError)
+      if(e instanceof TypeError){
+        error({name: e.name, message: e.message})
         return 
       }
+      
       
       error(e)
     }

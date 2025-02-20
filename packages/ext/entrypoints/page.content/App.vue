@@ -4,9 +4,10 @@
 import { onMessage, sendMessage } from '@/messaging'
 import RightFloatingBallContainer from '@/src/components/container/RightFloatingBallContainer.vue'
 import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
+import SeparationComponentInContentDebug from '@/src/components/debug/SeparationComponentInContentDebug.vue'
 import Summary from '@/src/components/summary/Summary.vue'
 import Toaster from '@/src/components/ui/toast/Toaster.vue'
-import { getEnableAutoBeginSummary, useEnableFloatingBall } from '@/src/composables/general-config'
+import { getEnableAutoBeginSummary, getEnableSummaryWindowDefault, useEnableFloatingBall } from '@/src/composables/general-config'
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { sleep } from 'radash'
 import { onMounted, ref } from 'vue'
@@ -19,7 +20,7 @@ onMounted(() => {
 
 
 const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
-const {enableFloatingBall}=useEnableFloatingBall()
+const { enableFloatingBall } = useEnableFloatingBall()
 const isFloatingBallPulseAnim = ref(false)
 const isOpenDebugPanel = ref(false)
 
@@ -35,11 +36,11 @@ async function toggleShowWrap() {
   await sleep(1500)
   isFloatingBallPulseAnim.value = false
 }
-getEnableAutoBeginSummary().then(v => {
-  isOpenDebugPanel.value = v
+getEnableSummaryWindowDefault().then(v => {
+  isOpenSummaryPanel.value = v
 })
 
-onMessage('invokeSummary',()=>{
+onMessage('invokeSummary', () => {
   console.debug('invoke summary by popup')
   tryEnableOrShow()
 })
@@ -56,19 +57,19 @@ onMessage('invokeSummary',()=>{
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" class="top-16 right-16" @minimize-panel="toggleShowWrap" />
 
-    <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false" :storage-key="'page'">
-      <HoverCard>
-        <template #trigger>
-          <div @click="tryEnableOrShow" :class="{ 'animate-bounce duration-500': isFloatingBallPulseAnim }"
-            class="w-fit h-fit p-2 aspect-square rounded-full border-[1px] border-purple-800">
-            <img :src="icon" class="w-6 h-6 rounded select-none" draggable="false">
-          </div>
-        </template>
-        <template #content>
-          open summary panel
+    <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false"
+      :storage-key="'page'">
+      <HoverCard position="left" alignment="middle">
+        <div @click="tryEnableOrShow" :class="{ 'animate-bounce duration-500': isFloatingBallPulseAnim }"
+          class="w-fit h-fit p-1 aspect-square rounded-full border-[1px] border-purple-700">
+          <img :src="icon" class="w-6 h-6 rounded select-none" draggable="false">
+        </div>
+        <template #custom-content>
+          <div class="absolute right-12 top-0 rounded p-1 text-nowrap bg-neutral-700 text-white"> open summary panel</div>
         </template>
       </HoverCard>
     </RightFloatingBallContainer>
+
   </div>
 </template>
 

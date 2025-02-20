@@ -23,16 +23,21 @@ const toggleOpen = (open: boolean) => {
 
 <template>
   <div :class="cn('relative', props.class)">
+    <!-- use #trigger or #default are both ok -->
     <div @mouseenter="toggleOpen(true)" @mouseleave="toggleOpen(false)">
       <slot name="trigger" />
     </div>
 
-    <!-- dropdown list -->
-    <div v-show="isOpen"
-      class="absolute  text-nowrap rounded-md border bg-popover text-popover-foreground shadow-md">
-      <slot name="content" />
-
+    <div @mouseenter="toggleOpen(true)" @mouseleave="toggleOpen(false)">
+      <slot name="default" />
     </div>
+
+    <!--  -->
+    <div v-show="isOpen" class="absolute  text-nowrap rounded-md border bg-popover text-popover-foreground shadow-md">
+      <slot name="content" />
+    </div>
+    <!-- #custom-content is for custom positon -->
+    <slot name="custom-content" v-if="isOpen" />
   </div>
 </template>
 

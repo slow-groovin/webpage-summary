@@ -123,7 +123,11 @@ function defineConnectMessage(): {
       browser.runtime.onConnect.addListener((port) => {
         // Filter by NAME_KEY.  Only process connections with the correct name.
         if (port.name !== NAME_KEY) return;
-
+        let isPortDisconnect=false
+        port.onDisconnect.addListener(()=>{
+          console.debug(`[${NAME_KEY}][onDisconnect]`)
+          isPortDisconnect=true
+        })
         const onMessageListener = (_msg: any) => {
           // First message is the input parameter.
           input = _msg;
@@ -171,6 +175,7 @@ function defineConnectMessage(): {
           };
 
           const error = (e: Error) => {
+            if(isPortDisconnect) return 
             port.postMessage({ type: 'error', key: 'error', value: e })
           }
           callbackFunc(input, { markReturn, complete, chunk, chunkEnd, resolve, error });
@@ -244,7 +249,7 @@ function defineConnectMessage(): {
           // Handle the 'chunkEnd' message, which signals the end of a chunked stream.
           returnValueChunkCompleteFuncMap[msg.key]!(msg.value);
         } else if (msg.type === 'error') {
-          console.log('onError', msg)
+          console.debug('[sendConnectMessage]onError', msg.value)
           if(onErrorHook){
             onErrorHook(msg.value)
           }else{

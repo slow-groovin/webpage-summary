@@ -74,25 +74,56 @@
             <CardContent>
               Card Content
             </CardContent>
-            <CardFooter>
-              Card Footer
-            </CardFooter>
           </Card>
         </template>
       </CustomHoverCard>
 
-      <CustomHoverCard>
-        <template #trigger>
-          <CircleAlertIcon/>
-        </template>
-        <template #content>
-          <pre>1.a
+      <div class=" flex flex-col gap-2">
+        <div>
+          <label>
+            <input type="radio" value="top" v-model="customHoverPositon" />
+            Top
+          </label>
+          <label>
+            <input type="radio" value="bottom" v-model="customHoverPositon" />
+            Bottom
+          </label>
+          <label>
+            <input type="radio" value="left" v-model="customHoverPositon" />
+            Left
+          </label>
+          <label>
+            <input type="radio" value="right" v-model="customHoverPositon" />
+            Right
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" value="middle" v-model="customHoverAlignment" />
+            Middle
+          </label>
+          <label>
+            <input type="radio" value="min" v-model="customHoverAlignment" />
+            Min
+          </label>
+          <label>
+            <input type="radio" value="max" v-model="customHoverAlignment" />
+            Max
+          </label>
+        </div>
+        <button @click="nextTick()">refresh()</button>
+        <CustomHoverCard :position="customHoverPositon" :alignment="customHoverAlignment">
+          <template #trigger>
+            <CircleAlertIcon />
+          </template>
+          <template #content>
+            <pre>1.a
 2.b
 3.c            
           </pre>
-        </template>
-      </CustomHoverCard>
-
+          </template>
+        </CustomHoverCard>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Card Title</CardTitle>
@@ -101,9 +132,7 @@
         <CardContent>
           Card Content
         </CardContent>
-        <CardFooter>
-          Card Footer
-        </CardFooter>
+        
       </Card>
 
 
@@ -115,7 +144,7 @@
 
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import Button from '../ui/button/Button.vue';
 import HoverCard from '../ui/hover-card/HoverCard.vue';
 import HoverCardContent from '../ui/hover-card/HoverCardContent.vue';
@@ -137,6 +166,8 @@ import CustomHoverCard from '../custom-ui/HoverCard.vue'
 import { CircleAlertIcon } from 'lucide-vue-next';
 const debugRef = ref<HTMLElement | null>()
 const debugRefByDocument = ref<HTMLElement>()
+const customHoverPositon = ref<'top' | 'bottom' | 'left' | 'right'>('top')
+const customHoverAlignment = ref<"middle" | "min" | "max">('middle')
 tryQueryShadowElement()
 onMounted(() => {
   tryQueryShadowElement()

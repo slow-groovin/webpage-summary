@@ -14,7 +14,7 @@ import { useWebpageContent } from './readability';
 import { getEnableAutoBeginSummary, getSpokenLanguage, getSummaryInputExceedBehaviour } from './general-config';
 import { EventEmitter } from 'eventemitter3'
 import { handleExceedContent } from '../utils/page-read';
-import { parseVercelSDKError } from '../utils/error-parse';
+import { handleConnectError } from '../utils/error-parse';
 
 
 
@@ -47,15 +47,15 @@ export function useSummary() {
     if (isFailed.value) {
       return 'failed'
     }
-    
+
     if (isPreparing.value) {
       return 'preparing'
     }
 
     return 'ready'
   })
-  const error=ref<any>()
-  let stopFunction:CallableFunction|null=null
+  const error = ref<any>()
+  let stopFunction: CallableFunction | null = null
   const inputContentLengthInfo = reactive<{
     totalLength?: number,
     clipedLength?: number,
@@ -168,18 +168,16 @@ export function useSummary() {
         messages: messages.value,
       },
       {
-        onError: (e)=>{
-          isRunning.value=false
-          isPreparing.value=false
-          isFailed.value=true
-          error.value=parseVercelSDKError(e)
-          toast({ title: 'Error', description: error.value, variant: 'destructive' })
-          
+        onError: (e) => {
+          isRunning.value = false
+          isPreparing.value = false
+          isFailed.value = true
 
+          error.value = handleConnectError(e)
         }
       }
     )
-    stopFunction=stop
+    stopFunction = stop
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
@@ -198,12 +196,12 @@ export function useSummary() {
   }
 
   async function stop() {
-    if(!stopFunction){
+    if (!stopFunction) {
       console.error("stop function is not defined")
-      return 
+      return
     }
     stopFunction()
-    isRunning.value=false
+    isRunning.value = false
   }
 
   return {

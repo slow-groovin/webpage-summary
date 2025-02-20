@@ -97,7 +97,7 @@ const endDrag = () => {
     floatingBall.value.style.right = '0px'; // 清除x轴位置
 
     positionStorage.value = floatingBall.value.style.top
-    console.log('positionStorage.value', positionStorage.value)
+    // console.log('positionStorage.value', positionStorage.value)
   }
 };
 
