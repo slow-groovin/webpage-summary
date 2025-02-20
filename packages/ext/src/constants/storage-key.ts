@@ -13,8 +13,21 @@ export const ENABLE_TOKAN_USAGE_VIEW='local:enable-tokan-usage-view'
 
 export const ENABLE_USER_CHAT_DEFAULT='local:enable-user-chat-default'
 
+
+/* 
+Trigger Settings
+ */
 export const ENABLE_AUTO_BEGIN_SUMMARY='local:enable-auto-begin-summary'
 
 export const ENABLE_SUMMARY_WINDOW_DEFAULT='local:enable-summary-window-default'
+
+export const ENABLE_FLOATING_BALL='local:enable-floating-ball'
+
+export const POPUP_CLICK_TRIGGER='local:popup-click-trigger'
+
+
+/*
+Strategy Settings
+ */
 
 export const SUMMARY_INPUT_EXCEED_BEHAVIOUR='local:summary-input-exceed-behaviour' 

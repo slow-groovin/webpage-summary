@@ -6,7 +6,7 @@ import RightFloatingBallContainer from '@/src/components/container/RightFloating
 import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
 import Summary from '@/src/components/summary/Summary.vue'
 import Toaster from '@/src/components/ui/toast/Toaster.vue'
-import { getEnableAutoBeginSummary } from '@/src/composables/general-config'
+import { getEnableAutoBeginSummary, useEnableFloatingBall } from '@/src/composables/general-config'
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { sleep } from 'radash'
 import { onMounted, ref } from 'vue'
@@ -19,7 +19,7 @@ onMounted(() => {
 
 
 const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
-
+const {enableFloatingBall}=useEnableFloatingBall()
 const isFloatingBallPulseAnim = ref(false)
 const isOpenDebugPanel = ref(false)
 
@@ -56,7 +56,7 @@ onMessage('invokeSummary',()=>{
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" class="top-16 right-16" @minimize-panel="toggleShowWrap" />
 
-    <RightFloatingBallContainer class="top-[70%]" :init-closed-btn-hidden="false">
+    <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false" :storage-key="'page'">
       <HoverCard>
         <template #trigger>
           <div @click="tryEnableOrShow" :class="{ 'animate-bounce duration-500': isFloatingBallPulseAnim }"

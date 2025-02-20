@@ -9,12 +9,13 @@ hover时出现说明.
 <script lang="ts" setup>
 import { cn } from '@/src/utils/shadcn';
 import { CircleXIcon } from 'lucide-vue-next';
-import { HTMLAttributes, computed, onMounted, ref } from 'vue';
-import HoverCard from '../custom-ui/HoverCard.vue';
-import Button from '../ui/button/Button.vue';
 import { sleep } from 'radash';
+import { HTMLAttributes, computed, onMounted, ref } from 'vue';
+import Button from '../ui/button/Button.vue';
+import useWxtStorage from '@/src/composables/useWxtStorage';
 
 const props = defineProps<{
+  storageKey?: string
   class?: HTMLAttributes['class'];
   initClosedBtnHidden?: boolean
 }>();
@@ -25,7 +26,8 @@ const emit = defineEmits<{
 
 
 const isCloseBtnHidden = ref(!!props.initClosedBtnHidden)
-const isClose=ref(false)
+const isClose = ref(false)
+const { state: positionStorage, then: fetchPositionStorageThen } = useWxtStorage<string>(`local:right-floating-ball-top-${props.storageKey}`, '75%')
 
 /*
  * drag control:
@@ -80,7 +82,6 @@ const drag = (event: MouseEvent) => {
 
     floatingBall.value.style.left = newX + 'px';
     floatingBall.value.style.top = newY + 'px';
-
     initialMousePosition.value = { x: event.clientX, y: event.clientY };
   }
 };
@@ -94,36 +95,46 @@ const endDrag = () => {
   if (floatingBall.value) {
     floatingBall.value.style.removeProperty('left')
     floatingBall.value.style.right = '0px'; // 清除x轴位置
+
+    positionStorage.value = floatingBall.value.style.top
+    console.log('positionStorage.value', positionStorage.value)
   }
 };
 
-async function delayHiddenCloseBtn(){
+async function delayHiddenCloseBtn() {
   await sleep(100)
-  isCloseBtnHidden.value=false
+  isCloseBtnHidden.value = false
 }
 
 onMounted(() => {
   if (floatingBall.value) {
     elementWidth.value = floatingBall.value.clientWidth;
     elementHeight.value = floatingBall.value.clientHeight;
+    fetchPositionStorageThen(() => {
+      if (props.storageKey && floatingBall.value) {
+        floatingBall.value.style.top = positionStorage.value
+      }
+    })
+
   }
 });
 
 // 关闭
 function close() {
-  isClose.value=true
+  isClose.value = true
   emit('close')
 }
 </script>
 
 <template>
   <div v-if="!isClose" ref="floatingBall"
-    :class="cn('fixed top-1/2  right-0  z-50 rounded-full p-2 aspect-square', containerStyle, props.class)"
+    :class="cn('fixed right-0  z-50 rounded-full p-2 aspect-square', containerStyle, props.class)"
     :style="{ cursor: isDragging ? 'grabbing' : 'pointer' }" @mousedown="startDrag" @mouseover="delayHiddenCloseBtn"
     @mouseout="isCloseBtnHidden = true">
     <!-- 关闭按钮 -->
     <Button variant="ghost" size="sm-icon" @click.stop="close"
-      class=" absolute p-0 w-4 h-4 top-0 left-0 rounded-full text-white bg-neutral-400/80 hover:bg-neutral-500 hover:text-white" :class="{ 'hidden': isCloseBtnHidden }">
+      class=" absolute p-0 w-4 h-4 top-0 left-0 rounded-full text-white bg-neutral-400/80 hover:bg-neutral-500 hover:text-white"
+      :class="{ 'hidden': isCloseBtnHidden }">
       <CircleXIcon class="h-4 w-4" />
     </Button>
     <slot>
@@ -134,7 +145,7 @@ function close() {
     </slot>
 
   </div>
-  
+
 </template>
 
 <style scoped></style>

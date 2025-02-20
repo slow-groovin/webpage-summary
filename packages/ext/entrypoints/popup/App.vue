@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import HelloWorld from '@/src/components/HelloWorld.vue';
-import { useExtInfo } from '@/src/composables/extension';
-import SampleApp from '@/src/pages/SampleApp.vue';
-import { Button } from '@/src/components/ui/button';
 import { sendMessage } from '@/messaging';
+import { Button } from '@/src/components/ui/button';
+import { useExtInfo } from '@/src/composables/extension';
+import { getEnablePopupClickTrigger } from '@/src/composables/general-config';
 import { BookOpenTextIcon, SettingsIcon } from 'lucide-vue-next';
+import { onMounted } from 'vue';
 import { browser } from 'wxt/browser';
 const { iconUrl, name, version } = useExtInfo()
 
@@ -16,6 +16,15 @@ async function invokeCurrentTabSummary() {
   }
   sendMessage('invokeSummary', undefined, { tabId: tab.id })
 }
+
+onMounted(async ()=>{
+  const enablePopupClickTrigger=await getEnablePopupClickTrigger()
+  if(enablePopupClickTrigger){
+    invokeCurrentTabSummary()
+    window.close()
+  }
+
+})
 </script>
 
 <template>

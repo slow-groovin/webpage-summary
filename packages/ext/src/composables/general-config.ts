@@ -1,5 +1,5 @@
 import { storage } from "wxt/storage";
-import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR } from "../constants/storage-key";
+import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
 import { InputContentLengthExceededStrategy } from "../types/summary";
@@ -98,6 +98,27 @@ export function useEnableSummaryWindowDefault() {
 
 export async function getEnableSummaryWindowDefault() {
   return await storage.getItem(ENABLE_SUMMARY_WINDOW_DEFAULT, { fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT })
+}
+
+/**
+ * enable floating ball
+ */
+export function useEnableFloatingBall(){
+  const { state: enableFloatingBall, ...other } = useWxtStorage(ENABLE_FLOATING_BALL, DefaultConfig.ENABLE_FLOATING_BALL)
+  return { enableFloatingBall, ...other }
+}
+
+/**
+  popup as a begin summarize trigger
+ */
+
+export function useEnablePopupClickTrigger(){
+  const { state: enablePopupClickTrigger, ...other } = useWxtStorage(ENABLE_POPUP_CLICK_TRIGGER, DefaultConfig.ENABLE_POPUP_CLICK_TRIGGER)
+  return { enablePopupClickTrigger, ...other }
+}
+
+export async function getEnablePopupClickTrigger(){
+  return await storage.getItem(ENABLE_POPUP_CLICK_TRIGGER, { fallback: DefaultConfig.ENABLE_POPUP_CLICK_TRIGGER })
 }
 
 /**

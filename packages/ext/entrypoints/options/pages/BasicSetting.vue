@@ -3,13 +3,15 @@ import Select from '@/src/components/custom-ui/select/Select.vue';
 import SelectItem from '@/src/components/custom-ui/select/SelectItem.vue';
 import Input from '@/src/components/ui/input/Input.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
-import { useSpokenLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle } from '@/src/composables/general-config';
+import { useSpokenLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle, useEnableFloatingBall, useEnablePopupClickTrigger } from '@/src/composables/general-config';
 import { allInputContentLengthExceededStrategys } from '@/src/presets/strategy';
 import { browser } from 'wxt/browser';
 
 const { spokenLanguage } = useSpokenLanguage()
 const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
 const { enableSummaryWindowDefault } = useEnableSummaryWindowDefault()
+const { enableFloatingBall } = useEnableFloatingBall()
+const { enablePopupClickTrigger } = useEnablePopupClickTrigger()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault } = useEnableUserChatDefault()
 const { summaryInputExceedBehaviour } = useSummaryInputExceedBehaviour()
@@ -20,7 +22,7 @@ const { userCustomStyle } = useUserCustomStyle()
 </script>
 <template>
   <h1 class="text-2xl mb-4">Basic Setting</h1>
-  <div class="mr-auto flex flex-col gap-8 items-stretch" >
+  <div class="mr-auto flex flex-col gap-8 items-stretch">
     <!-- SAMPLE -->
     <!-- <div class="line">
       <div>
@@ -77,6 +79,17 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
+        <div class="title">Auto open summary panel</div>
+        <div class="description">always open summary panel on a new webpage</div>
+      </div>
+      <div>
+        <Switch v-model:checked="enableSummaryWindowDefault" />
+      </div>
+    </div>
+
+
+    <div class="line">
+      <div>
         <div class="title">Auto begin summary</div>
         <div class="description">Auto begin to summary after openning the summary window </div>
       </div>
@@ -87,13 +100,24 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Always open summary window</div>
-        <div class="description">always open summary window on a new webpage</div>
+        <div class="title">Enable floating ball</div>
+        <div class="description">enable floating ball on the webpage</div>
       </div>
       <div>
-        <Switch v-model:checked="enableSummaryWindowDefault" />
+        <Switch v-model:checked="enableFloatingBall" />
       </div>
     </div>
+
+    <div class="line">
+      <div>
+        <div class="title">Enable popup click trigger</div>
+        <div class="description">enable popup click trigger on the webpage</div>
+      </div>
+      <div>
+        <Switch v-model:checked="enablePopupClickTrigger" />
+      </div>
+    </div>
+
 
     <div class="line">
       <div>

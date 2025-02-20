@@ -78,21 +78,19 @@
 <script setup lang="ts">
 import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
+import { useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
 import { useSummary } from '@/src/composables/useSummary';
-import { getShadowRootAsync, injectUserSettingCssVariables, scrollToId } from '@/src/utils/document';
+import { scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
-import { onMounted, ref, useHost, useShadowRoot, useTemplateRef } from 'vue';
+import { onMounted, ref, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
 import SummaryDialog from '../summary/SummaryDialog.vue';
 import Button from '../ui/button/Button.vue';
-import PageWordCount from './InputTiktokenResultItem.vue';
-import TokenUsageItem from './TokenUsageItem.vue';
-import { useEnableAutoBeginSummary, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig } from '@/src/composables/general-config'
-import { sleep } from 'radash';
-import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
 import { toast } from '../ui/toast';
+import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
+import TokenUsageItem from './TokenUsageItem.vue';
 const isChatDialogOpen = ref(false)
 
 
