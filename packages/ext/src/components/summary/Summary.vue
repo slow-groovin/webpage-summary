@@ -47,7 +47,7 @@
           <div class="absolute right-0 top-0 flex flex-row gap-1 ">
             <!-- enable ChaptInputBox  buttons -->
             <Button v-show="!isChatDialogOpen" @click="() => isChatDialogOpen = !isChatDialogOpen" variant="github"
-              size="icon" class="rounded-none text-gray-500 text-primary">
+              size="icon" class="rounded-none text-neutral-400 text-primary" title="continue chat">
               <MessageCirclePlusIcon />
             </Button>
           </div>

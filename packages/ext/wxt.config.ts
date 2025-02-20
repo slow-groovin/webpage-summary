@@ -19,7 +19,7 @@ export default defineConfig({
     //   // sourcemap: true
     // },
     plugins: [
-    
+
     ],
     resolve: {
       alias: {
@@ -27,14 +27,14 @@ export default defineConfig({
       }
     },
     css: {
-      postcss:{
-        plugins:[tailwind(), autoprefixer()]
+      postcss: {
+        plugins: [tailwind(), autoprefixer()]
       }
     },
   }),
   manifest: {
     name: 'webpage-summary-M',
-    description: 'OSS web page summary , any llm api',
+    description: 'OSS web page summarize , via any llm api',
     permissions: ['storage'],
     icons: {
       // 16: '/icon/16.png',
@@ -42,6 +42,15 @@ export default defineConfig({
       48: '/icon/48.png',
       64: '/icon/64.png',
       128: '/icon/128.png',
+    },
+    commands: {
+      "COMMAND_INVOKE_SUMMARY": {
+        "suggested_key": {
+          "default": "Alt+S",
+          "mac": "Command+S"
+        },
+        "description": "open summary panel in current focus webpage"
+      }
     },
     web_accessible_resources: [
       {

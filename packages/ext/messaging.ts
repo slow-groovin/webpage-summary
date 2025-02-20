@@ -1,23 +1,15 @@
+import models from '@/src/model-providers';
 import { defineExtensionMessaging } from '@webext-core/messaging';
-import { CallWarning, CoreMessage, FinishReason, LanguageModel, LanguageModelUsage, streamText } from 'ai';
-import models from '@/src/model-providers'
+import { CoreMessage } from 'ai';
 interface ProtocolMap {
-  /**
-   * fetch a global config from background
-   * @param key 
-   * @deprecated
-   */
-  getGlobalConfig(key:string):Promise<string|null>;
 
-
-
+  /** for content/popup to open option page */
 	openOptionPage(url:string): Promise<any>;
+  
+  /** for pages beside content to send message to content to invoke summary */
+  invokeSummary():void;
 
-  /**
-   * for onConnectMessage and sendConnectMessage
-   * @param key
-   */
-  _connectEstablish(key:string):string;
+  
 
   /*
    * tests  

@@ -20,7 +20,7 @@ const { userCustomStyle } = useUserCustomStyle()
 </script>
 <template>
   <h1 class="text-2xl mb-4">Basic Setting</h1>
-  <div class="mr-auto flex flex-col gap-8 items-stretch" v-if="enableAutoBeginSummary">
+  <div class="mr-auto flex flex-col gap-8 items-stretch" >
     <!-- SAMPLE -->
     <!-- <div class="line">
       <div>

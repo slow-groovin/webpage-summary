@@ -1,6 +1,7 @@
 <!-- content entry, as a router -->
 <script lang="ts" setup>
 // import ContentDebugPanelEntry from '@/src/components/debug/ContentDebugPanelEntry.vue'
+import { onMessage, sendMessage } from '@/messaging'
 import RightFloatingBallContainer from '@/src/components/container/RightFloatingBallContainer.vue'
 import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
 import Summary from '@/src/components/summary/Summary.vue'
@@ -37,6 +38,13 @@ async function toggleShowWrap() {
 getEnableAutoBeginSummary().then(v => {
   isOpenDebugPanel.value = v
 })
+
+onMessage('invokeSummary',()=>{
+  console.debug('invoke summary by popup')
+  tryEnableOrShow()
+})
+
+
 
 </script>
 

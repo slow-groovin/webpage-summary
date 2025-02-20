@@ -67,3 +67,5 @@ function filterValidCssVariableText(cssVariableText: string) {
     .filter(line => line.startsWith(USER_CUSTOM_CSS_VAR_PREFIX) && line.endsWith(';'))
     .join('\n')
 }
+
+

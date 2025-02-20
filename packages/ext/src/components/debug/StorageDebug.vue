@@ -46,7 +46,8 @@ async function getStorage() {
 }
 
 async function getStorageFromBackground() {
-  backgroundItem.value=await sendMessage('getGlobalConfig','debug-item')
+  // backgroundItem.value=await sendMessage('getGlobalConfig','debug-item')
+  alert("this function has been delete")
 }
 
 async function getAllConfig(){
