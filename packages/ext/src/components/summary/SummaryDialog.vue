@@ -1,22 +1,25 @@
 <template>
   <!-- Summary Dialog Component -->
 
-
   <div class="relative border"><!-- wrapper  -->
     <!-- top-right buttons -->
     <div class="sticky top-1  flex justify-end pr-1 flex-row gap-1">
+      <Button variant="github" size="sm-icon" class="border-none" @click="scrollBottomFunc?.()" title="scroll to bottom">
+        <ArrowDownIcon />
+      </Button>
+
       <!-- copy btn -->
-      <Button variant="github" size="sm-icon">
+      <Button variant="github" size="sm-icon" @click="copyFunc?.()" title="copy all">
         <CopyIcon />
       </Button>
+
     </div>
 
     <!-- dialog block -->
     <div class="pt-2 pl-2 pr-8 pb-9 mt-[-1.5rem]">
       <div id="dialog-top-anchor"></div>
 
-      <slot id="dialog-bottom-anchor"></slot>
-      <div id=""></div>
+      <slot></slot>
 
     </div>
     <div class="sticky bottom-2  flex justify-end pr-1 flex-row gap-1">
@@ -28,11 +31,13 @@
 </template>
 
 <script setup lang="ts">
-import { CopyIcon, MessageCirclePlusIcon } from 'lucide-vue-next';
-import Button from '../ui/button/Button.vue';
+import { ArrowDownIcon, CopyIcon } from 'lucide-vue-next';
 import GoTop from '../common/GoTop.vue';
+import Button from '../ui/button/Button.vue';
+import { inject } from 'vue';
 
-
+const copyFunc = inject<Function>('copy-func')
+const scrollBottomFunc = inject<Function>('scroll-bottom')
 
 
 </script>

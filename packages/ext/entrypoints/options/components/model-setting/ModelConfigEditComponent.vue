@@ -87,7 +87,7 @@ const onSubmit = handleSubmit(async (values) => {
     <ModelProviderSelect v-model:provider-type="providerType">
     </ModelProviderSelect>
 
-    <form @submit="onSubmit" class="w-fit flex flex-col gap-4">
+    <form @submit="onSubmit" class="w-fit flex flex-col gap-4  rounded p-4 border">
       <FormField v-slot="{ componentField }" name="name">
         <FormItem>
           <FormLabel>Config Name</FormLabel>

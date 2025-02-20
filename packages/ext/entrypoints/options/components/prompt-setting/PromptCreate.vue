@@ -1,12 +1,11 @@
 <!-- create prompt item -->
 <script setup lang="ts">
+import { toast } from '@/src/components/ui/toast';
 import { usePromptConfigStorage } from '@/src/composables/prompt';
-import PromptEditComponent from './PromptEditComponent.vue';
 import { PromptConfigItem } from '@/src/types/config/prompt';
 import { uid } from 'radash';
-import { toast, ToastAction } from '@/src/components/ui/toast';
 import { useRouter } from 'vue-router';
-import { h } from 'vue'
+import PromptEditComponent from './PromptEditComponent.vue';
 const { createItem } = usePromptConfigStorage()
 const { push } = useRouter()
 async function onSubmit(name: string, systemMessage: string, userMessage: string) {
@@ -29,18 +28,11 @@ async function onSubmit(name: string, systemMessage: string, userMessage: string
     const timer = setTimeout(() => {
       push('/prompts')
 
-    }, 2500)
+    }, 500)
 
     toast({
       variant: 'default',
-      title: 'success! Will go to list page in 3 sencords',
-      action: h(ToastAction, {
-        altText: 'Cancel',
-        onClick: () => { clearTimeout(timer) }
-      }, {
-        default: () => 'Cancel',
-      }),
-
+      title: 'create success! ',
     });
 
   }

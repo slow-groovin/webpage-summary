@@ -3,7 +3,7 @@
 import Button from '@/src/components/ui/button/Button.vue';
 import { usePromptConfigs, usePromptConfigStorage } from '@/src/composables/prompt';
 import PromptConfigItemComponent from './PromptConfigItem.vue';
-import { Edit, ArrowUpFromLine, ArrowDownFromLine, Delete, CircleX, LocateFixed } from 'lucide-vue-next'
+import { Edit, ArrowUpFromLine, ArrowDownFromLine, Delete, CircleX, LocateFixed, SquarePlusIcon } from 'lucide-vue-next'
 import { useRouter } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
 import { toast } from '@/src/components/ui/toast';
@@ -82,15 +82,18 @@ const handleLocate = (id: string | undefined) => {
   <div>
     <!-- create button -->
     <div>
-      <RouterLink to="/prompts/create">
-        <Button>create one</Button>
-      </RouterLink>
+      <Button class="bg-green-600 hover:bg-green-800 pl-2">
+        <RouterLink to="/prompts/create" class="flex items-center [&_svg]:size-6">
+          <SquarePlusIcon class=""/>
+          Create
+        </RouterLink>
+      </Button>
     </div>
     <!-- default -->
     <div class="min-h-16 text-2xl mt-4 flex flex-row items-center gap-2">
       default:
       <span class="border rounded p-1 border-green-500">
-        {{ defaultPrompt?.name }}
+        {{ defaultPrompt?.name ?? 'NO PROMPT' }}
 
       </span>
       <LocateFixed @click="handleLocate(defaultPrompt?.id)" class="h-8 w-8 text-green-500 border rounded-2xl p-1 hover:border-green-800" />

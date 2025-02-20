@@ -14,7 +14,7 @@ export { toast, useToast } from './use-toast'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 export const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[--radix-toast-swipe-end-x] data-[swipe=move]:translate-x-[--radix-toast-swipe-move-x] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
+  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 mt-2 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[--radix-toast-swipe-end-x] data-[swipe=move]:translate-x-[--radix-toast-swipe-move-x] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
   {
     variants: {
       variant: {
@@ -23,6 +23,9 @@ export const toastVariants = cva(
                     'destructive group border-destructive bg-destructive text-destructive-foreground',
         success: 'border bg-green-700 text-white',
         warning: 'border bg-amber-700 text-white',
+        blockquote: 'border-l-8 rounded-l-none py-2 px-2 border-blue-400 italic',
+        'blockquote-error': 'border-l-8 rounded-l-none py-2 px-2 border-red-400 italic',
+        'blockquote-success': 'border-l-8 rounded-l-none py-2 px-2 border-green-400 italic'
       },
     },
     defaultVariants: {

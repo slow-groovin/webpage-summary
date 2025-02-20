@@ -5,15 +5,17 @@ import { useModelConfigs, useModelConfigStorage } from '@/src/composables/model-
 import { ModelConfigItem } from '@/src/types/config/model';
 import { RouterLink, useRouter } from 'vue-router';
 import { toast } from '@/src/components/ui/toast';
-import { ArrowUpFromLine, ArrowDownFromLine, CircleX, LocateFixed, EditIcon } from 'lucide-vue-next'
+import { ArrowUpFromLine, ArrowDownFromLine, CircleX, LocateFixed, EditIcon, SquarePlusIcon } from 'lucide-vue-next'
 import RadioButton from '@/src/components/custom-ui/RadioButton.vue';
 import ModelConfigItemComponent from './ModelConfigItem.vue';
+import Switch from '@/src/components/ui/switch/Switch.vue';
+import useWxtStorage from '@/src/composables/useWxtStorage';
 
 const { listItem, updateConfigOrder, setDefaultItemId, deleteItem, getDefaultItem } = useModelConfigStorage()
 const { state: models } = useModelConfigs()
 const { push } = useRouter()
 const defaultModel = ref<ModelConfigItem | null>()
-const isEditMode = ref(false)
+const {state:isEditMode} = useWxtStorage('local:config-model-list-is-edit-mode',false)
 onMounted(async () => {
   defaultModel.value = await getDefaultItem()
 })
@@ -79,17 +81,22 @@ const handleLocate = (id: string | undefined) => {
     <!-- create button   -->
     <div class="flex flex-row gap-2">
 
-      <Button>
-        <RouterLink to="/models/create">Create</RouterLink>
+      <Button class="bg-green-600 hover:bg-green-800 pl-2">
+        <RouterLink to="/models/create" class="flex items-center [&_svg]:size-6">
+          <SquarePlusIcon class=""/>
+          Create
+        </RouterLink>
       </Button>
-      <Button @click="() => isEditMode = true" v-if="!isEditMode">Edit Mode </Button>
-      <Button @click="() => isEditMode = false" v-if="isEditMode" variant="destructive">Quit Edit Mode </Button>
+      <label class="flex flex-row items-center gap-2 font-light border p-1 text-sm rounded">
+        <Switch v-model:checked="isEditMode" class="data-[state=checked]:bg-amber-500" />
+        Toggle edit mode
+      </label>
     </div>
     <!-- default -->
     <div class="min-h-16 text-2xl mt-4 flex flex-row items-center gap-2">
       default:
       <span class="border rounded p-1 border-green-500">
-        {{ defaultModel?.name }}
+        {{ defaultModel?.name??'NO MODEL ' }}
 
       </span>
       <LocateFixed @click="handleLocate(defaultModel?.id)"

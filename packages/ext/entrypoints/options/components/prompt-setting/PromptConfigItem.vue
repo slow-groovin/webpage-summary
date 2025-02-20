@@ -9,6 +9,7 @@ const props = defineProps<{
 }>()
 const renderMessage = (message: string) => {
   if (typeof message !== 'string') return ''
+  message = message.replace(/</g, '&lt;').replace(/>/g, '&gt;')
   const parts = message.split(/(\{\{[^}]*\}\})/)
   // console.log(parts)
   return parts.map((part, index) => {

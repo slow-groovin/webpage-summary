@@ -11,7 +11,7 @@ import { renderMessages } from '../utils/prompt';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
-import { getEnableAutoBeginSummary, getSpokenLanguage, getSummaryInputExceedBehaviour } from './general-config';
+import { getEnableAutoBeginSummary, getSummaryLanguage, getSummaryInputExceedBehaviour } from './general-config';
 import { EventEmitter } from 'eventemitter3'
 import { handleExceedContent } from '../utils/page-read';
 import { handleConnectError } from '../utils/error-parse';
@@ -20,14 +20,20 @@ import { handleConnectError } from '../utils/error-parse';
 
 export function useSummary() {
   onMounted(async () => {
-    currentModel.value = await modelStorage.getDefaultItem()
-    currentPrompt.value = await promptStorage.getDefaultItem()
-    isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
-    isPreparing.value = false
-    await initMessages()
-    event.emit('ready')
-    if (await getEnableAutoBeginSummary()) {
-      append('', 'assistant')
+    try {
+      currentModel.value = await modelStorage.getDefaultItem()
+      currentPrompt.value = await promptStorage.getDefaultItem()
+      isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
+      isPreparing.value = false
+      await initMessages()
+      event.emit('prepare-done')
+      if (await getEnableAutoBeginSummary()) {
+        append('', 'assistant')
+      }
+    } catch (e) {
+      error.value=(e)
+      event.emit('prepare-done')
+      // toast({ title: 'Error', description: handleConnectError(e), variant: 'destructive' })
     }
   })
   const uiMessages = ref<UIMessage[]>([])
@@ -83,8 +89,8 @@ export function useSummary() {
 
   const event = new EventEmitter()
 
-  function onReady(onReadyHook: () => void) {
-    event.once('ready', onReadyHook)
+  function onPrepareDone(onReadyHook: () => void) {
+    event.once('prepare-done', onReadyHook)
   }
 
   function onChunk(onChunkHook: (chunk: unknown) => void) {
@@ -125,7 +131,7 @@ export function useSummary() {
 
       const summaryInput = {
         ...webpageContent,
-        spokenLanguage: await getSpokenLanguage()
+        summaryLanguage: await getSummaryLanguage()
       }
       renderMessages(messages.value, summaryInput)
     } else {
@@ -144,6 +150,10 @@ export function useSummary() {
     append('', 'assistant')
   }
 
+  async function copyMessages() {
+    await navigator.clipboard.writeText(uiMessages.value.map(m=>m.content).join('\n\n'))
+    toast({ title: "copied to clipboard success!", variant: 'blockquote-success' })
+  }
   async function append(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
@@ -210,7 +220,7 @@ export function useSummary() {
     uiMessages,
     webpageContent,
     onChunk,
-    onReady,
+    onPrepareDone: onPrepareDone,
     append,
     stop,
     refreshSummary,
@@ -218,5 +228,6 @@ export function useSummary() {
     currentPrompt,
     tokenUsage,
     inputContentLengthInfo,
+    copyMessages
   }
 }

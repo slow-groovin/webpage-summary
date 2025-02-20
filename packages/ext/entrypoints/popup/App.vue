@@ -5,7 +5,10 @@ import { useExtInfo } from '@/src/composables/extension';
 import { getEnablePopupClickTrigger } from '@/src/composables/general-config';
 import { BookOpenTextIcon, SettingsIcon } from 'lucide-vue-next';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { browser } from 'wxt/browser';
+
+console.log(window.location.href)
 const { iconUrl, name, version } = useExtInfo()
 
 async function invokeCurrentTabSummary() {
@@ -17,9 +20,9 @@ async function invokeCurrentTabSummary() {
   sendMessage('invokeSummary', undefined, { tabId: tab.id })
 }
 
-onMounted(async ()=>{
-  const enablePopupClickTrigger=await getEnablePopupClickTrigger()
-  if(enablePopupClickTrigger){
+onMounted(async () => {
+  const enablePopupClickTrigger = await getEnablePopupClickTrigger()
+  if (enablePopupClickTrigger) {
     invokeCurrentTabSummary()
     window.close()
   }

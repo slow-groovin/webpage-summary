@@ -5,6 +5,9 @@ interface ProtocolMap {
 
   /** for content/popup to open option page */
 	openOptionPage(url:string): Promise<any>;
+
+  /** for content/popup to open option page */
+	openPopupPage(input:{ query:string}): Promise<any>;
   
   /** for pages beside content to send message to content to invoke summary */
   invokeSummary():void;

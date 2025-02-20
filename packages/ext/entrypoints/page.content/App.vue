@@ -52,8 +52,7 @@ onMessage('invokeSummary', () => {
 <template>
   <div class="relative z-[9999] user-setting-style">
 
-    <Toaster />
-
+    <Toaster class="top-0 left-1/2"/>
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" class="top-16 right-16" @minimize-panel="toggleShowWrap" />
 

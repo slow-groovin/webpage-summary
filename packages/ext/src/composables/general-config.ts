@@ -21,7 +21,7 @@ async function getAllExtConfigs() {
   ]);
 
   return {
-    spokenLanguage: result[0].value as string ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
+    summaryLanguage: result[0].value as string ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
     maxLength: result[1].value as number ?? DefaultConfig.MAX_LENGTH,
     userCustomStyle: result[2].value as string ?? DefaultConfig.USER_CUSTOM_STYLE,
     enableTokanUsageView: result[3].value as boolean ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
@@ -36,13 +36,13 @@ export function useGeneralConfig() {
 }
 
 /**
- * Reactive spoken language config.
+ * Reactive summary language config.
  */
-export function useSpokenLanguage() {
-  const { state: spokenLanguage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
-  return { spokenLanguage, ...other }
+export function useSummaryLanguage() {
+  const { state: summaryLanguage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
+  return { summaryLanguage, ...other }
 }
-export async function getSpokenLanguage() {
+export async function getSummaryLanguage() {
   return await storage.getItem(SPOKEN_LANG_KEY, { fallback: DefaultConfig.SPOKEN_LANG })
 }
 /**

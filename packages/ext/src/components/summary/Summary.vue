@@ -1,5 +1,5 @@
 <template>
-  <template class="" v-if="currentModel && currentPrompt">
+  <template class="" v-if="true || (currentModel && currentPrompt)">
     <DraggableContainer
       class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl">
       <template #header>
@@ -19,7 +19,7 @@
             <!-- minimize button -->
             <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
               class="border-none p-0 [&_svg]:size-6">
-              <SquareMinusIcon/>
+              <SquareMinusIcon />
             </Button>
           </template>
         </SummaryHeader>
@@ -80,7 +80,7 @@ import { useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composa
 import { useSummary } from '@/src/composables/useSummary';
 import { scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
-import { onMounted, ref, useTemplateRef } from 'vue';
+import { onMounted, provide, ref, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
@@ -91,26 +91,43 @@ import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 const isChatDialogOpen = ref(false)
 
-
 //todo define Expose to parent to control hide/show panel
 defineEmits<{
   minimizePanel: []
 }>()
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, stop, inputContentLengthInfo, tokenUsage, onChunk, error } = useSummary()
+
+
+const { append, stop, error, status,
+  currentModel, currentPrompt, uiMessages,
+  refreshSummary, onPrepareDone, onChunk,
+  inputContentLengthInfo, tokenUsage, copyMessages
+} = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
+const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
+
+/*provide funcs to SummaryDialog.vue */
+provide('copy-func', copyMessages)
+provide('scroll-bottom', () => scrollToId('dialog-bottom-anchor'))
 
 enableUserChatDefaultThen(() => {
   isChatDialogOpen.value = enableUserChatDefault.value
 })
 
+onPrepareDone(() => {
+  if (!currentModel.value) {
+    toast({ variant: 'blockquote-error', description: 'no model configed, please create a model config first!', open: true, duration: 10000 })
+  }
+  if (!currentPrompt.value) {
+    toast({ variant: 'blockquote-error', description: 'no prompt configed, please create a prompt config first!', open: true, duration: 10000 })
+  }
+})
 // onChunk(() => {
 //   scrollToId('dialog-bottom-anchor')
 // })
 
 
-const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 
 async function submitUserInput(content: string, onSuc: () => void) {
   if (!content || status.value !== 'ready') return
@@ -121,12 +138,14 @@ async function submitUserInput(content: string, onSuc: () => void) {
 }
 
 async function viewFailedReason() {
-  toast({ title: "ERROR", description: error.value, variant: "destructive" })
+  toast({ title: "ERROR", description: error.value, variant: "blockquote-error" })
 }
 
 onMounted(() => {
 
 })
+
+
 </script>
 
 

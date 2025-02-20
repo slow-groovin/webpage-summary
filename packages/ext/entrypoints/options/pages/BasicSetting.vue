@@ -3,11 +3,11 @@ import Select from '@/src/components/custom-ui/select/Select.vue';
 import SelectItem from '@/src/components/custom-ui/select/SelectItem.vue';
 import Input from '@/src/components/ui/input/Input.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
-import { useSpokenLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle, useEnableFloatingBall, useEnablePopupClickTrigger } from '@/src/composables/general-config';
+import { useSummaryLanguage, useEnableAutoBeginSummary, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useGeneralConfig, useMaxLength, useSummaryInputExceedBehaviour, useUserCustomStyle, useEnableFloatingBall, useEnablePopupClickTrigger } from '@/src/composables/general-config';
 import { allInputContentLengthExceededStrategys } from '@/src/presets/strategy';
 import { browser } from 'wxt/browser';
 
-const { spokenLanguage } = useSpokenLanguage()
+const { summaryLanguage } = useSummaryLanguage()
 const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
 const { enableSummaryWindowDefault } = useEnableSummaryWindowDefault()
 const { enableFloatingBall } = useEnableFloatingBall()
@@ -46,11 +46,11 @@ const { userCustomStyle } = useUserCustomStyle()
     </div> -->
     <div class="line">
       <div>
-        <div class="title">Language of the output summary</div>
+        <div class="title">Language of summary</div>
         <div class="description">select the language of the summary that you want to read</div>
       </div>
       <div>
-        <Input v-model="spokenLanguage" />
+        <Input v-model="summaryLanguage" />
       </div>
     </div>
 

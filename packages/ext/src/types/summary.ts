@@ -46,10 +46,10 @@ export type WebpageContent = {
   title?: string
 }
 
-export type SummaryInput = WebpageContent & { spokenLanguage: string }
+export type SummaryInput = WebpageContent & { summaryLanguage: string }
 export const SummaryInputSchema: z.ZodType<SummaryInput> = z.object({
   textContent: z.string(),
-  spokenLanguage: z.string().min(2)
+  summaryLanguage: z.string().min(2)
 })
 
 export type TokenUsage = {

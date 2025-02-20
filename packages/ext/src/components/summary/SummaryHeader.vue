@@ -8,15 +8,17 @@
       </div>
 
       <!-- model select -->
-      <div class="rounded" v-if="currentModelConfig">
-        <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig.id">
+      <div class="rounded">
+        <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig?.id??''">
           <!-- Select Trigger has bug in headless, so use style to force setting it  -->
           <template #trigger class="h-fit">
-            <ModelConfigInlineItem :item="currentModelConfig" :is-selected="true" />
+            <ModelConfigInlineItem v-if="currentModelConfig" :item="currentModelConfig" :is-selected="true" />
+            <ModelErrorInineItem v-else />
+
           </template>
 
           <template #content>
-            <template v-for="configItem in modelConfigs" :key="configItem.id">
+            <template v-if="modelConfigs" v-for="configItem in modelConfigs" :key="configItem.id">
               <SelectItem :value="configItem.id">
                 <ModelConfigInlineItem :item="configItem" :is-selected="false" />
               </SelectItem>
@@ -26,16 +28,18 @@
         </Select>
       </div>
 
+
       <!-- prompt select -->
-      <div class="rounded" v-if="currentPromptConfig">
-        <Select @update:model-value="selectCurrentPrompt" :model-value="currentPromptConfig.id">
+      <div class="rounded">
+        <Select @update:model-value="selectCurrentPrompt" :model-value="currentPromptConfig?.id ?? '0'">
           <!-- Select Trigger has bug in headless, so use style to force setting it -->
           <template #trigger class="h-fit" style="background-color: transparent;color:var(--primary)">
-            <PromptConfigInlineItem :item="currentPromptConfig!" />
+            <PromptConfigInlineItem v-if="currentPromptConfig" :item="currentPromptConfig" />
+            <PromptErrorInineItem v-else/>
           </template>
 
-          <template #content="value">
-            <template v-for="configItem in promptConfigs" :key="configItem.id">
+          <template #content>
+            <template v-if="promptConfigs" v-for="configItem in promptConfigs" :key="configItem.id">
               <SelectItem :value="configItem.id">
                 <PromptConfigInlineItem :item="configItem" />
               </SelectItem>
@@ -63,21 +67,21 @@
 </template>
 
 <script setup lang="ts">
+import { sendMessage } from '@/messaging';
+import { Select, SelectItem } from '@/src/components/custom-ui/select';
 import { useExtInfo } from '@/src/composables/extension';
 import { useModelConfigStorage } from '@/src/composables/model-config';
-import { ModelConfigItem } from '@/src/types/config/model';
-import { onMounted, ref } from 'vue';
-import { SettingsIcon } from 'lucide-vue-next';
-import { Select, SelectItem } from '@/src/components/custom-ui/select'
-import ModelConfigInlineItem from '../model/ModelConfigInlineItem.vue';
 import { usePromptConfigStorage } from '@/src/composables/prompt';
+import { ModelConfigItem } from '@/src/types/config/model';
 import { PromptConfigItem } from '@/src/types/config/prompt';
-import PromptConfigInlineItem from '../prompt/PromptConfigInlineItem.vue';
-import { TokenUsage } from '@/src/types/summary';
-import TokenUsageItem from './TokenUsageItem.vue';
-import Button from '../ui/button/Button.vue';
-import { sendMessage } from '@/messaging';
+import { SettingsIcon } from 'lucide-vue-next';
+import { onMounted, ref } from 'vue';
 import icon from '~/assets/16.png';
+import ModelConfigInlineItem from '../model/ModelConfigInlineItem.vue';
+import ModelErrorInineItem from '../model/ModelErrorInineItem.vue';
+import PromptConfigInlineItem from '../prompt/PromptConfigInlineItem.vue';
+import PromptErrorInineItem from '../prompt/PromptErrorInineItem.vue';
+import Button from '../ui/button/Button.vue';
 
 
 defineProps<{

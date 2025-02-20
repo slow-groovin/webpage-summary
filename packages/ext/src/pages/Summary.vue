@@ -27,7 +27,7 @@ async function simpleSummary() {
   const {articleUrl,byline,dir,excerpt,lang,length,publishedTime,siteName,textContent,title}=pageArtilce
   const messages = presetPrompts['basic']
   renderMessages(messages, {
-    spokenLanguage: 'Chinese',
+    summaryLanguage: 'Chinese',
     textContent: JSON.stringify(rest)
   })
 
