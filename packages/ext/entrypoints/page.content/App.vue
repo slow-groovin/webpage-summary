@@ -1,39 +1,66 @@
 <!-- content entry, as a router -->
 <script lang="ts" setup>
-import DraggableContainer from '@/src/components/container/DraggableContainer.vue'
-import SeparationComponentInContentDebug from '@/src/components/debug/SeparationComponentInContentDebug.vue'
 // import ContentDebugPanelEntry from '@/src/components/debug/ContentDebugPanelEntry.vue'
-import ErrorComponent from '@/src/components/status/ErrorComponent.vue'
-import LoadingComponent from '@/src/components/status/LoadingComponent.vue'
+import RightFloatingBallContainer from '@/src/components/container/RightFloatingBallContainer.vue'
+import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
 import Summary from '@/src/components/summary/Summary.vue'
 import Toaster from '@/src/components/ui/toast/Toaster.vue'
-import { defineAsyncComponent, ref } from 'vue'
-const open = ref(false)
+import { getEnableAutoBeginSummary } from '@/src/composables/general-config'
+import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
+import { sleep } from 'radash'
+import { onMounted, ref } from 'vue'
+import icon from '~/assets/16.png'
+
+onMounted(() => {
+
+})
+
+
+
+const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
+
+const isFloatingBallPulseAnim = ref(false)
+const isOpenDebugPanel = ref(false)
+
+
+
 async function openDebugPanel() {
-  open.value = !open.value
+  isOpenDebugPanel.value = !isOpenDebugPanel.value
 }
+
+async function toggleShowWrap() {
+  toggleShow()
+  isFloatingBallPulseAnim.value = true
+  await sleep(1500)
+  isFloatingBallPulseAnim.value = false
+}
+getEnableAutoBeginSummary().then(v => {
+  isOpenDebugPanel.value = v
+})
+
 </script>
 
 <template>
   <div class="relative z-[9999] user-setting-style">
+
     <Toaster />
-    <!-- <DraggableContainer v-if="false" >
-      <template #header>
-        <div class=" h-8 min-w-64 bg-gray-200 flex flex-row-reverse">
-          <button @click="openDebugPanel">debug panel: {{ open }}</button>
 
-        </div>
-      </template>
-<div>
-  <Summary></Summary>
-</div>
 
-</DraggableContainer> -->
-      <Summary class="top-16 right-16" />
+    <Summary v-if="isOpenSummaryPanel" v-show="isShow" class="top-16 right-16" @minimize-panel="toggleShowWrap" />
 
-    <!-- <div class="fixed top-[50vh] right-[50vw] bg-white min-h-96 min-w-96 border rounded">
-      <SeparationComponentInContentDebug/>
-    </div> -->
+    <RightFloatingBallContainer class="top-[70%]" :init-closed-btn-hidden="false">
+      <HoverCard>
+        <template #trigger>
+          <div @click="tryEnableOrShow" :class="{ 'animate-bounce duration-500': isFloatingBallPulseAnim }"
+            class="w-fit h-fit p-2 aspect-square rounded-full border-[1px] border-purple-800">
+            <img :src="icon" class="w-6 h-6 rounded select-none" draggable="false">
+          </div>
+        </template>
+        <template #content>
+          open summary panel
+        </template>
+      </HoverCard>
+    </RightFloatingBallContainer>
   </div>
 </template>
 

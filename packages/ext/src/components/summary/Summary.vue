@@ -9,13 +9,20 @@
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
           <template #left-buttons>
-            <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary" @stop="stop" />
+            <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary"
+              @stop="stop" />
           </template>
           <template #right-buttons>
-            <div v-if="enableTokenUsageView" class="flex items-center gap-1 border rounded p-1 bg-gray-200"
-              title="Token Usage">
+            <div v-if="enableTokenUsageView && tokenUsage.inputToken"
+              class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
               <TokenUsageItem v-if="tokenUsage && tokenUsage.inputToken" :usage="tokenUsage" />
             </div>
+
+            <!-- minimize button -->
+            <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
+              class="border-none p-0 [&_svg]:size-6">
+              <SquareMinusIcon/>
+            </Button>
           </template>
         </SummaryHeader>
 
@@ -27,7 +34,8 @@
           ref="summaryDialog">
           <div class="flex flex-col gap-4">
             <InputTiktokenResultItem class="p-0.5 text-sm border-none"
-              v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength!==undefined" :result="inputContentLengthInfo" />
+              v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
+              :result="inputContentLengthInfo" />
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem :message="{ type: msg.role, content: msg.content }" />
             </template>
@@ -72,7 +80,7 @@ import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
 import { useSummary } from '@/src/composables/useSummary';
 import { getShadowRootAsync, injectUserSettingCssVariables, scrollToId } from '@/src/utils/document';
-import { ChevronUpIcon, MessageCirclePlusIcon } from 'lucide-vue-next';
+import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
 import { onMounted, ref, useHost, useShadowRoot, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
@@ -88,7 +96,12 @@ import { toast } from '../ui/toast';
 const isChatDialogOpen = ref(false)
 
 
-const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady,stop, inputContentLengthInfo, tokenUsage, onChunk,error } = useSummary()
+//todo define Expose to parent to control hide/show panel
+defineEmits<{
+  minimizePanel: []
+}>()
+
+const { append, currentModel, currentPrompt, status, uiMessages, refreshSummary, onReady, stop, inputContentLengthInfo, tokenUsage, onChunk, error } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 
@@ -112,7 +125,7 @@ async function submitUserInput(content: string, onSuc: () => void) {
 }
 
 async function viewFailedReason() {
-  toast({title:"ERROR", description:error.value, variant:"destructive"})
+  toast({ title: "ERROR", description: error.value, variant: "destructive" })
 }
 
 onMounted(() => {

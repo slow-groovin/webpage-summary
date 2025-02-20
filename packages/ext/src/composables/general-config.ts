@@ -96,6 +96,10 @@ export function useEnableSummaryWindowDefault() {
   return { enableSummaryWindowDefault, ...other }
 }
 
+export async function getEnableSummaryWindowDefault() {
+  return await storage.getItem(ENABLE_SUMMARY_WINDOW_DEFAULT, { fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT })
+}
+
 /**
  * Reactive summary input exceed behaviour config.
  */
