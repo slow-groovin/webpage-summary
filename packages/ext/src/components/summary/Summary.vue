@@ -35,7 +35,7 @@
               v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
               :result="inputContentLengthInfo" />
             <template v-for="(msg, index) in uiMessages" :key="index">
-              <MessageItem :message="msg" />
+              <MessageItem v-if="!msg.hide" :message="msg" />
             </template>
             <div id="dialog-bottom-anchor"></div>
           </div>

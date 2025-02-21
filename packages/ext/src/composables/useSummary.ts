@@ -39,8 +39,7 @@ export function useSummary() {
   const uiMessages = ref<UIMessage[]>([])
   const messages = ref<CoreMessage[]>([])
 
-  // const status = ref<'preparing' | 'failed' | 'ready' | 'running'>('preparing')
-  // 使用以下flag和计算属性status替代上面的status
+
   const isRunning = ref(false)
   const isFailed = ref(false)
   const isPreparing = ref(true)
@@ -79,8 +78,6 @@ export function useSummary() {
   const tokenUsage = ref<TokenUsage>({
     inputToken: 0,
     outputToken: 0,
-    cost: 0,
-    unit: '$',
   })
 
   const { webpageContent } = useWebpageContent()
@@ -116,6 +113,9 @@ export function useSummary() {
       { role: 'system', content: currentPrompt.value?.systemMessage ?? promptPreset.systemMessage },
       { role: 'user', content: currentPrompt.value?.userMessage ?? promptPreset.userMessage },
     ]
+    /*
+     * render and deal with content length exceed
+     */
     if (webpageContent) {
       if (!webpageContent.textContent) webpageContent.textContent = ''
 
@@ -137,17 +137,20 @@ export function useSummary() {
     } else {
       throw new Error('webpage content is empty')
     }
-  }
 
-  function initUIMessages() {
-    uiMessages.value = []
+    //init ui messages with first two message hidden
+    uiMessages.value = messages.value.map(m => ({
+      at: Date.now(),
+      content: m.content as string,
+      role: m.role as 'system' | 'user',
+      hide: true
+    }))
   }
 
 
   async function refreshSummary() {
     try {
       await initMessages()
-      initUIMessages()
       append('', 'assistant')
 
     } catch (e) {
@@ -158,24 +161,28 @@ export function useSummary() {
   }
 
   async function copyMessages() {
-    await navigator.clipboard.writeText(uiMessages.value.map(m => m.content).join('\n\n'))
+    await navigator.clipboard.writeText(uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n'+'-'.repeat(50)+'\n'))
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
   async function append(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
     }
+    /*content can be '', for reusing this function to trigger initial summary with the first two messages.    */
+    if (content) {
+      messages.value.push({
+        role: role, content: content
+      })
 
-    messages.value.push({
-      role: role, content: content
-    })
-
-    //show user input message
-    if (role === 'user') {
-      uiMessages.value.push({ role: 'user', content: content, at: Date.now() })
+      //show user input message
+      if (role === 'user') {
+        uiMessages.value.push({ role: 'user', content: content, at: Date.now() })
+      }
     }
+
     //show latest assitant message
     uiMessages.value.push({ role: 'assistant', content: '', at: Date.now() })
+
 
     isRunning.value = true
     const { textStream, tokenUsage: newTokenUsage, stop } = await sendConnectMessage(
@@ -203,6 +210,11 @@ export function useSummary() {
     })
     textStream.onChunkComplete(async () => {
       isRunning.value = false
+
+      /*push to messages */
+      messages.value.push({ role: 'assistant', content: uiMessages.value[uiMessages.value.length - 1].content })
+
+      /*calc token usage */
       const { inputToken, outputToken } = await newTokenUsage
       const cost = (currentModel.value?.inputTokenPrice ?? 0) * inputToken / 100_0000 + (currentModel.value?.outputTokenPrice ?? 0) * outputToken / 100_0000
 
@@ -210,7 +222,7 @@ export function useSummary() {
         inputToken: tokenUsage.value.inputToken + inputToken,
         outputToken: tokenUsage.value.outputToken + outputToken,
         cost: cost,
-        unit: currentModel.value?.priceUnit 
+        unit: currentModel.value?.priceUnit
       }
     })
   }
