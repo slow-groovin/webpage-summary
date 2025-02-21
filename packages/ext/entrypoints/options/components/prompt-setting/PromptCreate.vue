@@ -41,7 +41,7 @@ async function onSubmit(name: string, systemMessage: string, userMessage: string
 }
 </script>
 <template>
-  <h1>create new template</h1>
+  <h1 class="text-lg font-bold">create new template</h1>
   <div>
     <PromptEditComponent @submit="onSubmit" />
   </div>

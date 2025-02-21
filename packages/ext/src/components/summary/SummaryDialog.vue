@@ -16,7 +16,7 @@
     </div>
 
     <!-- dialog block -->
-    <div class="pt-2 pl-2 pr-8 pb-9 mt-[-1.5rem]">
+    <div class="pt-2 pl-2 pr-8 pb-9 mt-[-1.5rem] ">
       <div id="dialog-top-anchor"></div>
 
       <slot></slot>

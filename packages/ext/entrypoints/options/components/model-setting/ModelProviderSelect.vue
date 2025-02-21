@@ -25,11 +25,11 @@ const providerType = defineModel<string>('providerType')
       </Button>
     </template>
   </div>
-  <h3 class=" text-sm font-semibold flex flex-col items-start gap-4">
-    <span>Model Provider: </span>
-    <div class="flex items-center gap-2 border border-neutral-500 rounded p-1">
+  <h3 class="mx-auto text-sm font-semibold flex flex-row items-center gap-4">
+    <span>Selected Model Provider: </span>
+    <div class="flex items-center gap-1 border border-neutral-500 rounded p-1">
       <img :src="modelProviderPresets[providerType as string].icon" alt="Model Icon" class="w-6 h-6" />
-      <div class="  text-green-700">{{ providerType }} </div>
+      <div class="">{{ providerType }} </div>
     </div>
 
   </h3>

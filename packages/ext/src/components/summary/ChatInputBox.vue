@@ -7,9 +7,9 @@
     :class="cn('relative flex flex-row flex-nowrap items-end border p-2 h-fit', isTextAreaFocus ? 'border-primary' : '', props.class)">
     <!-- :class="{ 'border-primary': isTextAreaFocus }"> -->
     <!-- Input box -->
-    <textarea v-model="inputValue"
+    <textarea v-model="inputValue" ref="textareaRef"
       :class="cn('w-full h-12 min-h-4  rounded-md border-none text-base focus-visible:outline-none resize-none caret-current bg-transparent', props.class)"
-      placeholder="Type your message here..." @input="adjustHeight" @focusin="focusin" @focusout="focusout"></textarea>
+      placeholder="Type your message here... Shift+Enter to send." @input="adjustHeight" @focusin="focusin" @focusout="focusout"></textarea>
 
     <!-- Send button -->
     <Button variant="default" class="py-2 h-fit" @click="handleSubmit" :disabled="$attrs.disabled">
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { cn } from '@/src/utils/shadcn';
-import { ref, type HTMLAttributes } from 'vue';
+import { ref, useTemplateRef, type HTMLAttributes } from 'vue';
 import { SendHorizonalIcon } from 'lucide-vue-next';
 import Button from '../ui/button/Button.vue';
 import { getLineHeightOfElement } from '@/src/utils/document';
@@ -36,13 +36,22 @@ const emit = defineEmits<{
 const inputValue = ref('')
 
 const isTextAreaFocus = ref(false)
+const textAreaRef=useTemplateRef('textareaRef')
+
+const handleEnterPress = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' && event.shiftKey) {
+    handleSubmit()
+  }
+}
 
 function focusin() {
+  textAreaRef.value?.addEventListener('keydown', handleEnterPress);
   isTextAreaFocus.value = true
 }
 
 function focusout() {
   isTextAreaFocus.value = false
+  
 }
 
 function adjustHeight(event: Event) {

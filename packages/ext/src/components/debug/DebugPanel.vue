@@ -1,19 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-import DragShadowRoot from './DragShadowRoot.vue';
+import { useRoute, useRouter } from 'vue-router';
 import SimpleTabsContainer from '../container/SimpleTabsContainer.vue';
-import ReadabilityDebug from './ReadabilityDebug.vue';
-import VercelAICoreDebug from './VercelAICoreDebug.vue';
-import MessageDebug from './MessageDebug.vue';
-import StorageDebug from './StorageDebug.vue';
-import { useRoute,useRouter } from 'vue-router';
-import { ErrorMessage } from 'vee-validate';
-import SummaryHeaderDebug from './SummaryBoxDebug.vue';
-import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
-import CustomSelectDebug from './CustomSelectDebug.vue';
 import ConnectMessageDebug from './ConnectMessageDebug.vue';
+import CustomSelectDebug from './CustomSelectDebug.vue';
+import MessageDebug from './MessageDebug.vue';
+import ReadabilityDebug from './ReadabilityDebug.vue';
 import ResizableDebug from './ResizableDebug.vue';
-import SeparationComponentInContentDebug from './SeparationComponentInContentDebug.vue';
+import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
+import StorageDebug from './StorageDebug.vue';
+import SummaryHeaderDebug from './SummaryBoxDebug.vue';
+import VercelAICoreDebug from './VercelAICoreDebug.vue';
 const { query: { index } } = useRoute()
 const {replace}=useRouter()
 const components = [

@@ -31,7 +31,7 @@ export function useSummary() {
         append('', 'assistant')
       }
     } catch (e) {
-      error.value=(e)
+      error.value = (e)
       event.emit('prepare-done')
       // toast({ title: 'Error', description: handleConnectError(e), variant: 'destructive' })
     }
@@ -145,14 +145,21 @@ export function useSummary() {
 
 
   async function refreshSummary() {
-    await initMessages()
-    initUIMessages()
-    append('', 'assistant')
+    try {
+      await initMessages()
+      initUIMessages()
+      append('', 'assistant')
+
+    }catch(e){
+      console.error(e)
+      error.value=handleConnectError(e)
+    }
+    
   }
 
   async function copyMessages() {
-    await navigator.clipboard.writeText(uiMessages.value.map(m=>m.content).join('\n\n'))
-    toast({ title: "copied to clipboard success!", variant: 'blockquote-success' })
+    await navigator.clipboard.writeText(uiMessages.value.map(m => m.content).join('\n\n'))
+    toast({ title: "copied to clipboard success!", variant: 'success' })
   }
   async function append(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
@@ -184,6 +191,7 @@ export function useSummary() {
           isFailed.value = true
 
           error.value = handleConnectError(e)
+        
         }
       }
     )

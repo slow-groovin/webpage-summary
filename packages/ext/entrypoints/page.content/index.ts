@@ -32,7 +32,9 @@ export default defineContentScript({
 
       onMount: (container, _shadow, shadowHost) => {
         // console.log(container,_shadow,shadowHost)
+        // applyPageHtmlFont(_shadow,  shadowHost)
         // Define how your UI will be mounted inside the container
+
         const app = createApp(App);
         app.config.errorHandler = (err:any) => {
           console.error('vue err',err)
@@ -52,3 +54,20 @@ export default defineContentScript({
     ui.mount();
   },
 });
+
+/**
+ * experimental: apply host's font-family
+ * @param shadowRoot 
+ * @param shadowHost 
+ */
+function applyPageHtmlFont(shadowRoot:ShadowRoot, shadowHost:HTMLElement){
+  const pageFont = window.getComputedStyle(document.body).fontFamily;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    html, :host {
+      font-family: ${pageFont}; /* test_j4571 */
+    }
+  `;
+  shadowRoot.querySelector('head')?.appendChild(style);
+}

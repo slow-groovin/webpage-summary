@@ -1,7 +1,7 @@
 <template>
-  <template class="" v-if="true || (currentModel && currentPrompt)">
+  <template  v-if="true">
     <DraggableContainer
-      class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl">
+      class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl shadow-2xl">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -35,7 +35,7 @@
               v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
               :result="inputContentLengthInfo" />
             <template v-for="(msg, index) in uiMessages" :key="index">
-              <MessageItem :message="{ type: msg.role, content: msg.content }" />
+              <MessageItem :message="msg" />
             </template>
             <div id="dialog-bottom-anchor"></div>
           </div>
@@ -117,10 +117,10 @@ enableUserChatDefaultThen(() => {
 
 onPrepareDone(() => {
   if (!currentModel.value) {
-    toast({ variant: 'blockquote-error', description: 'no model configed, please create a model config first!', open: true, duration: 10000 })
+    toast({ variant: 'destructive', description: 'no model configed, please create a model config first!', open: true, duration: 10000 })
   }
   if (!currentPrompt.value) {
-    toast({ variant: 'blockquote-error', description: 'no prompt configed, please create a prompt config first!', open: true, duration: 10000 })
+    toast({ variant: 'destructive', description: 'no prompt configed, please create a prompt config first!', open: true, duration: 10000 })
   }
 })
 // onChunk(() => {
@@ -138,7 +138,7 @@ async function submitUserInput(content: string, onSuc: () => void) {
 }
 
 async function viewFailedReason() {
-  toast({ title: "ERROR", description: error.value, variant: "blockquote-error" })
+  toast({ title: "ERROR", description: error.value, variant: "destructive" })
 }
 
 onMounted(() => {

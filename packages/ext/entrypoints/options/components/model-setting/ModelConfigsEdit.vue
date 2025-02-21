@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ModelConfigItem } from '@/src/types/config/model';
-import ModelConfigEditComponent from './ModelConfigEditComponent.vue';
-import { useModelConfigStorage } from '@/src/composables/model-config';
-import { toast } from '@/src/components/ui/toast';
-import { useRoute, useRouter } from 'vue-router';
-import { ArgumentsType } from '@vueuse/core';
-import { uid } from 'radash';
-import { onMounted, ref } from 'vue';
 import ErrorComponent from '@/src/components/status/ErrorComponent.vue';
+import { toast } from '@/src/components/ui/toast';
+import { useModelConfigStorage } from '@/src/composables/model-config';
+import { ModelConfigItem } from '@/src/types/config/model';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import ModelConfigEditComponent from './ModelConfigEditComponent.vue';
 
 const {query:{id}}=useRoute()
 const {push}=useRouter()

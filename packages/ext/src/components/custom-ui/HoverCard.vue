@@ -8,29 +8,39 @@ import { cn } from '@/src/utils/shadcn';
 
 interface HoverCardProps {
   class?: HTMLAttributes['class'];
+  openDelay?: number;
+  closeDelay?: number;
 }
 
-const props = withDefaults(defineProps<HoverCardProps>(), {
+const { class: clazz, closeDelay: closeDelay = 100, openDelay: openDelay = 100 } = withDefaults(defineProps<HoverCardProps>(), {
 });
 
 const isOpen = ref(false);
+let timer: any = null;
+function setOpen() {
+  if (timer) clearTimeout(timer)
+  timer = setTimeout(() => {
+    isOpen.value = true;
+  }, openDelay)
 
-const toggleOpen = (open: boolean) => {
-  isOpen.value = open;
-};
+}
+
+function setClose() {
+  if (timer) clearTimeout(timer)
+  timer = setTimeout(() => {
+    isOpen.value = false;
+  }, closeDelay)
+}
+
 
 </script>
 
 <template>
-  <div :class="cn('relative', props.class)">
+  <div :class="cn('relative', clazz)" @mouseenter="setOpen()" @mouseleave="setClose()">
     <!-- use #trigger or #default are both ok -->
-    <div @mouseenter="toggleOpen(true)" @mouseleave="toggleOpen(false)">
-      <slot name="trigger" />
-    </div>
+    <slot name="trigger" />
+    <slot name="default" />
 
-    <div @mouseenter="toggleOpen(true)" @mouseleave="toggleOpen(false)">
-      <slot name="default" />
-    </div>
 
     <!--  -->
     <div v-show="isOpen" class="absolute  text-nowrap rounded-md border bg-popover text-popover-foreground shadow-md">

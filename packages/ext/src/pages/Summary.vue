@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { sendMessage } from '@/messaging';
-import { simpleParseRead } from '../utils/page-read';
-import { Yi34B_SiliconFlow } from '../model-providers/siliconflow-models';
-import { CoreMessage } from 'ai';
-import { computed, ref } from 'vue'
-import { browser, Runtime } from 'wxt/browser';
-import { uid, unique } from 'radash';
+import markdownit from 'markdown-it';
+import { uid } from 'radash';
+import { computed, ref } from 'vue';
+import { browser } from 'wxt/browser';
 import { presetPrompts } from '../presets/prompts';
+import { simpleParseRead } from '../utils/page-read';
 import { renderMessages } from '../utils/prompt';
-import markdownit from 'markdown-it'
 const md = markdownit()
 
 const pageArtilce = simpleParseRead()

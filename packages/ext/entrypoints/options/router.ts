@@ -8,13 +8,13 @@ import PromptEdit from './components/prompt-setting/PromptEdit.vue'
 import PromptList from './components/prompt-setting/PromptList.vue'
 import OptionsLayout from './layout/OptionsLayout.vue'
 import BasicSetting from './pages/BasicSetting.vue'
-import DebugPanelEntry from './pages/DebugPanelEntry.vue'
 import ModelConfigsSetting from './pages/ModelConfigsSetting.vue'
 import PromptsSetting from './pages/PromptsSetting.vue'
 import TriggerSetting from './pages/TriggerSetting.vue'
 
 
-
+        
+const debgRoute={ path: '/debug', component: ()=>import('@/src/components/debug/DebugPanel.vue') }
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -44,7 +44,7 @@ export const router = createRouter({
         },
 
         { path: '/', component: BasicSetting},
-        { path: '/debug', component: DebugPanelEntry },
+        debgRoute,
         { path: '/p1', component: BasicSetting},
         { path: '/p2', component: BasicSetting},
         { path: '/p3', component: BasicSetting},

@@ -1,7 +1,7 @@
 import { Ref } from "vue"
 
 export type UIMessage={
-  content: Ref<string>,
+  content: string,
   at: number,
   role: 'system'|'assistant'|'user'
 }

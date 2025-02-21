@@ -1,6 +1,6 @@
 {
   "name": "webpage-summary-ext",
-  "description": "manifest.json description",
+  "description": "Open source webpage summarize tool, via any llm api, support prompt-template/site customization.",
   "private": true,
   "version": "0.0.2",
   "type": "module",
@@ -20,6 +20,7 @@
     "@ai-sdk/deepseek": "^0.1.8",
     "@ai-sdk/openai": "^1.1.9",
     "@mozilla/readability": "^0.5.0",
+    "@openrouter/ai-sdk-provider": "^0.2.2",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/core": "^12.5.0",
     "@webext-core/messaging": "^2.2.0",

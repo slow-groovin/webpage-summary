@@ -88,7 +88,7 @@ const handleLocate = (id: string | undefined) => {
         </RouterLink>
       </Button>
       <label class="flex flex-row items-center gap-2 font-light border p-1 text-sm rounded">
-        <Switch v-model:checked="isEditMode" class="data-[state=checked]:bg-amber-500" />
+        <Switch v-model:checked="isEditMode" class="data-[state=checked]:bg-gray-500" />
         Toggle edit mode
       </label>
     </div>
@@ -110,7 +110,7 @@ const handleLocate = (id: string | undefined) => {
           <div class="flex items-center gap-2 mb-4 w-fit min-w-96" :id="model.id">
             <RadioButton :checked="!!defaultModel && defaultModel.id === model.id" @click="handleSelect(model.id)" />
             <ModelConfigItemComponent :item="model" class="flex-1 self-stretch"
-              :class="{ ' shadow-green-500 border-blue-500 ring-blue-500 bg-green-300/20 ring-2 shadow-2xl': !!defaultModel && defaultModel.id === model.id }" />
+              :class="{ 'shadow-green-500 border-blue-500 ring-blue-500 bg-green-300/20 ring-2 shadow-2xl': !!defaultModel && defaultModel.id === model.id }" />
             <div class="flex flex-col justify-center gap-2" v-if="isEditMode">
               <Button @click="handleUp(model.id)">
                 <ArrowUpFromLine />

@@ -12,12 +12,17 @@ export default defineConfig({
   //   sourceMap:true,
   // },
   imports: false,
-  vite: () => ({
+  vite: (configEnv) => ({
     // Override config here, same as `defineConfig({ ... })`
     // inside vite.config.ts files
-    // build:{
-    //   // sourcemap: true
-    // },
+    build: {
+      // sourcemap: true
+      rollupOptions: {
+        external: (id) => {
+          return (id.includes('src/components/debug'))
+        }
+      }
+    },
     plugins: [
 
     ],
@@ -34,7 +39,7 @@ export default defineConfig({
   }),
   manifest: {
     name: 'Webpage Summary',
-    description: 'OpenSource webpage summarize tool, via any llm api, support prompt-template/site customization.',
+    description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
     permissions: ['storage'],
     icons: {
       // 16: '/icon/16.png',

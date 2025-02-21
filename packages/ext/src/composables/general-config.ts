@@ -1,5 +1,5 @@
 import { storage } from "wxt/storage";
-import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL } from "../constants/storage-key";
+import { MAX_LENGTH_KEY, SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
 import { InputContentLengthExceededStrategy } from "../types/summary";
@@ -10,7 +10,7 @@ import { InputContentLengthExceededStrategy } from "../types/summary";
  */
 async function getAllExtConfigs() {
   const result = await storage.getItems([
-    { key: SPOKEN_LANG_KEY, fallback: DefaultConfig.SPOKEN_LANG },
+    { key: SUMMARY_LANG_KEY, fallback: DefaultConfig.SUMMARY_LANG },
     { key: MAX_LENGTH_KEY, fallback: DefaultConfig.MAX_LENGTH },
     { key: USER_CUSTOM_STYLE_KEY, fallback: DefaultConfig.USER_CUSTOM_STYLE },
     { key: ENABLE_TOKAN_USAGE_VIEW, fallback: DefaultConfig.ENABLE_TOKAN_USAGE_VIEW },
@@ -21,7 +21,7 @@ async function getAllExtConfigs() {
   ]);
 
   return {
-    summaryLanguage: result[0].value as string ?? DefaultConfig.SPOKEN_LANG,  //.getItems(...) has bugs: setting fallback has no effect
+    summaryLanguage: result[0].value as string ?? DefaultConfig.SUMMARY_LANG,  //.getItems(...) has bugs: setting fallback has no effect
     maxLength: result[1].value as number ?? DefaultConfig.MAX_LENGTH,
     userCustomStyle: result[2].value as string ?? DefaultConfig.USER_CUSTOM_STYLE,
     enableTokanUsageView: result[3].value as boolean ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
@@ -39,11 +39,11 @@ export function useGeneralConfig() {
  * Reactive summary language config.
  */
 export function useSummaryLanguage() {
-  const { state: summaryLanguage, ...other } = useWxtStorage(SPOKEN_LANG_KEY, DefaultConfig.SPOKEN_LANG)
+  const { state: summaryLanguage, ...other } = useWxtStorage(SUMMARY_LANG_KEY, DefaultConfig.SUMMARY_LANG)
   return { summaryLanguage, ...other }
 }
 export async function getSummaryLanguage() {
-  return await storage.getItem(SPOKEN_LANG_KEY, { fallback: DefaultConfig.SPOKEN_LANG })
+  return await storage.getItem(SUMMARY_LANG_KEY, { fallback: DefaultConfig.SUMMARY_LANG })
 }
 /**
  * Reactive max length config.
