@@ -5,6 +5,7 @@
  */
 import type { TokenUsage } from '../../types/summary';
 import { cn } from "@/src/utils/shadcn";
+import { isNumber } from 'radash';
 import type { HTMLAttributes } from 'vue';
 
 defineProps<{
@@ -27,7 +28,7 @@ defineProps<{
       {{ usage.outputToken }}
     </span>
     <!-- 如果有 cost，显示 API Cost -->
-    <div v-if="usage.cost">
+    <div v-if="isNumber(usage.cost) && usage.unit">
       {{ usage.unit ?? '$' }}{{ usage.cost.toFixed(5) }}
     </div>
   </div>

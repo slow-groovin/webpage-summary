@@ -150,11 +150,11 @@ export function useSummary() {
       initUIMessages()
       append('', 'assistant')
 
-    }catch(e){
+    } catch (e) {
       console.error(e)
-      error.value=handleConnectError(e)
+      error.value = handleConnectError(e)
     }
-    
+
   }
 
   async function copyMessages() {
@@ -191,7 +191,7 @@ export function useSummary() {
           isFailed.value = true
 
           error.value = handleConnectError(e)
-        
+
         }
       }
     )
@@ -203,12 +203,14 @@ export function useSummary() {
     })
     textStream.onChunkComplete(async () => {
       isRunning.value = false
-      const { inputToken, outputToken, cost, unit } = await newTokenUsage
+      const { inputToken, outputToken } = await newTokenUsage
+      const cost = (currentModel.value?.inputTokenPrice ?? 0) * inputToken / 100_0000 + (currentModel.value?.outputTokenPrice ?? 0) * outputToken / 100_0000
+
       tokenUsage.value = {
         inputToken: tokenUsage.value.inputToken + inputToken,
         outputToken: tokenUsage.value.outputToken + outputToken,
-        cost: (tokenUsage.value.cost ?? 0) + (cost ?? 0),
-        unit: unit
+        cost: cost,
+        unit: currentModel.value?.priceUnit 
       }
     })
   }

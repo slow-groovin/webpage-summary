@@ -13,7 +13,7 @@
           <template #right-buttons>
             <div v-if="enableTokenUsageView && tokenUsage.inputToken"
               class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
-              <TokenUsageItem v-if="tokenUsage && tokenUsage.inputToken" :usage="tokenUsage" />
+              <TokenUsageItem :usage="tokenUsage" />
             </div>
 
             <!-- minimize button -->

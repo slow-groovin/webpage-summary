@@ -41,8 +41,6 @@ export function registerLLMMessages() {
         resolve('tokenUsage', {
           inputToken: u.promptTokens,
           outputToken: u.completionTokens,
-          cost: u.promptTokens * (0.3 / 100_0000) + u.completionTokens * (0.9 / 100_0000),
-          unit: "$"
         } as TokenUsage)
       })
 
