@@ -8,6 +8,7 @@ import { BookOpenTextIcon, SettingsIcon } from 'lucide-vue-next';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { browser } from 'wxt/browser';
+import { activePageAndInvokeSummary } from '../../src/utils/extension';
 
 const { iconUrl, name, version } = useExtInfo()
 
@@ -17,7 +18,7 @@ async function invokeCurrentTabSummary() {
     alert('No tab found')
     return
   }
-  sendMessage('invokeSummary', undefined, { tabId: tab.id })
+  activePageAndInvokeSummary(tab)
 }
 
 onMounted(async () => {

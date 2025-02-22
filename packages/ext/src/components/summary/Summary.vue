@@ -100,10 +100,10 @@ import Button from '../ui/button/Button.vue';
 import { toast } from '../ui/toast';
 import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
+import EventEmitter from 'eventemitter3';
 const isChatDialogOpen = ref(false)
 
-//todo define Expose to parent to control hide/show panel
-defineEmits<{
+const emit = defineEmits<{
   minimizePanel: []
 }>()
 
@@ -123,6 +123,13 @@ const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summar
 provide('copy-func', copyMessages)
 provide('scroll-bottom', () => scrollToId('dialog-bottom-anchor'))
 
+const event=new EventEmitter()
+/*expose funcs */
+defineExpose({
+  refreshSummary,
+  on: (name:string,fn:Parameters<typeof event.on>[1])=>event.on(name,fn),
+})
+
 enableUserChatDefaultThen(() => {
   isChatDialogOpen.value = enableUserChatDefault.value
 })
@@ -134,6 +141,7 @@ onPrepareDone(() => {
   if (!currentPrompt.value) {
     toast({ variant: 'destructive', description: 'no prompt configed, please create a prompt config first!', open: true, duration: 10000 })
   }
+  event.emit('onPrepareDone')
 })
 // onChunk(() => {
 //   scrollToId('dialog-bottom-anchor')

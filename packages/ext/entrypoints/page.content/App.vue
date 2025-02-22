@@ -6,11 +6,13 @@ import RightFloatingBallContainer from '@/src/components/container/RightFloating
 import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
 import SeparationComponentInContentDebug from '@/src/components/debug/SeparationComponentInContentDebug.vue'
 import Summary from '@/src/components/summary/Summary.vue'
+import { toast } from '@/src/components/ui/toast'
 import Toaster from '@/src/components/ui/toast/Toaster.vue'
 import { getEnableAutoBeginSummary, getEnableSummaryWindowDefault, useEnableFloatingBall } from '@/src/composables/general-config'
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
-import { sleep } from 'radash'
-import { onMounted, ref } from 'vue'
+import { watchOnce } from '@vueuse/core'
+import { sleep, sum } from 'radash'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import icon from '~/assets/16.png'
 
 onMounted(() => {
@@ -23,7 +25,7 @@ const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = us
 const { enableFloatingBall } = useEnableFloatingBall()
 const isFloatingBallPulseAnim = ref(false)
 const isOpenDebugPanel = ref(false)
-
+const summaryRef = useTemplateRef('summaryRef')
 
 
 async function openDebugPanel() {
@@ -40,9 +42,22 @@ getEnableSummaryWindowDefault().then(v => {
   isOpenSummaryPanel.value = v
 })
 
+// trigger by popup/contextMenu, directly begin summary
 onMessage('invokeSummary', () => {
-  console.debug('invoke summary by popup')
-  tryEnableOrShow()
+  console.debug('[invokeSummary]')
+  tryEnableOrShow() //open panel
+  //invoke begin summary //todo: add a extra contextMenu
+  // if (summaryRef.value) { 
+  //   summaryRef.value.refreshSummary()
+  // } else {//maybe the summary page not prepared when initailly
+  //   watchOnce(summaryRef, () => {
+  //     summaryRef.value!.on('onPrepareDone', () => {
+  //       summaryRef.value!.refreshSummary()
+  //     })
+  //   })
+
+  // }
+
 })
 
 
@@ -54,7 +69,7 @@ onMessage('invokeSummary', () => {
 
     <Toaster class="top-0 left-1/2" />
 
-    <Summary v-if="isOpenSummaryPanel" v-show="isShow" @minimize-panel="toggleShowWrap"
+    <Summary v-if="isOpenSummaryPanel" v-show="isShow" ref="summaryRef" @minimize-panel="toggleShowWrap"
       class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />
 
     <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false"

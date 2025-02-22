@@ -40,7 +40,7 @@ export default defineConfig({
   manifest: {
     name: 'Webpage Summary',
     description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
-    permissions: ['storage'],
+    permissions: ['storage','contextMenus'],
     icons: {
       // 16: '/icon/16.png',
       32: '/icon/32.png',
