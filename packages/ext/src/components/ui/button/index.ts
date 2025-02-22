@@ -18,6 +18,7 @@ export const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         github: 'bg-background border hover:bg-hover active:bg-active text-foreground',
+        topic: 'bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 text-white active:from-purple-500 active:to-blue-300 hover:via-purple-600 hover:to-blue-600',
       },
       size: {
         default: 'h-9 px-4 py-2',

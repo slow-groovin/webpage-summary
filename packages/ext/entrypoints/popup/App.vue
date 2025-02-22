@@ -3,12 +3,12 @@ import { sendMessage } from '@/messaging';
 import { Button } from '@/src/components/ui/button';
 import { useExtInfo } from '@/src/composables/extension';
 import { getEnablePopupClickTrigger } from '@/src/composables/general-config';
+import { useTitle } from '@vueuse/core';
 import { BookOpenTextIcon, SettingsIcon } from 'lucide-vue-next';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { browser } from 'wxt/browser';
 
-console.log(window.location.href)
 const { iconUrl, name, version } = useExtInfo()
 
 async function invokeCurrentTabSummary() {
@@ -40,7 +40,7 @@ onMounted(async () => {
 
     </div>
 
-    <Button variant="default" @click="invokeCurrentTabSummary">
+    <Button variant="topic" class="" @click="invokeCurrentTabSummary">
       <BookOpenTextIcon />
       Summarize
     </Button>

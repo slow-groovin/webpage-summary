@@ -20,8 +20,8 @@ const calcIconUrl = (assetUrl: string) => browser.runtime.getURL(assetUrl as Pub
       :src="calcIconUrl(modelProviderPresets[item.providerType].icon!)" alt="Model Icon" class="w-4 h-4" />
 
 
-    <div class="flex flex-col text-xs max-w-32 ">
-      <div class="overflow-x-hidden text-nowrap text-ellipsis" :title="item.modelName + `(${item.maxContentLength})`">
+    <div class="flex flex-col text-xs  ">
+      <div class="overflow-x-hidden text-nowrap text-ellipsis max-w-16" :title="item.modelName + `(${item.maxContentLength})`">
         {{ item.name }}
       </div>
       <div v-if="!isSelected" class="overflow-x-hidden text-nowrap text-ellipsis"

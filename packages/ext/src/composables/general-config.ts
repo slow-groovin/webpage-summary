@@ -57,9 +57,14 @@ export function useMaxLength() {
  * Reactive user custom style config.
  */
 export function useUserCustomStyle() {
-  const { state: userCustomStyle, ...other } = useWxtStorage(USER_CUSTOM_STYLE_KEY, DefaultConfig.USER_CUSTOM_STYLE)
+  const { state: userCustomStyle, ...other } = useWxtStorage<string>(USER_CUSTOM_STYLE_KEY, DefaultConfig.USER_CUSTOM_STYLE)
   return { userCustomStyle, ...other }
 }
+export async function getUserCustomStyle() {
+  return await storage.getItem(USER_CUSTOM_STYLE_KEY, { fallback: DefaultConfig.USER_CUSTOM_STYLE })
+}
+
+
 
 /**
  * Reactive enable token usage view config.

@@ -169,20 +169,23 @@ const onSubmit = handleSubmit(async (values) => {
               <HoverCardTrigger>
                 <CircleAlertIcon class="text-gray-500 h-5 w-5" />
               </HoverCardTrigger>
-              <HoverCardContent class="min-w-[50em]">
-                内容长度由String.length计算<br />
-                所以请根据您的语言的实际情况进行调整<br>(比如,中文一个length对应一个token,英文一个word的length对应一个token)<br />
+              <HoverCardContent class=" ">
+                calc by String.length<br />
+                You could adjust it based on your language<br>
+                (for example, for Chinese : 1 length = 1 token, for English, 1 word = n length = n token)<br />
               </HoverCardContent>
             </HoverCard>
-            <HoverBadget class="text-nowrap" title="为什么不直接计算token" description="不同模型的token计算方式差异很大, 无法使用单一模型进行准确计算" />
+            <HoverBadget class="text-nowrap" title="Why not tokenizer?" description="1.The token calculation method varies greatly between different models,
+making it impossible to use a single model for accurate calculation 
+2.token calculation duration is too large, 
+3.tokenizer lib will lead to a large package size." />
 
           </FormLabel>
           <FormControl>
             <Input type="number" placeholder="leave empty to not limit" class="w-56" v-bind="componentField" />
           </FormControl>
           <FormDescription>
-            限制提取的网页内容(发送给llm之前)的最大长度
-
+            limit the max length of the webpage content text
           </FormDescription>
           <FormMessage />
         </FormItem>

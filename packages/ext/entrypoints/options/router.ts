@@ -7,10 +7,13 @@ import PromptCreate from './components/prompt-setting/PromptCreate.vue'
 import PromptEdit from './components/prompt-setting/PromptEdit.vue'
 import PromptList from './components/prompt-setting/PromptList.vue'
 import OptionsLayout from './layout/OptionsLayout.vue'
-import BasicSetting from './pages/BasicSetting.vue'
 import ModelConfigsSetting from './pages/ModelConfigsSetting.vue'
 import PromptsSetting from './pages/PromptsSetting.vue'
 import TriggerSetting from './pages/TriggerSetting.vue'
+import GeneralSetting from './pages/GeneralSetting.vue'
+import PageExtractionSettig from './pages/PageExtractionSettig.vue'
+import AppearanceSetting from './pages/AppearanceSetting.vue'
+import SiteCustomizationSetting from './pages/SiteCustomizationSetting.vue'
 
 
         
@@ -22,8 +25,8 @@ export const router = createRouter({
       path: '/',
       component: OptionsLayout,
       children: [
-        { path: '/basic', component: BasicSetting },
-        { path: '/trigger', component: TriggerSetting },
+        { path: '/general', component: GeneralSetting },
+        { path: '/page-extraction', component: PageExtractionSettig },
         {
           path: '/models',
           component: ModelConfigsSetting,
@@ -43,14 +46,14 @@ export const router = createRouter({
           ]
         },
 
-        { path: '/', component: BasicSetting},
+        { path: '/', component: GeneralSetting},
         debgRoute,
-        { path: '/p1', component: BasicSetting},
-        { path: '/p2', component: BasicSetting},
-        { path: '/p3', component: BasicSetting},
-        { path: '/p4', component: BasicSetting},
-        { path: '/p5', component: BasicSetting},
-        { path: '/about', component: BasicSetting},
+        { path: '/appearance', component: AppearanceSetting},
+        { path: '/site-customization', component: SiteCustomizationSetting},
+        { path: '/p2', component: GeneralSetting},
+        { path: '/p1', component: GeneralSetting},
+        { path: '/p4', component: GeneralSetting},
+        { path: '/about', component: GeneralSetting},
 
       ]
     }

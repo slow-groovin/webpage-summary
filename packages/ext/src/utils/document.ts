@@ -52,7 +52,7 @@ export function injectUserSettingCssVariables(cssVariableText: string) {
   getShadowRootAsync().then(root => {
     const style = document.createElement('style');
     style.innerHTML = `
-.user-setting-style{
+html, :host {
   ${validText}
 }
     `;
@@ -60,7 +60,7 @@ export function injectUserSettingCssVariables(cssVariableText: string) {
   })
 }
 
-function filterValidCssVariableText(cssVariableText: string) {
+export function filterValidCssVariableText(cssVariableText: string) {
   return cssVariableText
     .split('\n')
     .map(line => line.trim())

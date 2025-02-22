@@ -12,8 +12,7 @@ interface HoverCardProps {
   closeDelay?: number;
 }
 
-const { class: clazz, closeDelay: closeDelay = 100, openDelay: openDelay = 100 } = withDefaults(defineProps<HoverCardProps>(), {
-});
+const { class: clazz, closeDelay: closeDelay = 100, openDelay: openDelay = 100 } = defineProps<HoverCardProps>()
 
 const isOpen = ref(false);
 let timer: any = null;

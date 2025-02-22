@@ -59,7 +59,7 @@ export type TokenUsage = {
   unit?: string
 }
 
-export type InputContentLengthExceededStrategy='split'|'error'|'ignore'
+export type InputContentLengthExceededStrategy='cut-preserve-front'|'cut-preserve-end'|'cut-preserve-middle'|'nothing'
 
 
 export type CallbackFunction=(...args:any[])=>any;

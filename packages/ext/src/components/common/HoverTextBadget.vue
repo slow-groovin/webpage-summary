@@ -17,9 +17,7 @@ const titleRef = useTemplateRef('title')
       </div>
     </template>
     <template #custom-content>
-      <div class="absolute mt-2 bg-background border rounded p-2  ">
-        {{ description }}
-      </div>
+      <pre class="absolute mt-2 bg-background border rounded p-2 ">{{ description }}</pre>
     </template>
   </HoverCard>
 </template>

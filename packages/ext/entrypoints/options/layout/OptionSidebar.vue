@@ -5,27 +5,27 @@ import { RouterLink, useRoute, useLink, useRouter } from 'vue-router';
 import { computed } from 'vue';
 const route = useRoute();
 const currentPath = computed(() => route.path);
-const debugCharacters=import.meta.env.DEV ? [ { name: 'debug', path: '/debug' }]:[];
+const debugCharacters = import.meta.env.DEV ? [{ name: 'debug', path: '/debug' }] : [];
 const groups = [
   {
-    name: 'basic',
+    name: '',
     chapters: [
-      { name: 'interact', path: '/basic' },
-      { name: 'page extract', path: '/p3' },
-      { name: 'models', path: '/models' },
-      { name: 'prompts', path: '/prompts' },
-      { name: 'site customize', path: '/p1' },
-      { name: 'appearance', path: '/p4' },
+      { name: 'General', path: '/general' },
+      { name: 'Page Extraction', path: '/page-extraction' },
+      { name: 'Models', path: '/models' },
+      { name: 'Prompts', path: '/prompts' },
+      { name: 'Site Customization', path: '/site-customization' },
+      { name: 'Appearance', path: '/appearance' },
 
 
     ]
   },
   {
-    name: 'other',
+    name: '',
     chapters: [
       // { name: 'about', path: '/models' },
       ...debugCharacters,
-      { name: 'export/import', path: '/p2' },
+      // { name: 'Export/Import', path: '/p2' },
     ]
   }
 ]

@@ -52,9 +52,10 @@ onMessage('invokeSummary', () => {
 <template>
   <div class="relative z-[9999] user-setting-style">
 
-    <Toaster class="top-0 left-1/2"/>
+    <Toaster class="top-0 left-1/2" />
 
-    <Summary v-if="isOpenSummaryPanel" v-show="isShow" class="top-16 right-16" @minimize-panel="toggleShowWrap" />
+    <Summary v-if="isOpenSummaryPanel" v-show="isShow" @minimize-panel="toggleShowWrap"
+      class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />
 
     <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false"
       :storage-key="'page'">
@@ -64,7 +65,8 @@ onMessage('invokeSummary', () => {
           <img :src="icon" class="w-6 h-6 rounded select-none" draggable="false">
         </div>
         <template #custom-content>
-          <div class="absolute right-12 top-0 rounded p-1 text-nowrap bg-neutral-700 text-white"> open summary panel</div>
+          <div class="absolute right-12 top-0 rounded p-1 text-nowrap bg-neutral-700 text-white"> open summary panel
+          </div>
         </template>
       </HoverCard>
     </RightFloatingBallContainer>

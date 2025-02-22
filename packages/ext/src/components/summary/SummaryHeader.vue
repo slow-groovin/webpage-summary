@@ -1,67 +1,61 @@
 <template>
-  <div class="flex items-center justify-between flex-nowrap px-1 py-1  border-b border" ref="headerRef">
-    <div class="flex items-center flex-nowrap space-x-4">
-      <div class="flex items-center text-nowrap">
-        <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded mr-2 select-none" draggable="false" />
-        <!-- <div> {{ name }}</div> -->
-        <slot name="left-buttons"></slot>
-      </div>
+  <div class="flex items-center justify-start flex-wrap px-1 py-1 gap-1 border" ref="headerRef">
+    <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded select-none" draggable="false" />
+    <slot name="left-buttons"></slot>
 
-      <!-- model select -->
-      <div class="rounded">
-        <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig?.id??''">
-          <!-- Select Trigger has bug in headless, so use style to force setting it  -->
-          <template #trigger class="h-fit">
-            <ModelConfigInlineItem v-if="currentModelConfig" :item="currentModelConfig" :is-selected="true" />
-            <ModelErrorInineItem v-else />
+    <div class="grow" />
 
+    <!-- model select -->
+    <div class="rounded">
+      <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig?.id ?? ''" >
+        <!-- Select Trigger has bug in headless, so use style to force setting it  -->
+        <template #trigger class="h-fit">
+          <ModelConfigInlineItem v-if="currentModelConfig" :item="currentModelConfig" :is-selected="true" />
+          <ModelErrorInineItem v-else />
+
+        </template>
+
+        <template #content>
+          <template v-if="modelConfigs" v-for="configItem in modelConfigs" :key="configItem.id">
+            <SelectItem :value="configItem.id">
+              <ModelConfigInlineItem :item="configItem" :is-selected="false" />
+            </SelectItem>
           </template>
+        </template>
 
-          <template #content>
-            <template v-if="modelConfigs" v-for="configItem in modelConfigs" :key="configItem.id">
-              <SelectItem :value="configItem.id">
-                <ModelConfigInlineItem :item="configItem" :is-selected="false" />
-              </SelectItem>
-            </template>
-          </template>
-
-        </Select>
-      </div>
-
-
-      <!-- prompt select -->
-      <div class="rounded">
-        <Select @update:model-value="selectCurrentPrompt" :model-value="currentPromptConfig?.id ?? '0'">
-          <!-- Select Trigger has bug in headless, so use style to force setting it -->
-          <template #trigger class="h-fit" style="background-color: transparent;color:var(--primary)">
-            <PromptConfigInlineItem v-if="currentPromptConfig" :item="currentPromptConfig" />
-            <PromptErrorInineItem v-else/>
-          </template>
-
-          <template #content>
-            <template v-if="promptConfigs" v-for="configItem in promptConfigs" :key="configItem.id">
-              <SelectItem :value="configItem.id">
-                <PromptConfigInlineItem :item="configItem" />
-              </SelectItem>
-            </template>
-          </template>
-        </Select>
-      </div>
-
-
-
-
-
+      </Select>
     </div>
+
+
+    <!-- prompt select -->
+    <div class="rounded">
+      <Select @update:model-value="selectCurrentPrompt" :model-value="currentPromptConfig?.id ?? '0'">
+        <!-- Select Trigger has bug in headless, so use style to force setting it -->
+        <template #trigger class="h-fit" style="background-color: transparent;color:var(--primary)">
+          <PromptConfigInlineItem v-if="currentPromptConfig" :item="currentPromptConfig" />
+          <PromptErrorInineItem v-else />
+        </template>
+
+        <template #content>
+          <template v-if="promptConfigs" v-for="configItem in promptConfigs" :key="configItem.id">
+            <SelectItem :value="configItem.id">
+              <PromptConfigInlineItem :item="configItem" />
+            </SelectItem>
+          </template>
+        </template>
+      </Select>
+    </div>
+
+
+
+
+    <div class="grow" />
 
     <!-- right button area -->
-    <div class="flex items-center space-x-2 ml-3">
-      <slot name="right-buttons"></slot>
-      <!-- <div>[Pin Icon]</div> -->
-      <Button variant="github" size="icon" @click="openExtSettingPage()">
-        <SettingsIcon class="" />
-      </Button>
-    </div>
+    <slot name="right-buttons"></slot>
+    <Button variant="github" size="icon" @click="openExtSettingPage()">
+      <SettingsIcon class="" />
+    </Button>
 
   </div>
 </template>

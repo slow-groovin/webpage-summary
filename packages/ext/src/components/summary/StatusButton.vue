@@ -43,7 +43,7 @@ const emit = defineEmits<{
   </template>
   <template v-else-if="status === 'running'">
     <div class="w-6 h-6 border-2 border-t-2  border-t-green-800 border-solid rounded-full animate-spin"></div>
-    <Button variant="outline" size="sm-icon" class="ml-2 border-2  bg-neutral-100 p-1 aspect-square rounded-full flex items-center "
+    <Button variant="outline" size="sm-icon" class="ml-2 border-2  bg-neutral-100/50 p-1 aspect-square rounded-full flex items-center "
       @click="emit('stop')">
       <div class="w-3 h-3 aspect-square bg-red-500"></div>
     </Button>
@@ -60,9 +60,9 @@ const emit = defineEmits<{
   </template>
 
   <template v-else-if="status === 'ready' && !showRefresh">
-    <Button variant="outline" size="icon" class="w-fit px-1 gap-0 flex items-center h-8 leading-8"
+    <Button variant="outline" size="icon" class="aspect-square h-auto px-1 gap-0 flex items-center leading-8"
       @click="()=>{isFirstClickDone=true;emit('refresh')}">
-      <PlayIcon />Summary
+      <PlayIcon class="text-green-800"/>
     </Button>
 
 

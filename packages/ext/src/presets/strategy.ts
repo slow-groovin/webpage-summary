@@ -1,20 +1,23 @@
 import { InputContentLengthExceededStrategy } from "../types/summary";
 
-export const allInputContentLengthExceededStrategys:Record<InputContentLengthExceededStrategy,any>={
-  split:{
-    name: 'split',
-    desc: 'split into two parts and desert the second one to match max length'
+export const contentLengthExceededStrategys:Record<InputContentLengthExceededStrategy,any>={
+  "cut-preserve-front":{
+    name: 'cut-preserve-front',
+    desc: 'Split the content, keeping the first half with the maximum length.'
   },
-  error:{
-    name: 'error',
+  "cut-preserve-end":{
+    name: 'cut-preserve-end',
 
-    desc: 'throw a error '
+    desc: 'Split the content, keeping the second half with the maximum length. '
 
   },
-  ignore:{
-    name: 'ignore',
+  "cut-preserve-middle":{
+    name: 'cut-preserve-end',
+    desc: 'Split the content into 3 parts, with the middle part of maximum length beging preserved, front and end sides are equally divided.'
 
-    desc: 'ignore it and continue '
-
+  },
+  "nothing":{
+    name: 'nothing',
+    desc: 'do nothing '
   },
 }

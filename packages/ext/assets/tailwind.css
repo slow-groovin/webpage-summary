@@ -79,10 +79,17 @@
   body {
     @apply bg-background text-foreground text-base;
   }
-/* webpage-summary */
+
+  /* webpage-summary */
   :root {
     /*  */
-    --webpage-summary-user-float-window-width: 50rem;
+    --webpage-summary-panel-width: 50rem;
+    --webpage-summary-panel-dialog-max-height: 20rem;
+    --webpage-summary-panel-background: #ffffff;
+    --webpage-summary-panel-top: 4em;
+    --webpage-summary-panel-right: 4em;
+    --webpage-summary-panel-bottom: unset;
+    --webpage-summary-panel-left: unset;
   }
 }
 

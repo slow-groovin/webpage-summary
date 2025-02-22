@@ -4,6 +4,7 @@
   <div class="relative border"><!-- wrapper  -->
     <!-- top-right buttons -->
     <div class="sticky top-1  flex justify-end pr-1 flex-row gap-1">
+      <slot name="top-right-buttons"/>
       <Button variant="github" size="sm-icon" class="border-none" @click="scrollBottomFunc?.()" title="scroll to bottom">
         <ArrowDownIcon />
       </Button>

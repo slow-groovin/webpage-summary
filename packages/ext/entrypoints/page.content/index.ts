@@ -8,6 +8,8 @@ import '@/assets/tailwind.css'
 import { createApp } from 'vue';
 import App from './App.vue';
 import { toast } from "@/src/components/ui/toast";
+import { injectUserSettingCssVariables } from "@/src/utils/document";
+import { getUserCustomStyle } from "@/src/composables/general-config";
 
 export default defineContentScript({
   matches: [
@@ -34,6 +36,12 @@ export default defineContentScript({
         // console.log(container,_shadow,shadowHost)
         // applyPageHtmlFont(_shadow,  shadowHost)
         // Define how your UI will be mounted inside the container
+        
+        //inject user-custom appearance css vars
+        getUserCustomStyle().then(style=>{
+          injectUserSettingCssVariables(style)
+        })
+        
 
         const app = createApp(App);
         app.config.errorHandler = (err:any) => {
@@ -54,6 +62,7 @@ export default defineContentScript({
     ui.mount();
   },
 });
+
 
 /**
  * experimental: apply host's font-family

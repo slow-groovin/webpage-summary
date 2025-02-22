@@ -1,7 +1,7 @@
 <template>
-  <template  v-if="true">
-    <DraggableContainer
-      class="w-[var(--webpage-summary-user-float-window-width)] h-fit bg-white rounded-t-xl rounded-b-xl shadow-2xl">
+  <template v-if="true">
+    <DraggableContainer class="w-[var(--webpage-summary-panel-width)]  bg-[--webpage-summary-panel-background] 
+       rounded-t-xl rounded-b-xl shadow-2xl">
       <template #header>
 
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -11,10 +11,7 @@
               @stop="stop" />
           </template>
           <template #right-buttons>
-            <div v-if="enableTokenUsageView && tokenUsage.inputToken"
-              class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
-              <TokenUsageItem :usage="tokenUsage" />
-            </div>
+
 
             <!-- minimize button -->
             <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
@@ -28,12 +25,23 @@
 
       <template #default>
 
-        <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[50vh]" style="overflow-anchor: auto;"
-          ref="summaryDialog">
+        <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[--webpage-summary-panel-dialog-max-height]"
+          style="overflow-anchor: auto;" ref="summaryDialog">
+          <template #top-right-buttons>
+            <div v-if="enableTokenUsageView && tokenUsage.inputToken"
+              class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
+              <TokenUsageItem :usage="tokenUsage" />
+            </div>
+          </template>
           <div class="flex flex-col gap-4">
-            <InputTiktokenResultItem class="p-0.5 text-sm border-none"
-              v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
-              :result="inputContentLengthInfo" />
+            <!-- dialog first line  -->
+            <div>
+              <InputTiktokenResultItem class="p-0.5 text-sm border-none"
+                v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
+                :result="inputContentLengthInfo" />
+
+            </div>
+
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem v-if="!msg.hide" :message="msg" />
             </template>
