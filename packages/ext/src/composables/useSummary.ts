@@ -25,10 +25,10 @@ export function useSummary() {
       currentPrompt.value = await promptStorage.getDefaultItem()
       isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
       isPreparing.value = false
-      await initMessages()
+      // await initMessages()
       event.emit('prepare-done')
       if (await getEnableAutoBeginSummary()) {
-        append('', 'assistant')
+        refreshSummary()
       }
     } catch (e) {
       error.value = (e)
@@ -61,10 +61,15 @@ export function useSummary() {
   })
   const error = ref<any>()
   let stopFunction: CallableFunction | null = null
-  const inputContentLengthInfo = reactive<{
-    totalLength?: number,
-    clipedLength?: number,
-  }>({})
+
+  /**
+   * Ref<Function> for dealing with textContent, expose to component to reactivly assign, default is a directly return function
+   */
+  const textContentTrimmer = ref<{ trim: (s: string) => string }>({trim:(content: string): string => content})
+  // const inputContentLengthInfo = reactive<{
+  //   totalLength?: number,
+  //   clipedLength?: number,
+  // }>({})
 
 
   const modelStorage = useModelConfigStorage()
@@ -81,6 +86,7 @@ export function useSummary() {
   })
 
   const { webpageContent } = useWebpageContent()
+
 
 
 
@@ -116,19 +122,13 @@ export function useSummary() {
     /*
      * render and deal with content length exceed
      */
+
     if (webpageContent) {
       if (!webpageContent.textContent) webpageContent.textContent = ''
 
-      const maxContentLength = currentModel.value.maxContentLength
-      inputContentLengthInfo.totalLength = webpageContent.textContent.length
-      if (maxContentLength) {
-        const exceedBehaviour = await getSummaryInputExceedBehaviour()
-        if (webpageContent.textContent.length > maxContentLength) {
-          webpageContent.textContent = handleExceedContent(webpageContent.textContent, maxContentLength, exceedBehaviour)
-        }
-        inputContentLengthInfo.clipedLength = inputContentLengthInfo.totalLength - webpageContent.textContent.length
+      if (textContentTrimmer.value) {
+        webpageContent.textContent = textContentTrimmer.value.trim(webpageContent.textContent)
       }
-
       const summaryInput = {
         ...webpageContent,
         summaryLanguage: await getSummaryLanguage()
@@ -161,9 +161,10 @@ export function useSummary() {
   }
 
   async function copyMessages() {
-    await navigator.clipboard.writeText(uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n'+'-'.repeat(50)+'\n'))
+    await navigator.clipboard.writeText(uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n'))
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
+
   async function append(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
@@ -249,7 +250,7 @@ export function useSummary() {
     currentModel,
     currentPrompt,
     tokenUsage,
-    inputContentLengthInfo,
+    textContentTrimmer,
     copyMessages
   }
 }

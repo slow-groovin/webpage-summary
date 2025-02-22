@@ -15,7 +15,7 @@
 
             <!-- minimize button -->
             <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
-              class="border-none p-0 [&_svg]:size-6">
+              class="border-none p-0 [&_svg]:size-6 text-foreground/50">
               <SquareMinusIcon />
             </Button>
           </template>
@@ -28,20 +28,21 @@
         <SummaryDialog class="mt-[-1px]   min-h-16 overflow-y-auto max-h-[--webpage-summary-panel-dialog-max-height]"
           style="overflow-anchor: auto;" ref="summaryDialog">
           <template #top-right-buttons>
+
+            <!-- length view&manage -->
+            <InputInspect v-if="webpageContent && currentModel && textContentTrimmer" :content-trimmer="textContentTrimmer"
+              :webpag-content="webpageContent" :max-content-length="currentModel?.maxContentLength"
+              class="ml-2" />
+
+            <!-- token usage -->
             <div v-if="enableTokenUsageView && tokenUsage.inputToken"
               class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
               <TokenUsageItem :usage="tokenUsage" />
             </div>
+            <!-- 👆push to left -->
+            <div class="grow" />
           </template>
           <div class="flex flex-col gap-4">
-            <!-- dialog first line  -->
-            <div>
-              <InputTiktokenResultItem class="p-0.5 text-sm border-none"
-                v-if="inputContentLengthInfo.totalLength && inputContentLengthInfo.clipedLength !== undefined"
-                :result="inputContentLengthInfo" />
-
-            </div>
-
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem v-if="!msg.hide" :message="msg" />
             </template>
@@ -53,7 +54,7 @@
           <div class="absolute right-0 top-0 flex flex-row gap-1 ">
             <!-- enable ChaptInputBox  buttons -->
             <Button v-show="!isChatDialogOpen" @click="() => isChatDialogOpen = !isChatDialogOpen" variant="github"
-              size="icon" class="rounded-none text-neutral-400 text-primary" title="continue chat">
+              size="icon" class="rounded-none text-neutral-400 text-primary/50" title="continue chat">
               <MessageCirclePlusIcon />
             </Button>
           </div>
@@ -95,7 +96,7 @@ import MessageItem from '../summary/MessageItem.vue';
 import SummaryDialog from '../summary/SummaryDialog.vue';
 import Button from '../ui/button/Button.vue';
 import { toast } from '../ui/toast';
-import InputTiktokenResultItem from './InputTiktokenResultItem.vue';
+import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 const isChatDialogOpen = ref(false)
 
@@ -109,7 +110,8 @@ defineEmits<{
 const { append, stop, error, status,
   currentModel, currentPrompt, uiMessages,
   refreshSummary, onPrepareDone, onChunk,
-  inputContentLengthInfo, tokenUsage, copyMessages
+  textContentTrimmer, tokenUsage, copyMessages,
+  webpageContent
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()

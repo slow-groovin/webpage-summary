@@ -65,6 +65,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
         </div>
         <p class="description">what to do when webpage content length exceeds the maxContentLength of model's config</p>
+        <p class="description text-amber-600">feel free to set, you can also adjust context window on the spot when bad response received.</p>
 
         <Tabs v-model="summaryInputExceedBehaviour">
           <TabsList class="gap-4 p-4 bg-gray-300 items-stretch">

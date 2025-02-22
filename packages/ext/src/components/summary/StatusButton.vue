@@ -60,9 +60,10 @@ const emit = defineEmits<{
   </template>
 
   <template v-else-if="status === 'ready' && !showRefresh">
-    <Button variant="outline" size="icon" class="aspect-square h-auto px-1 gap-0 flex items-center leading-8"
+    <Button variant="outline" size="icon" class="w-fit h-8 px-1 gap-0 flex items-center leading-8"
       @click="()=>{isFirstClickDone=true;emit('refresh')}">
       <PlayIcon class="text-green-800"/>
+      <span class="text-xs" style="font-stretch: condensed;">Sum</span>
     </Button>
 
 

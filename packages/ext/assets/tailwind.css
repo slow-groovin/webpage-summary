@@ -83,8 +83,8 @@
   /* webpage-summary */
   :root {
     /*  */
-    --webpage-summary-panel-width: 50rem;
-    --webpage-summary-panel-dialog-max-height: 20rem;
+    --webpage-summary-panel-width: 30rem;
+    --webpage-summary-panel-dialog-max-height: 30rem;
     --webpage-summary-panel-background: #ffffff;
     --webpage-summary-panel-top: 4em;
     --webpage-summary-panel-right: 4em;
