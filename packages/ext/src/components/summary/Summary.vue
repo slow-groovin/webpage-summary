@@ -42,6 +42,8 @@
             <!-- 👆push to left -->
             <div class="grow" />
           </template>
+
+          <!-- markdown render messages  -->
           <div class="flex flex-col gap-4">
             <template v-for="(msg, index) in uiMessages" :key="index">
               <MessageItem v-if="!msg.hide" :message="msg" />

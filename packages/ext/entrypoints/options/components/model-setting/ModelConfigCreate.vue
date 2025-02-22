@@ -3,11 +3,28 @@ import { ModelConfigItem } from '@/src/types/config/model';
 import ModelConfigEditComponent from './ModelConfigEditComponent.vue';
 import { useModelConfigStorage } from '@/src/composables/model-config';
 import { toast } from '@/src/components/ui/toast';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ArgumentsType } from '@vueuse/core';
 import { uid } from 'radash';
-const { createItem, isNameExist } = useModelConfigStorage()
+import { ref, onMounted } from 'vue';
+
+const { createItem, getItem } = useModelConfigStorage()
+const {query:{copy}}=useRoute()
 const {push}=useRouter()
+
+const toCopyItem = ref<ModelConfigItem>()
+
+onMounted(async ()=>{
+  if(copy){
+    toCopyItem.value=await getItem(copy as string)
+    if(!toCopyItem.value){
+    toast({ title: `copy  null Model Config:  ${copy}`, variant: 'destructive'})
+    return
+  }
+  }
+})
+
+
 async function submitCreate(value: Omit<ModelConfigItem,'id'>) {
   const newModelConfig={
     ...value,
@@ -25,5 +42,5 @@ async function submitCreate(value: Omit<ModelConfigItem,'id'>) {
 
 <template>
   <h2 class="text-2xl mb-4">Create Model Config</h2>
-  <ModelConfigEditComponent @sumbit="submitCreate" />
+  <ModelConfigEditComponent v-if="!copy || (copy && toCopyItem)" :item="toCopyItem" @sumbit="submitCreate" />
 </template>

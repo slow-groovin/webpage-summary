@@ -20,6 +20,9 @@ const references = [
   { key: '--webpage-summary-panel-right: 4em;', description: 'Initial Right position of the summary panel' },
   { key: '--webpage-summary-panel-bottom: unset;', description: 'Initial Bottom position of the summary panel' },
   { key: '--webpage-summary-panel-left: unset;', description: 'Initial Left position of the summary panel' },
+  { key: '--webpage-summary-markdown-font-size: inherit;', description: 'font-size base of rendered markdown' },
+  { key: '--webpage-summary-markdown-line-height: inherit;', description: 'line-height base of rendered markdow' },
+  { key: '--webpage-summary-markdown-color: inherit;', description: 'text color of rendered markdow' },
 ];
 
 

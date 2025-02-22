@@ -5,7 +5,7 @@ import { useModelConfigs, useModelConfigStorage } from '@/src/composables/model-
 import { ModelConfigItem } from '@/src/types/config/model';
 import { RouterLink, useRouter } from 'vue-router';
 import { toast } from '@/src/components/ui/toast';
-import { ArrowUpFromLine, ArrowDownFromLine, CircleX, LocateFixed, EditIcon, SquarePlusIcon } from 'lucide-vue-next'
+import { ArrowUpFromLine, ArrowDownFromLine, CircleX, LocateFixed, EditIcon, SquarePlusIcon, CopyPlusIcon } from 'lucide-vue-next'
 import RadioButton from '@/src/components/custom-ui/RadioButton.vue';
 import ModelConfigItemComponent from './ModelConfigItem.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
@@ -53,6 +53,10 @@ const handleEdit = (id: string) => {
   push(`/models/edit?id=${id}`)
 }
 
+const handleCopy = (id: string) => {
+  console.log(`copy button clicked for model with id ${id}`);
+  push(`/models/create?copy=${id}`)
+}
 const handleSelect = async (id: string) => {
   console.log(`select button clicked for model with id ${id}`);
   const rs = await setDefaultItemId(id)
@@ -116,10 +120,14 @@ const handleLocate = (id: string | undefined) => {
                 <ArrowUpFromLine />
               </Button>
               <!-- edit button -->
-              <Button @click="handleEdit(model.id)" variant="outline">
+              <Button @click="handleEdit(model.id)" variant="outline" title="edit">
                 <EditIcon />
               </Button>
-              <Button @click="handleDelete(model.id)" variant="destructive">
+              <Button @click="handleCopy(model.id)" variant="outline" title="copy">
+                <CopyPlusIcon />
+              </Button>
+              <!-- delte button -->
+              <Button @click="handleDelete(model.id)" variant="destructive" title="delete">
                 <CircleX />
               </Button>
               <Button @click="handleDown(model.id)">
