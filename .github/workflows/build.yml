@@ -35,36 +35,34 @@ jobs:
           pnpm zip:edge
           pnpm zip:firefox
         working-directory: packages/ext
-
-      - name: Generate Changelog
-        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
-
-      - name: echo
-        run: echo ${{ github.workspace }}-CHANGELOG.txt && ls
   
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
             packages/ext/.output/*-chrome.zip
             packages/ext/.output/*-edge.zip
             packages/ext/.output/*-firefox.zip
 
 
-      # - name: Submit to stores
-      #   run: |
-      #     pnpm wxt submit \
-      #       --chrome-zip .output/*-chrome.zip \
-      #       # --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
-      #   env:
-      #     CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-      #     CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-      #     CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
-      #     CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-      #     FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
-      #     FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
-      #     FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
-      #   working-directory: packages/ext
+      - name: Submit to stores
+        run: |
+          pnpm wxt submit \
+            --chrome-zip .output/*-chrome.zip \
+            --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip \
+            --edge-zip   .output/*-edge.zip 
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
+          EDGE_CLIENT_ID: ${{secrets.EDGE_CLIENT_ID}}
+          EDGE_PRODUCT_ID:  ${{secrets.EDGE_PRODUCT_ID}}
+          EDGE_API_KEY: ${{secrets.EDGE_API_KEY}}
+      
+        working-directory: packages/ext
