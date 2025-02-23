@@ -1,4 +1,3 @@
-import models from '@/src/model-providers';
 import { defineExtensionMessaging } from '@webext-core/messaging';
 import { CoreMessage } from 'ai';
 interface ProtocolMap {
@@ -22,7 +21,7 @@ interface ProtocolMap {
    * content.js --> background streamText() test
    * @param data 
    */
-  streamTextTest(input: {messages:CoreMessage[],modelName:keyof typeof models, connectId:string}): Promise<unknown>;
+  streamTextTest(input: {messages:CoreMessage[],modelName:string, connectId:string}): Promise<unknown>;
 }
 
 export const { sendMessage, onMessage } = defineExtensionMessaging<ProtocolMap>();

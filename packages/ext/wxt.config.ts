@@ -37,6 +37,17 @@ export default defineConfig({
       }
     },
   }),
+
+  hooks: {
+    'build:manifestGenerated': (wxt, manifest) => {
+      if (wxt.config.mode === 'development') {
+        // console.log('manifest',manifest)
+        manifest.name += ' (DEV)';
+      }
+    },
+  },
+
+
   manifest: {
     name: '__MSG_extName__',
     description: '__MSG_extDescription__',

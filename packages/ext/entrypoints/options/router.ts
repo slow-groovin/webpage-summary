@@ -9,11 +9,11 @@ import PromptList from './components/prompt-setting/PromptList.vue'
 import OptionsLayout from './layout/OptionsLayout.vue'
 import ModelConfigsSetting from './pages/ModelConfigsSetting.vue'
 import PromptsSetting from './pages/PromptsSetting.vue'
-import TriggerSetting from './pages/TriggerSetting.vue'
 import GeneralSetting from './pages/GeneralSetting.vue'
 import PageExtractionSettig from './pages/PageExtractionSettig.vue'
 import AppearanceSetting from './pages/AppearanceSetting.vue'
 import SiteCustomizationSetting from './pages/SiteCustomizationSetting.vue'
+import Welcome from './pages/Welcome.vue'
 
 
         
@@ -54,6 +54,7 @@ export const router = createRouter({
         { path: '/p1', component: GeneralSetting},
         { path: '/p4', component: GeneralSetting},
         { path: '/about', component: GeneralSetting},
+        { path: '/welcome', component: Welcome},
 
       ]
     }

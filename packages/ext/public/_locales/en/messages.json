@@ -160,5 +160,20 @@
   },
   "Custom_css_variables_INPUT_PLACEHOLDER": {
     "message": "only valid css variables..."
+  },
+  "Welcome_Title": {
+    "message": "Welcome to "
+  },
+  "Welcome_Intro": {
+    "message": "Thank you for installing. Here are basic usages:"
+  },
+  "image_error_hint": {
+    "message": "Image cannot be viewed? Please try viewing the tutorial from github"
+  },
+  "create_new_model_config": {
+    "message": "1. create a new model config"
+  },
+  "open_webpage_click_sum": {
+    "message": "2. open a webpage, click floating ball to open panel, click \"sum\" button"
   }
 }

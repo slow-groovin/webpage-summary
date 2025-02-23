@@ -4,9 +4,9 @@ import markdownit from 'markdown-it';
 import { uid } from 'radash';
 import { computed, ref } from 'vue';
 import { browser } from 'wxt/browser';
-import { presetPrompts } from '../presets/prompts';
-import { simpleParseRead } from '../utils/page-read';
-import { renderMessages } from '../utils/prompt';
+import { presetPrompts } from '../../presets/prompts';
+import { simpleParseRead } from '../../utils/page-read';
+import { renderMessages } from '../../utils/prompt';
 const md = markdownit()
 
 const pageArtilce = simpleParseRead()

@@ -161,5 +161,20 @@
   },
   "Custom_css_variables_INPUT_PLACEHOLDER":{
     "message": "有效的 CSS 变量..."
+  },
+  "Welcome_Title": {
+    "message": "欢迎使用"
+  },
+  "Welcome_Intro": {
+    "message": "感谢您安装扩展。以下是基本用法:"
+  },
+  "image_error_hint": {
+    "message": "图片不能查看? 请尝试从github查看教程"
+  },
+   "create_new_model_config": {
+    "message": "1. 新建一个模型配置"
+  },
+  "open_webpage_click_sum": {
+    "message": "2. 打开一个网页, 点击悬浮球打开总结面板, 点击\"总结\" 按钮开始总结"
   }
 }

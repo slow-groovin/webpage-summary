@@ -1,8 +1,8 @@
 
 import { onConnectMessage } from "@/connect-messaging";
 import { onMessage } from "@/messaging";
-import allModels from '@/src/model-providers';
 import { PortListener } from "@/src/types/browser";
+import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { random, sleep } from "radash";
 import { browser, Runtime } from "wxt/browser";
@@ -81,7 +81,10 @@ export function registerStreamMessageTest() {
   onMessage('streamTextTest', async (message) => {
     console.debug('[streamTextTest]', message.data)
     const { messages, modelName, connectId } = message.data
-    const model = allModels[modelName]
+    const model = createOpenAI({
+      apiKey:'',
+      baseURL:''
+    }).languageModel(modelName as string)
     const result = streamText({
       messages,
       model: model,

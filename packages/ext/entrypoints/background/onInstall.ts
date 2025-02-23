@@ -2,10 +2,12 @@ import { usePromptConfigStorage } from "@/src/composables/prompt";
 import { presetPrompts } from "@/src/presets/prompts";
 import { activePageAndInvokeSummary, t } from "@/src/utils/extension";
 import { browser, Runtime } from "wxt/browser";
+import { storage } from "wxt/storage";
 
 export function onInstallHook(detail:Runtime.OnInstalledDetailsType){
   addDefaultPrompt()
   addContextMenus()
+  openWelcomeOnFirstInstall()
 }
 
 
@@ -51,4 +53,14 @@ async function addContextMenus() {
       browser.tabs.create({url:'/options.html#/'})
     }
   });
+}
+
+async function openWelcomeOnFirstInstall() {
+  const isFirstInstall=!(await storage.getItem('local:is-first-install'))
+  if(isFirstInstall){
+    storage.setItem('local:is-first-install',true)
+    browser.tabs.create({url:'/options.html#/welcome'})
+  }
+
+  
 }
