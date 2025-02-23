@@ -1,52 +1,129 @@
-# webpage-summary
+<div align="center ">
+ <img src="./packages/ext/assets/16.png"/>
+ <h2>Webpage Summary</h2>
+ <p align="center">Browser extension for summarizing webpage text content with AI (LLM)</p>
+</div>
+
 [![wakatime](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7.svg)](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7)
-A browser extension for summarizing webpage text content via LLM api
+
+<p align="center">
+  <span>English</span>
+  <a href="./docs/README_zh.md">简体中文</a>
+</p>
 
 
-# features
+![summary](/docs/img/summary-anim.webp)
 
-## multi triggers
-1. keyboard shortcut
-2. popup menu
-3. in-page button
-4. context menu
 
-## multi panel
-1. in-page float
-2. sidebar/side-panel
-3. popup
-4. in-page sidebar 
+- [Features](#features)
+- [Install](#install)
+- [Usage](#usage)
+  - [Quick Start](#quick-start)
+  - [Trigger](#trigger)
+  - [Error Inspect](#error-inspect)
+  - [Proxy for LLM Requests](#proxy-for-llm-requests)
+- [Inspiration](#inspiration)
+- [Feedback & Suggestions](#feedback--suggestions)
+- [Contribution](#contribution)
+- [Update History](#update-history)
 
-## multi scratch methods
-1. @mozilla/readability
-2. in-page user pick
-3. predefined xpath selector
+## Features
 
-## multi LLM api
-1. origin api
-2. third-party api such as OpenRouter
-3. local LLM model such as ollama
-4. third-party oss api such as together-ai, silicon-flow
-5. cross Website request(?)
+1.  Custom AI (LLM) provider configuration, use any provider you like
+2.  Custom prompt templates
+3.  Switch between different models or prompts on the page
+4.  Input context length adjustment/limit & token usage view
+5.  Multiple triggers for opening the panel: `Auto Open` / `Floating Ball` / `Context Menu` / `Keyboard Shortcut` / `Action Click`
+6.  Auto begin summary: `Enable/Disable`
+7.  Works with different site access permissions in the browser; can be started from the contextMenu without current tab's permission
+8.  (Future) Summary in popup / in-page side panel / side panel
+9.  (Future) Site customization (glob, selector, trigger, whitelist, blacklist)
+10. (Future) Cross-site LLM request (using session requests from LLM websites)
 
-## customization
-1. prompt-template
-2. webpage xpath selector
+## Install
 
-## network
-1. proxy?
-2. endpoint
+<div align="">
+<a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp/">
+  <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg" height="40" style="margin-right:1em;padding-top:2px"/ >
+</a>
+<a href="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png">
+  <img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png" height="30"/ >
+</a>
+<a href="https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/">
+  <img src="https://addons.mozilla.org/static-frontend/459ebe418a9783cd0b80bdd8b98e5faa.svg" height="30"/ >
+</a>
+</div>
 
-## inspect
-1. prompt-template view
-2. token-usage view
-3. page text content view
-4. LLM response view
+or [Github Releases](/releases)
 
-## advanced
-1. two-round summary: low-price rough summary + high-price summary
-2. ? one-page simple rag: call embedding to store vectors in indexedDB(using dexie.js), chat with vector-searched results.
-## other
-1. export as chat history
-2. store and manage history in indexedDB
-3. switch model and refresh
+## Usage
+
+### Quick Start
+
+1.  Configure a model
+![create model](/docs/img/create-model-anim.webp?width=500&height=300)
+2.  Open a page, click summary
+![summary](/docs/img/summary-anim.webp)
+3.  Continue to chat, or try modifying configurations
+
+### Trigger
+
+By default, the summary panel does not open automatically. You can open it in the following four ways:
+
+1.  Click the floating ball in the lower right corner of the page (configurable: `Yes (default) / No` display)
+2.  Click the action (popup) button, then click the "Summarize" button on the page (configurable: clicking the action (popup) button can `Open the panel directly / Open the popup page (default)`)
+3.  Click "⚡ Summarize This Page" in the page's context menu
+4.  (Manual configuration required) Configure a keyboard shortcut through the browser extension settings (not the plugin's options page). You can configure a shortcut trigger (recommended `Alt+S`)
+
+> You can also configure `Auto open summary panel on new tab`
+
+<br>
+
+By default, the summary does not start automatically after opening the panel. You need to click the "Sum" button in the panel to start summarizing.
+
+> You can configure `Auto begin summary` to automatically start summarizing when the panel is opened.
+
+<br>
+
+By default, the plugin has access to all sites.
+
+> You can change the plugin's access permission to `On Click` in the browser settings, and then open the summary panel through the context menu button on the page you need to summarize. (This function is implemented by: obtaining the permission of the current tab through activeTab when clicked, and then injecting and executing the code of the summary panel)
+
+### Error Inspect
+
+Some errors may not be displayed through the UI. You can view the errors of the summary panel through the developer console of the current webpage.
+
+View the logs of the plugin background through the developer console of the background (options) page.
+
+Requests sent to the LLM API can also be viewed in the developer console of the background page.
+
+### Proxy for LLM Requests
+
+This plugin does not provide proxy functionality itself. It can be used with other browser proxy plugins (similar to ProxySwitchOmega) to implement proxying of specified URL traffic.
+
+## Inspiration
+
+Copying webpage content into a llm website, then entering prompts and viewing the results is a common workflow for many people today. A browser plugin is needed to replace this process.
+
+Currently, the following provide this functionality:
+
+- Some small company products such as sider.ai, briefy.ai, require a considerable subscription price.
+- Some large model vendors provide free plugin ends, such as Doubao plugin, Kimi browser plugin. They are completely free. The user experience of Doubao plugin even far exceeds sider.ai with a subscription fee of $8/m, but it completely takes over your page and is somewhat laggy in terms of performance. It cannot even be put on the browser's extension store. If you don't care about privacy at all, Doubao plugin is the best choice.
+- A large number of AI application plugins from individual developers in the browser store simply encapsulate an LLM API, and none of them are open source.
+- [chatGPTBox](https://github.com/josStorer/chatGPTBox): The only open-source webpage summary plugin I found, it supports multiple model configurations and has made specific website customizations. The interface design of this project is inspired by it.
+
+[chatGPTBox](https://github.com/josStorer/chatGPTBox) is a nice project, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
+
+## 🤗 Feedback & Suggestions
+
+🙌 Welcome any feedback or suggestions
+
+If you have any suggestions for features, interface suggestions, bugs, questions, usage feedback, or any ideas, please submit them in the issue.
+
+## Contribution
+
+Welcome to contribute to documentation, i18n support, UI, and features. Please refer to [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Update History
+
+Please refer to [CHANGELOG](/CHANGELOG.md)
