@@ -1,0 +1,40 @@
+[English]
+
+⚡ Webpage Summary: Open-Source AI Summarization with Your Favorite Models and Methods! 🤖
+
+
+
+Try this open-source, single-purpose extension to summarize the webpages in the comfortable and secure way! 🚀 No complex features and cluttered interface, just one-click summarization. 📚
+
+Key Advantages:
+
+*   ✅ Simple & Easy: Focuses on one thing - summarizing webpages.
+*   🔓 Open Source on Github: Worry-free privacy, free to use, and runs entirely in your browser! No login required. 🛡️
+*   ⚙️ Fully Customizable: Configure your own AI provider, prompts, opening method, and customized appearance. 🎛️
+
+
+-----------------------------------------------------------------------
+⏳repository: https://github.com/slow-groovin/webpage-summary
+📝quickstart: https://github.com/slow-groovin/webpage-summary/blob/main/docs/README.md#31-quick-start
+🔑privacy policy: https://github.com/slow-groovin/webpage-summary/blob/main/docs/webstore/privacy.md
+
+[Chinese]
+
+⚡ Webpage Summary: 开源的网页AI总结, 用你喜欢的大模型和操作方式！ 🤖
+
+使用这个开源、单一职责(总结)的扩展，用最舒服和安全的方式总结你浏览的网页！ 🚀 没有复杂的功能和眼花缭乱的界面，只有毫不费力的一键总结。 📚
+
+主要优势：
+
+*   ✅ 简单易用：专注于一件事 - 总结网页。
+*   🔓 Github开源：隐私无忧, 开源免费, 完全在您的浏览器中运行! 无登陆注册。🛡️
+*   ⚙️ 完全可定制：配置你自己的AI提供商、提示词、打开方式和定制外观。 🎛️
+
+
+
+
+
+-----------------------------------------------------------------------
+⏳项目地址: https://github.com/slow-groovin/webpage-summary
+📝入门指南: https://github.com/slow-groovin/webpage-summary/blob/main/docs/README_zh.md#31-quick-start
+🔑隐私协议: https://github.com/slow-groovin/webpage-summary/blob/main/docs/webstore/privacy.md
