@@ -1,0 +1,164 @@
+{
+  "helloWorld": {
+    "message": "Hello world!"
+  },
+  "extName": {
+    "message": "Webpage Summary"
+  },
+  "extDescription": {
+    "message": "open source webpage summary, via any llm api, build any prompt-template."
+  },
+  "sum": {
+    "message": "sum"
+  },
+  "input_length": {
+    "message": "input length"
+  },
+  "summarize": {
+    "message": "summarize"
+  },
+  "Open_Setting": {
+    "message": "Open Setting"
+  },
+  "summarize_this_page": {
+    "message": "summarize this page"
+  },
+  "General": {
+    "message": "General"
+  },
+  "Page_Extraction": {
+    "message": "Page Extraction"
+  },
+  "Setting": {
+    "message": "Setting"
+  },
+  "Models": {
+    "message": "Models"
+  },
+  "Prompts": {
+    "message": "Prompts"
+  },
+  "Site_Customization": {
+    "message": "Site Customization"
+  },
+  "Appearance": {
+    "message": "Appearance"
+  },
+  "Language_Of_Summary": {
+    "message": "Language Of Summary"
+  },
+  "Interaction": {
+    "message": "Interaction"
+  },
+  "Enable_floating_ball": {
+    "message": "Enable floating ball"
+  },
+  "Auto_begin_summary": {
+    "message": "Auto begin summary"
+  },
+  "Auto_open_summary_panel_on_new_tab": {
+    "message": "Auto open summary panel on new tab"
+  },
+  "Enable_popup_click_trigger": {
+    "message": "Enable popup click trigger"
+  },
+  "Always_expand_the_chat_box": {
+    "message": "Always expand the chat box"
+  },
+  "Enbale_token_usage_view": {
+    "message": "Enbale token usage view"
+  },
+  "Extract_method": {
+    "message": "Extract method"
+  },
+  "Length_exceeding_behaviour": {
+    "message": "Length exceeding behaviour"
+  },
+  "cut_preserve_front_DESC": {
+    "message": "Split the content, keeping the first half with the maximum length."
+  },
+  "cut_preserve_end_DESC": {
+    "message": "Split the content, keeping the second half with the maximum length."
+  },
+  "cut_preserve_middle_DESC": {
+    "message": "Split the content into 3 parts, with the middle part of maximum length beging preserved, front and end sides are equally divided."
+  },
+  "nothing_DESC": {
+    "message": "do nothing"
+  },
+  "Create": {
+    "message": "Create"
+  },
+  "Toggle_edit_mode": {
+    "message": "Toggle edit mode"
+  },
+  "default": {
+    "message": "default"
+  },
+  "Create_Model_Config": {
+    "message": "Create Model Config"
+  },
+  "Edit_Model_Config": {
+    "message": "Edit Model Config"
+  },
+  "Selected_Model_Provider": {
+    "message": "Selected Model Provider"
+  },
+  "leave_empty_to_not_limit": {
+    "message": "leave empty to not limit"
+  },
+  "max_content_length_DESC": {
+    "message": "limit the max length of the webpage content text"
+  },
+  "max_content_length_CALC_INFO": {
+    "message": "💡calculate by javascript String.length\n💡this a hard limit on content, overlimit of llm api can happen any ways, you can adjust on panel after happens, feel free to set\n💡You could adjust it based on your language, for example: <English: n length = 1 word ≈  1 token> <Chinese : 1 length ≈ 1 token>"
+  },
+  "max_content_length_TOKENIZER_TITLE": {
+    "message": "Why not tokenizer?"
+  },
+  "max_content_length_TOKENIZER_INFO": {
+    "message": "1.The token calculation method varies greatly between different models,\nmaking it impossible to use a single model for accurate calculation \n2.token calculation duration is too large, \n3.tokenizer lib will lead to a large package size."
+  },
+  "maxTokens_DESC": {
+    "message": "set model's maximum output tokens"
+  },
+  "empty_to_unset": {
+    "message": "empty to unset"
+  },
+  "Optional_Settings": {
+    "message": "Optional Settings"
+  },
+  "input_token_price": {
+    "message": "input token price"
+  },
+  "output_token_price": {
+    "message": "output token price"
+  },
+  "Create_New_Template": {
+    "message": "Create New Tempate"
+  },
+  "Edit_Template": {
+    "message": "Edit Tempate"
+  },
+  "Template_Variables": {
+    "message": "Template Variables"
+  },
+  "Hide_Template_Variables": {
+    "message": "Hide Template Variables"
+  },
+  "Show_Template_Variables": {
+    "message": "Show Template Variables"
+  },
+  "Submit": {
+    "message": "Submit"
+  },
+  "Custom_css_variables": {
+    "message": "Custom css variables"
+  },
+  "Custom_css_variables_DESC": {
+    "message": "custom css settings to modify the style, if defined, it will be injected."
+  },
+  "Custom_css_variables_INPUT_PLACEHOLDER": {
+    "message": "only valid css variables..."
+  }
+}

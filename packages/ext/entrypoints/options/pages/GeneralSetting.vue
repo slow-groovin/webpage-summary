@@ -4,6 +4,7 @@ import Switch from '@/src/components/ui/switch/Switch.vue';
 import { useEnableAutoBeginSummary, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
 import { DefaultConfig } from '@/src/constants/default-config';
 import DefaultSettingValue from '../components/DefaultSettingValue.vue';
+import { t } from '@/src/utils/extension';
 
 const { summaryLanguage } = useSummaryLanguage()
 const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
@@ -12,14 +13,12 @@ const { enableFloatingBall } = useEnableFloatingBall()
 const { enablePopupClickTrigger } = useEnablePopupClickTrigger()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault } = useEnableUserChatDefault()
-const { summaryInputExceedBehaviour } = useSummaryInputExceedBehaviour()
-const { userCustomStyle } = useUserCustomStyle()
 
 
 
 </script>
 <template>
-  <h1 class="text-2xl mb-4">General Setting</h1>
+  <h1 class="text-2xl mb-4">{{ t('General') }} {{ t('Setting') }}</h1>
   <div class="mr-auto flex flex-col gap-8 items-stretch">
     <!-- SAMPLE -->
     <!-- <div class="line">
@@ -45,7 +44,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Language of summary </div>
+        <div class="title">{{ t('Language_Of_Summary') }} </div>
         <div class="description">select the language of the summary that you want to read</div>
       </div>
       <div class="setting">
@@ -56,11 +55,11 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <!-- Interaction -->
     <h2 class="font-bold text-2xl border-b ">
-      Interaction
+      {{ t('Interaction') }}
     </h2>
     <div class="line">
       <div>
-        <div class="title">Enable floating ball</div>
+        <div class="title">{{ t('Enable_floating_ball') }}</div>
         <div class="description">enable floating ball on the webpage</div>
       </div>
       <div class="setting">
@@ -72,7 +71,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Auto begin summary</div>
+        <div class="title">{{ t('Auto_begin_summary') }}</div>
         <div class="description">Auto begin summarizing once openning the summary window </div>
       </div>
       <div class="setting">
@@ -83,7 +82,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Auto open summary panel on new tab</div>
+        <div class="title">{{ t('Auto_open_summary_panel_on_new_tab') }}</div>
         <div class="description">always open summary panel when you openning a new page</div>
         <blockquote class="border-l-4 border-l-orange-500 pl-2 bg-neutral-400/20 italic">warning: this might cause you
           inconvenience </blockquote>
@@ -100,7 +99,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Enable popup click trigger</div>
+        <div class="title">{{ t('Enable_popup_click_trigger') }}</div>
         <div class="description"> change popup (extension icon in the left-top of browser) behaviour to opening the
           summary panel</div>
         <div class="description"> by default, it will open a popup panel</div>
@@ -114,7 +113,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Always expand the chat box</div>
+        <div class="title">{{ t('Always_expand_the_chat_box') }}</div>
         <div class="description">chat box(for user to ask llm after summary with summary context) in
           the bottom of the summary window</div>
       </div>
@@ -126,7 +125,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line">
       <div>
-        <div class="title">Enable token usage view</div>
+        <div class="title">{{ t('Enbale_token_usage_view') }}</div>
         <div class="description">show token usage information in summary panel header</div>
       </div>
       <div class="setting">

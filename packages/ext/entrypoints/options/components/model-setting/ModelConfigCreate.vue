@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '@/src/utils/extension';
 import { ModelConfigItem } from '@/src/types/config/model';
 import ModelConfigEditComponent from './ModelConfigEditComponent.vue';
 import { useModelConfigStorage } from '@/src/composables/model-config';
@@ -41,6 +42,6 @@ async function submitCreate(value: Omit<ModelConfigItem,'id'>) {
 </script>
 
 <template>
-  <h2 class="text-2xl mb-4">Create Model Config</h2>
+  <h2 class="text-2xl mb-4">{{ t('Create_Model_Config') }}</h2>
   <ModelConfigEditComponent v-if="!copy || (copy && toCopyItem)" :item="toCopyItem" @sumbit="submitCreate" />
 </template>

@@ -70,6 +70,7 @@ import { ModelConfigItem } from '@/src/types/config/model';
 import { PromptConfigItem } from '@/src/types/config/prompt';
 import { SettingsIcon } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
+import { t } from '@/src/utils/extension';
 import icon from '~/assets/16.png';
 import ModelConfigInlineItem from '../model/ModelConfigInlineItem.vue';
 import ModelErrorInineItem from '../model/ModelErrorInineItem.vue';

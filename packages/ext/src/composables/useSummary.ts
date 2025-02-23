@@ -1,20 +1,19 @@
 // packages/ext/src/composables/useStreamSummary.ts
 import { sendConnectMessage } from '@/connect-messaging';
 import { CoreMessage } from 'ai';
-import { computed, onMounted, reactive, ref } from 'vue';
+import { EventEmitter } from 'eventemitter3';
+import { computed, onMounted, ref } from 'vue';
 import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
 import { UIMessage } from '../types/message';
 import { TokenUsage } from '../types/summary';
+import { handleConnectError } from '../utils/error-parse';
 import { renderMessages } from '../utils/prompt';
+import { getEnableAutoBeginSummary, getSummaryLanguage } from './general-config';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
-import { getEnableAutoBeginSummary, getSummaryLanguage, getSummaryInputExceedBehaviour } from './general-config';
-import { EventEmitter } from 'eventemitter3'
-import { handleExceedContent } from '../utils/page-read';
-import { handleConnectError } from '../utils/error-parse';
 
 
 

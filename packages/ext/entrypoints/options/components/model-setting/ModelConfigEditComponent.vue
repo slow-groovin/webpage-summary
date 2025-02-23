@@ -18,6 +18,7 @@ import { ChevronsDownIcon, CircleAlertIcon, InfoIcon } from 'lucide-vue-next'
 import { useForm } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
+import { t } from '@/src/utils/extension';
 import ModelProviderSelect from './ModelProviderSelect.vue'
 import HoverBadget from '@/src/components/common/HoverTextBadget.vue'
 import Collapsible from '@/src/components/ui/collapsible/Collapsible.vue'
@@ -241,10 +242,10 @@ making it impossible to use a single model for accurate calculation
       </FormField>
 
       <Collapsible class="col-span-2">
-        <CollapsibleTrigger class="flex flex-row items-center text-blue-500 font-semibold ">
-          <ChevronsDownIcon />
-          Optional Settings
-        </CollapsibleTrigger>
+              <CollapsibleTrigger class="flex flex-row items-center text-blue-500 font-semibold ">
+                <ChevronsDownIcon />
+                {{ t('Optional_Settings') }}
+              </CollapsibleTrigger>
         <CollapsibleContent class="grid grid-cols-2 gap-4 p-2">
 
 

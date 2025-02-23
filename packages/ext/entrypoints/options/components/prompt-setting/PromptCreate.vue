@@ -1,5 +1,6 @@
 <!-- create prompt item -->
 <script setup lang="ts">
+import { t } from '@/src/utils/extension';
 import { toast } from '@/src/components/ui/toast';
 import { usePromptConfigStorage } from '@/src/composables/prompt';
 import { PromptConfigItem } from '@/src/types/config/prompt';
@@ -41,7 +42,7 @@ async function onSubmit(name: string, systemMessage: string, userMessage: string
 }
 </script>
 <template>
-  <h1 class="text-lg font-bold">create new template</h1>
+  <h1 class="text-lg font-bold">{{ t('Create_New_Template') }}</h1>
   <div>
     <PromptEditComponent @submit="onSubmit" />
   </div>

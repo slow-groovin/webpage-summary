@@ -9,6 +9,7 @@ import { cn } from '@/src/utils/shadcn';
 import { computed, ref } from 'vue';
 import EllipsisAnim from '../status/EllipsisAnim.vue';
 import { useEnableAutoBeginSummary } from '@/src/composables/general-config';
+import { browser } from 'wxt/browser';
 const props = defineProps<{
   status: 'preparing' | 'ready' | 'running' | 'failed';
 }>();
@@ -20,6 +21,8 @@ const emit = defineEmits<{
   (e: 'refresh'): void;
   (e: 'viewFailedReason'): void;
 }>();
+
+const msgSum=browser.i18n.getMessage('sum')
 </script>
 
 <template>
@@ -63,7 +66,7 @@ const emit = defineEmits<{
     <Button variant="outline" size="icon" class="w-fit h-8 px-1 gap-0 flex items-center leading-8"
       @click="()=>{isFirstClickDone=true;emit('refresh')}">
       <PlayIcon class="text-green-800"/>
-      <span class="text-xs" style="font-stretch: condensed;">Sum</span>
+      <span class="text-xs" style="font-stretch: condensed;">{{ msgSum }}</span>
     </Button>
 
 

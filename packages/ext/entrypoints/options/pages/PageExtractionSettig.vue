@@ -7,6 +7,7 @@ import DefaultSettingValue from '../components/DefaultSettingValue.vue';
 import { contentLengthExceededStrategys } from '@/src/presets/strategy';
 import Select from '@/src/components/custom-ui/select/Select.vue';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/components/ui/tabs';
+import { t } from '@/src/utils/extension';
 import { CircleCheckBig, CircleCheckBigIcon } from 'lucide-vue-next';
 
 
@@ -24,7 +25,7 @@ const { userCustomStyle } = useUserCustomStyle()
 
 </script>
 <template>
-  <h1 class="text-2xl mb-2">Page Extraction Setting</h1>
+  <h1 class="text-2xl mb-2">{{ t('Page_Extraction') }}</h1>
   <p class="description">extract text content from webpage as input of summary</p>
 
 
@@ -43,8 +44,8 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line mt-[-2em]">
       <div>
-        <div class="title">Extract method</div>
-        <p class="description">how to get text content from .html file </p>
+        <div class="title">{{t('Extract_method')}}</div>
+                 <p class="description">how to get text content from .html file </p>
       </div>
       <div>
         <!-- just decoration -->
@@ -60,9 +61,9 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line border rounded-xl p-2">
       <div>
-        <div class="title">Length exceeding behaviour
-
-
+        <div class="title">{{t('Length_exceeding_behaviour')}}
+         
+        
         </div>
         <p class="description">what to do when webpage content length exceeds the maxContentLength of model's config</p>
         <p class="description text-amber-600">feel free to set, you can also adjust context window on the spot when bad response received.</p>
@@ -95,8 +96,7 @@ const { userCustomStyle } = useUserCustomStyle()
             class="border rounded p-1 w-48  hover:cursor-pointer active:outline-1 select-none shadow font-mono font-bold">
             {{ contentLengthExceededStrategys[summaryInputExceedBehaviour]?.name }}
           </div>
-
-          <div> {{ contentLengthExceededStrategys[summaryInputExceedBehaviour]?.desc }}</div>
+          <div> {{ t((summaryInputExceedBehaviour.replaceAll('-','_')+'_DESC') as any )}}</div>
         </div>
         <DefaultSettingValue value="cut-preserve-front" class="w-fit"/>
 

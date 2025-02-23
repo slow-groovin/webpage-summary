@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Button from '@/src/components/ui/button/Button.vue';
 import { modelProviderPresets } from '@/src/presets/model-providers';
+import { t } from '@/src/utils/extension';
 import { ref } from 'vue';
 
 defineEmits<{
@@ -26,7 +27,7 @@ const providerType = defineModel<string>('providerType')
     </template>
   </div>
   <h3 class="mx-auto text-sm font-semibold flex flex-row items-center gap-4">
-    <span>Selected Model Provider: </span>
+    <span>{{ t('Selected_Model_Provider')}}: </span>
     <div class="flex items-center gap-1 border border-neutral-500 rounded p-1">
       <img :src="modelProviderPresets[providerType as string].icon" alt="Model Icon" class="w-6 h-6" />
       <div class="">{{ providerType }} </div>

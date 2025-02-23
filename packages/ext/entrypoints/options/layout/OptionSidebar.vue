@@ -3,6 +3,7 @@
 // sidebar of options.html page.
 import { RouterLink, useRoute, useLink, useRouter } from 'vue-router';
 import { computed } from 'vue';
+import { t } from '@/src/utils/extension';
 const route = useRoute();
 const currentPath = computed(() => route.path);
 const debugCharacters = import.meta.env.DEV ? [{ name: 'debug', path: '/debug' }] : [];
@@ -10,12 +11,12 @@ const groups = [
   {
     name: '',
     chapters: [
-      { name: 'General', path: '/general' },
-      { name: 'Page Extraction', path: '/page-extraction' },
-      { name: 'Models', path: '/models' },
-      { name: 'Prompts', path: '/prompts' },
-      { name: 'Site Customization', path: '/site-customization' },
-      { name: 'Appearance', path: '/appearance' },
+      { name: t('General'), path: '/general' },
+            { name: t('Page_Extraction'), path: '/page-extraction' },
+            { name: t('Models'), path: '/models' },
+            { name: t('Prompts'), path: '/prompts' },
+            { name: t('Site_Customization'), path: '/site-customization' },
+            { name: t('Appearance'), path: '/appearance' },
 
 
     ]

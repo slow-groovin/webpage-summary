@@ -4,7 +4,7 @@
     :class="cn('flex items-center rounded-lg underline decoration-dashed text-nowrap text-xs font-light', clazz ?? '')">
     <!-- Word count -->
 
-    <div title=" click the right eye button to View&Change">Input Length:
+    <div title=" click the right eye button to View&Change">{{ t('input_length') }}:
       <span v-if="selectLength > maxLength" class="text-red-500" :title="`>${showNum(maxLength)}`">
         {{ showNum(selectLength) }}
       </span>
@@ -88,6 +88,8 @@ import { Slider } from "../ui/slider";
 import { EyeIcon, Minimize2Icon, MinimizeIcon, ScanEyeIcon } from "lucide-vue-next";
 import ExtIcon from "../common/ExtIcon.vue";
 import Button from "../ui/button/Button.vue";
+import { browser } from "wxt/browser";
+import { t } from "@/src/utils/extension";
 
 defineOptions({
   inheritAttrs: false
@@ -113,7 +115,6 @@ const behaviourFunction = computed(() => {
   }
   return contentLengthExceededStrategys['nothing']['exec']
 })
-
 
 
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '@/src/utils/extension';
 import ErrorComponent from '@/src/components/status/ErrorComponent.vue';
 import { toast } from '@/src/components/ui/toast';
 import { useModelConfigStorage } from '@/src/composables/model-config';
@@ -38,7 +39,7 @@ async function submitEdit(value: Omit<ModelConfigItem,'id'>) {
 </script>
 
 <template>
-  <h2 class="text-2xl mb-4">Edit Model Config: {{ item?.name }}</h2>
+  <h2 class="text-2xl mb-4">{{ t('Edit_Model_Config') }} {{ item?.name }}</h2>
   <ModelConfigEditComponent v-if="item" :item="item" @sumbit="submitEdit" />
   <ErrorComponent v-else :message="`Model Config ${id} not found`"></ErrorComponent>
 </template>

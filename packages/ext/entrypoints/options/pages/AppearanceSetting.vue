@@ -3,6 +3,7 @@ import { Button } from '@/src/components/ui/button';
 import { toast } from '@/src/components/ui/toast';
 import { useUserCustomStyle } from '@/src/composables/general-config';
 import { filterValidCssVariableText } from '@/src/utils/document';
+import { t } from '@/src/utils/extension';
 import { ref } from 'vue';
 
 const { userCustomStyle, then } = useUserCustomStyle()
@@ -35,10 +36,10 @@ function submit() {
 }
 </script>
 <template>
-  <h1 class="text-2xl mb-4">Appearance Setting</h1>
+  <h1 class="text-2xl mb-4">{{ t('Appearance') }} {{ t('Setting') }}</h1>
   <div class="w-fit">
-    <div class="title">Custom css variables</div>
-    <div class="description">custom css settings to modify the style, if defined, it will be injected. </div>
+    <div class="title">{{ t('Custom_css_variables') }}</div>
+    <div class="description">{{ t('Custom_css_variables_DESC') }}</div>
 
     <div class="grid grid-cols-[auto,1fr] p-2 rounded-2xl w-fit  my-2   space-y-2
         items-baseline bg-gradient-to-r from-lime-100 to-blue-200">
@@ -50,9 +51,9 @@ function submit() {
     </div>
 
     <textarea v-model="editValue" class="border h-64 px-2  w-full resize font-mono"
-      placeholder="only valid css variables... " />
+      :placeholder="t('Custom_css_variables_INPUT_PLACEHOLDER')" />
     <br/>
-    <Button @click="submit">Submit</Button>
+    <Button @click="submit">{{ t('Submit') }}</Button>
   </div>
 
 

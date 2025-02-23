@@ -38,8 +38,11 @@ export default defineConfig({
     },
   }),
   manifest: {
-    name: 'Webpage Summary',
-    description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
+    name: '__MSG_extName__',
+    description: '__MSG_extDescription__',
+    // name: 'Webpage Summary',
+    // description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
+    default_locale: 'en',
     permissions: ['storage','contextMenus'],
     icons: {
       // 16: '/icon/16.png',

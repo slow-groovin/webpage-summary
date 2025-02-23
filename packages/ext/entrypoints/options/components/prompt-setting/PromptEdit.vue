@@ -1,14 +1,13 @@
 <!-- create prompt item -->
 <script setup lang="ts">
-import { usePromptConfigStorage } from '@/src/composables/prompt';
-import PromptEditComponent from './PromptEditComponent.vue';
-import { PromptConfigItem } from '@/src/types/config/prompt';
-import { uid } from 'radash';
-import { toast, ToastAction } from '@/src/components/ui/toast';
-import { useRoute, useRouter } from 'vue-router';
-import { h, onMounted, ref } from 'vue'
-import PromptConfigItemComponent from './PromptConfigItem.vue';
 import ErrorComponent from '@/src/components/status/ErrorComponent.vue';
+import { toast } from '@/src/components/ui/toast';
+import { usePromptConfigStorage } from '@/src/composables/prompt';
+import { PromptConfigItem } from '@/src/types/config/prompt';
+import { t } from '@/src/utils/extension';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import PromptEditComponent from './PromptEditComponent.vue';
 const { updateItem, getItem } = usePromptConfigStorage()
 const { query: { id } } = useRoute()
 const { push } = useRouter()
@@ -63,7 +62,7 @@ async function onSubmit(name: string, systemMessage: string, userMessage: string
   <div>
     <PromptEditComponent v-if="editedItem" :item="editedItem" @submit="onSubmit">
       <template #header>
-        <h1>Edit </h1>
+        <h1>{{ t('Edit_Template') }}</h1>
       </template>
 
     </PromptEditComponent>

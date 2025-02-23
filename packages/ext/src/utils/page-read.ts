@@ -26,13 +26,4 @@ export function simpleParseRead() {
   
 }
 
-export function handleExceedContent(content: string, maxContentLength:number, strategy: InputContentLengthExceededStrategy):string {
-  if(strategy==='split'){
-    return content.slice(0, maxContentLength)
-  }else if(strategy==='error'){
-    throw new Error(`The length count of webpage summary input is ${content.length}, which exceeds the model setting's max length ${maxContentLength}`)
-  }else if(strategy==='ignore'){
-    return content
-  }
-  return content
-}
+

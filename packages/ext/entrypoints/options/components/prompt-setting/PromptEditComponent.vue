@@ -27,6 +27,7 @@ import { usePromptConfigStorage, usePromptDefaultPreset } from '@/src/composable
 import AutoResizeTextarea from '@/src/components/custom-ui/AutoResizeTextarea.vue';
 import { useRouter } from 'vue-router';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/src/components/ui/collapsible';
+import { t } from '@/src/utils/extension';
 const { isNameExist } = usePromptConfigStorage()
 const { back } = useRouter()
 const isCollapseOpen = ref(true)
@@ -80,7 +81,7 @@ const templatVariables = [
     <Collapsible v-model:open="isCollapseOpen">
       <CollapsibleContent
         class="shadow-lime-500 shadow rounded-lg p-2 w-fit self-start bg-gradient-to-r from-lime-100 to-blue-200 text-black">
-        <h1 class="font-semibold">Template Variables</h1>
+        <h1 class="font-semibold">{{ t("Template_Variables") }}</h1>
         <hr class="border-t-black">
         <div class="grid grid-cols-[auto,1fr] mt-2 space-y-2 items-baseline">
           <template v-for="variable in templatVariables" :key="variable.key">
@@ -92,12 +93,12 @@ const templatVariables = [
       <CollapsibleTrigger class="text-blue-500 hover:text-blue-700 transition-colors duration-200">
         <div v-if="isCollapseOpen" class="flex items-center space-x-2 cursor-pointer">
           <ChevronsUp class="w-4 h-4" />
-          <div class="font-semibold">Hide Template Variables</div>
+          <div class="font-semibold">{{ t('Hide_Template_Variables') }}</div>
         </div>
 
         <div v-else class="flex items-center space-x-2 cursor-pointer">
           <ChevronsDown class="w-4 h-4" />
-          <div class="font-semibold">Show Template Variables</div>
+          <div class="font-semibold">{{ t('Show_Template_Variables') }}</div>
         </div>
       </CollapsibleTrigger>
 
@@ -141,7 +142,7 @@ const templatVariables = [
       </FormField>
 
       <Button type="submit">
-        Submit
+        {{ t('Submit') }}
       </Button>
     </form>
   </div>

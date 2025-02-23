@@ -8,7 +8,7 @@ import { BookOpenTextIcon, SettingsIcon } from 'lucide-vue-next';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { browser } from 'wxt/browser';
-import { activePageAndInvokeSummary } from '../../src/utils/extension';
+import { activePageAndInvokeSummary, t } from '../../src/utils/extension';
 
 const { iconUrl, name, version } = useExtInfo()
 
@@ -43,12 +43,13 @@ onMounted(async () => {
 
     <Button variant="topic" class="" @click="invokeCurrentTabSummary">
       <BookOpenTextIcon />
-      Summarize
+      {{ t('summarize') }}
     </Button>
 
     <Button @click="sendMessage('openOptionPage', '/options.html#/')" variant="secondary">
       <SettingsIcon />
-      Open Settings
+      {{ t('Open_Setting') }}
+
     </Button>
 
 

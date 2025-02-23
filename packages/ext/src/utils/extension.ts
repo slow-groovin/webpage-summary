@@ -23,3 +23,7 @@ export async function activePageAndInvokeSummary(tab:Tabs.Tab) {
   //3.
   sendMessage('invokeSummary', undefined, { tabId: tab.id! })
 }
+
+export function t(messageName:Parameters<typeof browser.i18n.getMessage>[0]){
+  return browser.i18n.getMessage(messageName)
+}

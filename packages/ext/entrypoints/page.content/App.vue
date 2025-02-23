@@ -13,6 +13,7 @@ import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { watchOnce } from '@vueuse/core'
 import { sleep, sum } from 'radash'
 import { onMounted, ref, useTemplateRef } from 'vue'
+import { browser } from 'wxt/browser'
 import icon from '~/assets/16.png'
 
 onMounted(() => {
@@ -60,8 +61,9 @@ onMessage('invokeSummary', () => {
 
 })
 
+const l=browser.i18n.getMessage('helloWorld')
 
-
+console.log('l',l)
 </script>
 
 <template>

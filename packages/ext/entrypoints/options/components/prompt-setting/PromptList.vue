@@ -9,6 +9,7 @@ import { ref, computed, onMounted } from 'vue';
 import { toast } from '@/src/components/ui/toast';
 import { PromptConfigItem } from '@/src/types/config/prompt';
 import RadioButton from '@/src/components/custom-ui/RadioButton.vue';
+import { t } from '@/src/utils/extension';
 
 const { listItem, updateConfigOrder, setDefaultItemId, deleteItem, getDefaultItem } = usePromptConfigStorage()
 const { state: prompts } = usePromptConfigs()
@@ -85,13 +86,13 @@ const handleLocate = (id: string | undefined) => {
       <Button class="bg-green-600 hover:bg-green-800 pl-2">
         <RouterLink to="/prompts/create" class="flex items-center [&_svg]:size-6">
           <SquarePlusIcon class=""/>
-          Create
+          {{ t('Create') }}
         </RouterLink>
       </Button>
     </div>
     <!-- default -->
     <div class="min-h-16 text-2xl mt-4 flex flex-row items-center gap-2">
-      default:
+      {{ t('default') }}:
       <span class="border rounded p-1 border-green-500">
         {{ defaultPrompt?.name ?? 'NO PROMPT' }}
 

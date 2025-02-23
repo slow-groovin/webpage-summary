@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useEnableAutoBeginSummary, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
+import { t } from '@/src/utils/extension';
 
 const { summaryLanguage } = useSummaryLanguage()
 const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
@@ -15,8 +16,8 @@ const { userCustomStyle } = useUserCustomStyle()
 
 </script>
 <template>
-  <h1 class="text-2xl mb-4">Site customization Setting</h1>
-  NOT IMPLEMENTION
+  <h1 class="text-2xl mb-4">{{ t('Site_Customization') }} {{ t('Setting') }}</h1>
+  🚧🚧🚧NOT IMPLEMENTION 🚧🚧🚧
     
 
 </template>

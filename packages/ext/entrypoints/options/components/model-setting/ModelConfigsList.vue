@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '@/src/utils/extension';
 import Button from '@/src/components/ui/button/Button.vue'
 import { onMounted, ref } from 'vue'
 import { useModelConfigs, useModelConfigStorage } from '@/src/composables/model-config';
@@ -88,17 +89,17 @@ const handleLocate = (id: string | undefined) => {
       <Button class="bg-green-600 hover:bg-green-800 pl-2">
         <RouterLink to="/models/create" class="flex items-center [&_svg]:size-6">
           <SquarePlusIcon class=""/>
-          Create
+          {{ t('Create') }}
         </RouterLink>
       </Button>
       <label class="flex flex-row items-center gap-2 font-light border p-1 text-sm rounded">
         <Switch v-model:checked="isEditMode" class="data-[state=checked]:bg-gray-500" />
-        Toggle edit mode
+        {{ t('Toggle_edit_mode') }}
       </label>
     </div>
     <!-- default -->
     <div class="min-h-16 text-2xl mt-4 flex flex-row items-center gap-2">
-      default:
+      {{ t('default') }}:
       <span class="border rounded p-1 border-green-500">
         {{ defaultModel?.name??'NO MODEL ' }}
 
