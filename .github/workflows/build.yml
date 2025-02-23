@@ -7,7 +7,8 @@ on:
       - "*"
     # branches:
     #   - deploy-test
-
+permissions: 
+  contents: write
 jobs:
   submit:
     runs-on: ubuntu-latest
