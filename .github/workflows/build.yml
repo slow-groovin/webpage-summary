@@ -52,7 +52,7 @@ jobs:
           pnpm wxt submit \
             --chrome-zip .output/*-chrome.zip \
             --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip \
-            --edge-zip   .output/*-edge.zip  --edge-api-version 1.1
+            --edge-zip   .output/*-edge.zip
         env:
           CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
@@ -64,5 +64,6 @@ jobs:
           EDGE_PRODUCT_ID:  ${{secrets.EDGE_PRODUCT_ID}}
           EDGE_CLIENT_ID: ${{secrets.EDGE_CLIENT_ID}}
           EDGE_API_KEY: ${{secrets.EDGE_API_KEY }}
+          EDGE_API_VERSION: 1.1
       
         working-directory: packages/ext
