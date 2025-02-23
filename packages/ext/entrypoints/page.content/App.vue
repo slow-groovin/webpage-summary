@@ -61,9 +61,6 @@ onMessage('invokeSummary', () => {
 
 })
 
-const l=browser.i18n.getMessage('helloWorld')
-
-console.log('l',l)
 </script>
 
 <template>

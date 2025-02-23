@@ -9,7 +9,8 @@
     <!-- Input box -->
     <textarea v-model="inputValue" ref="textareaRef"
       :class="cn('w-full h-12 min-h-4  rounded-md border-none text-base focus-visible:outline-none resize-none caret-current bg-transparent', props.class)"
-      placeholder="Type your message here... Shift+Enter to send." @input="adjustHeight" @focusin="focusin" @focusout="focusout"></textarea>
+      placeholder="Type your message here... Enter to send, Shift+Enter to insert new line." @input="adjustHeight"
+      @focusin="focusin" @focusout="focusout"></textarea>
 
     <!-- Send button -->
     <Button variant="default" class="py-2 h-fit" @click="handleSubmit" :disabled="$attrs.disabled">
@@ -36,10 +37,14 @@ const emit = defineEmits<{
 const inputValue = ref('')
 
 const isTextAreaFocus = ref(false)
-const textAreaRef=useTemplateRef('textareaRef')
+const textAreaRef = useTemplateRef('textareaRef')
 
 const handleEnterPress = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && event.shiftKey) {
+    //do nothing, will insert a newline
+
+  } else if (event.key === 'Enter' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
+    event.preventDefault()
     handleSubmit()
   }
 }
@@ -51,7 +56,7 @@ function focusin() {
 
 function focusout() {
   isTextAreaFocus.value = false
-  
+
 }
 
 function adjustHeight(event: Event) {

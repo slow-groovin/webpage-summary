@@ -43,7 +43,7 @@ export default defineConfig({
     // name: 'Webpage Summary',
     // description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
     default_locale: 'en',
-    permissions: ['storage','contextMenus'],
+    permissions: ['storage','contextMenus','scripting','activeTab '],
     icons: {
       // 16: '/icon/16.png',
       32: '/icon/32.png',

@@ -15,19 +15,19 @@
 ![summary](/docs/img/summary-anim.webp)
 
 
-- [Features](#features)
-- [Install](#install)
-- [Usage](#usage)
-  - [Quick Start](#quick-start)
-  - [Trigger](#trigger)
-  - [Error Inspect](#error-inspect)
-  - [Proxy for LLM Requests](#proxy-for-llm-requests)
-- [Inspiration](#inspiration)
-- [Feedback & Suggestions](#feedback--suggestions)
-- [Contribution](#contribution)
-- [Update History](#update-history)
+- [1. Features](#1-features)
+- [2. Install](#2-install)
+- [3. Usage](#3-usage)
+  - [3.1. Quick Start](#31-quick-start)
+  - [3.2. Trigger](#32-trigger)
+  - [3.3. Error Inspect](#33-error-inspect)
+  - [3.4. Proxy for LLM Requests](#34-proxy-for-llm-requests)
+- [4. Inspiration](#4-inspiration)
+- [5. Feedback\&Suggestions](#5-feedbacksuggestions)
+- [6. Contribution](#6-contribution)
+- [7. Update History](#7-update-history)
 
-## Features
+## 1. Features
 
 1.  Custom AI (LLM) provider configuration, use any provider you like
 2.  Custom prompt templates
@@ -36,11 +36,12 @@
 5.  Multiple triggers for opening the panel: `Auto Open` / `Floating Ball` / `Context Menu` / `Keyboard Shortcut` / `Action Click`
 6.  Auto begin summary: `Enable/Disable`
 7.  Works with different site access permissions in the browser; can be started from the contextMenu without current tab's permission
-8.  (Future) Summary in popup / in-page side panel / side panel
-9.  (Future) Site customization (glob, selector, trigger, whitelist, blacklist)
-10. (Future) Cross-site LLM request (using session requests from LLM websites)
+8.  Privacy without concerns, no telemetry/data collection/unrelated feature requests
+9.  (Future) Summary in popup / in-page side panel / side panel
+10. (Future) Site customization (glob, selector, trigger, whitelist, blacklist)
+11. (Future) Cross-site LLM request (using session requests from LLM websites)
 
-## Install
+## 2. Install
 
 <div align="">
 <a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp/">
@@ -54,11 +55,11 @@
 </a>
 </div>
 
-or [Github Releases](/releases)
+or download from [Github Releases](https://github.com/slow-groovin/webpage-summary/releases) and manually install
 
-## Usage
+## 3. Usage
 
-### Quick Start
+### 3.1. Quick Start
 
 1.  Configure a model
 ![create model](/docs/img/create-model-anim.webp?width=500&height=300)
@@ -66,7 +67,7 @@ or [Github Releases](/releases)
 ![summary](/docs/img/summary-anim.webp)
 3.  Continue to chat, or try modifying configurations
 
-### Trigger
+### 3.2. Trigger
 
 By default, the summary panel does not open automatically. You can open it in the following four ways:
 
@@ -87,9 +88,11 @@ By default, the summary does not start automatically after opening the panel. Yo
 
 By default, the plugin has access to all sites.
 
-> You can change the plugin's access permission to `On Click` in the browser settings, and then open the summary panel through the context menu button on the page you need to summarize. (This function is implemented by: obtaining the permission of the current tab through activeTab when clicked, and then injecting and executing the code of the summary panel)
+> You can change the plugin's access permission to `On Click` in the browser settings:
+> - Some browsers (such as Edge) can directly run the plugin's functionality on the page with one click of the action icon.
+> - Other browsers (such as Chrome) acquire page permissions after clicking the action icon, but need to refresh the page to run the plugin's functionality on the page. However, it doesn't matter, you can one step run by the `Summarize This Page ⚡` button in the right-click menu (like `Immersive Translate` extension).
 
-### Error Inspect
+### 3.3. Error Inspect
 
 Some errors may not be displayed through the UI. You can view the errors of the summary panel through the developer console of the current webpage.
 
@@ -97,11 +100,11 @@ View the logs of the plugin background through the developer console of the back
 
 Requests sent to the LLM API can also be viewed in the developer console of the background page.
 
-### Proxy for LLM Requests
+### 3.4. Proxy for LLM Requests
 
 This plugin does not provide proxy functionality itself. It can be used with other browser proxy plugins (similar to ProxySwitchOmega) to implement proxying of specified URL traffic.
 
-## Inspiration
+## 4. Inspiration
 
 Copying webpage content into a llm website, then entering prompts and viewing the results is a common workflow for many people today. A browser plugin is needed to replace this process.
 
@@ -114,16 +117,16 @@ Currently, the following provide this functionality:
 
 [chatGPTBox](https://github.com/josStorer/chatGPTBox) is a nice project, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
 
-## 🤗 Feedback & Suggestions
+## 5. Feedback&Suggestions
 
 🙌 Welcome any feedback or suggestions
 
 If you have any suggestions for features, interface suggestions, bugs, questions, usage feedback, or any ideas, please submit them in the issue.
 
-## Contribution
+## 6. Contribution
 
 Welcome to contribute to documentation, i18n support, UI, and features. Please refer to [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## Update History
+## 7. Update History
 
 Please refer to [CHANGELOG](/CHANGELOG.md)

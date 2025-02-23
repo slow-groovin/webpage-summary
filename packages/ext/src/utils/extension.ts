@@ -15,7 +15,7 @@ export async function activePageAndInvokeSummary(tab:Tabs.Tab) {
   //2. inject content.js if not exist
   if (isExist[0].result === false) {
     await browser.scripting.executeScript({
-      files: ["content-scripts/content.js", "content-scripts/page.js"],
+      files: [ "content-scripts/page.js"],
       target: { tabId: tab.id },
     })
   }
