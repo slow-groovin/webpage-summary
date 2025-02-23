@@ -6,7 +6,7 @@
     "message": "Webpage Summary"
   },
   "extDescription": {
-    "message": "open source webpage summary, via any llm api, build any prompt-template."
+    "message": "(open source) webpage summary with AI, customization of llm-provider/prompt-template, no worries abound privacy"
   },
   "sum": {
     "message": "sum"

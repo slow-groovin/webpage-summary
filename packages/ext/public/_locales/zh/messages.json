@@ -6,7 +6,7 @@
     "message": "网页总结"
   },
   "extDescription": {
-    "message": "开源的网页总结插件, 支持多种大模型API配置, prompt配置."
+    "message": "(开源)网页总结插件, 可配置任意大模型API/个性化Prompt模板, 隐私无忧"
   },
   "sum": {
     "message": "总结"

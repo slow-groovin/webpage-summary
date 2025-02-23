@@ -1,8 +1,8 @@
 {
   "name": "webpage-summary-ext",
-  "description": "Open source webpage summarize tool, via any llm api, support prompt-template/site customization.",
+  "description": "(open source) webpage summary with AI, customization of llm-provider/prompt-template, no worries abound privacy",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
