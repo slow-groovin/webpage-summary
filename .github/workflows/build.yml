@@ -36,26 +36,23 @@ jobs:
           pnpm zip:firefox
         working-directory: packages/ext
 
+      - name: Generate Changelog
+        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt
+
+      - name: echo
+        run: echo ${{ github.workspace }}-CHANGELOG.txt && ls
+  
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          body_path: ${{ github.workspace }}README.md
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
             packages/ext/.output/*-chrome.zip
             packages/ext/.output/*-edge.zip
             packages/ext/.output/*-firefox.zip
 
-      - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: .output/*-chrome.zip
-          asset_name: chrome-extension.zip
-          asset_content_type: application/zip
 
       # - name: Submit to stores
       #   run: |
