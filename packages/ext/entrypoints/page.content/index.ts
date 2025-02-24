@@ -14,8 +14,6 @@ import { getUserCustomStyle } from "@/src/composables/general-config";
 export default defineContentScript({
   matches: [
     '<all_urls>',
-    '*://*.example.com/*',
-    '*://*.baidu.com/*',
   ],
   // 2. Set cssInjectionMode
   cssInjectionMode: 'ui',

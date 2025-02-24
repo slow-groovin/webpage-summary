@@ -2,7 +2,7 @@
 import { sendConnectMessage } from '@/connect-messaging';
 import { CoreMessage } from 'ai';
 import { EventEmitter } from 'eventemitter3';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, toRaw } from 'vue';
 import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
@@ -32,7 +32,6 @@ export function useSummary() {
     } catch (e) {
       error.value = (e)
       event.emit('prepare-done')
-      // toast({ title: 'Error', description: handleConnectError(e), variant: 'destructive' })
     }
   })
   const uiMessages = ref<UIMessage[]>([])
@@ -188,8 +187,8 @@ export function useSummary() {
     const { textStream, tokenUsage: newTokenUsage, stop } = await sendConnectMessage(
       'streamTextViaConnect',
       {
-        modelConfig: currentModel.value!,
-        messages: messages.value,
+        modelConfig: toRaw(currentModel.value!), //firefox will throw if it is a proxy object
+        messages: toRaw(messages.value),
       },
       {
         onError: (e) => {

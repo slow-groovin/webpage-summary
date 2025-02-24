@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.3] - 2025-02-26
+1. adaption to firefox 
+2. new feature: export/import settings
+
+
 ## [0.1.2] - 2025-02-25
 1. add multiple llm providers.
 2. fix `open setting` context button not work outside page

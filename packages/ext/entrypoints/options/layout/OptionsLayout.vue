@@ -20,7 +20,7 @@ const canBack = computed(() => {
       <img :src="iconUrl" class="w-6 h-6" />
       <h1 class="font-semibold">{{ name }} <span class="text-xs font-light"> {{ version }}</span></h1>
 
-      <div class="grow" />
+      <div class="grow" /> 
       <!-- github link -->
       <a href="https://github.com/slow-groovin/webpage-summary" target="_blank" rel="noopener" class="" title="">
         <svg height="24" width="24" aria-hidden="true" viewBox="0 0 24 24" version="1.1"

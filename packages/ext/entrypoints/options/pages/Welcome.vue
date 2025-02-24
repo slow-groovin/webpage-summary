@@ -51,7 +51,7 @@ const { name } = useExtInfo()
 const isError1 = ref<boolean>()
 const isError2 = ref<boolean>()
 
-useTitle('Welcome to use ' + name + '!')
+useTitle(t('Welcome_Title') + name + '!')
 </script>
 <style lang="postcss" scoped>
 h3 {

@@ -14,6 +14,7 @@ import PageExtractionSettig from './pages/PageExtractionSettig.vue'
 import AppearanceSetting from './pages/AppearanceSetting.vue'
 import SiteCustomizationSetting from './pages/SiteCustomizationSetting.vue'
 import Welcome from './pages/Welcome.vue'
+import ExportImport from './pages/ExportImport.vue'
 
 
         
@@ -52,7 +53,7 @@ export const router = createRouter({
         { path: '/site-customization', component: SiteCustomizationSetting},
         { path: '/p2', component: GeneralSetting},
         { path: '/p1', component: GeneralSetting},
-        { path: '/p4', component: GeneralSetting},
+        { path: '/export_import', component: ExportImport},
         { path: '/about', component: GeneralSetting},
         { path: '/welcome', component: Welcome},
 

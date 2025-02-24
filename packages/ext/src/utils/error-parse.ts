@@ -21,6 +21,7 @@ export function handleConnectError(e: any): any {
         variant: 'destructive',
       })
     }
+    return e.value.error.metadata.raw
 
   } else {
 

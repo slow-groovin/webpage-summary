@@ -175,5 +175,27 @@
   },
   "open_webpage_click_sum": {
     "message": "2. open a webpage, click floating ball to open panel, click \"sum\" button"
+  },
+  "Export_Import":{
+    "message":"Export/Import"
+  },
+  "Export_Import_Desc":{
+    "message":"export/import your configs."
+  },
+  "Export":{
+    "message":"Export"
+  },
+  "Export_if_with_apiKeys":{
+    "message":"export with apiKeys?"
+  },
+  "Export_if_with_apiKeys_Alert":{
+    "message":"your credential will be inlcuded in the export file."
+  },
+  "Import":{
+    "message":"Import"
+  },
+
+  "Import_Alert":{
+    "message":"⚠ Import will TOTALLY OVERRIDE your config! "
   }
 }

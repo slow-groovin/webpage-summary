@@ -115,7 +115,7 @@ watch(provider, (newProvider) => {
 
 const onSubmit = handleSubmit(async (values) => {
 
-  console.log(values, values.maxContentLength, !!values.maxContentLength)
+  // console.log(values, values.maxContentLength, !!values.maxContentLength)
   emit('sumbit', {
     apiKey: values.apiKey,
     name: values.name,

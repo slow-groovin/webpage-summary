@@ -176,5 +176,26 @@
   },
   "open_webpage_click_sum": {
     "message": "2. 打开一个网页, 点击悬浮球打开总结面板, 点击\"总结\" 按钮开始总结"
+  },
+  "Export_Import":{
+    "message":"导出/导入"
+  },
+  "Export_Import_Desc":{
+    "message":"导出/导入您的插件配置。"
+  },
+  "Export":{
+    "message":"导出"
+  },
+  "Export_if_with_apiKeys":{
+    "message":"是否在导出文件包含apiKeys？"
+  },
+  "Export_if_with_apiKeys_Alert":{
+    "message":"您的凭证将会包含在导出文件中。"
+  },
+  "Import":{
+    "message":"导入"
+  },
+  "Import_Alert":{
+    "message":"⚠ 导入内容将完全覆盖您的配置！"
   }
 }

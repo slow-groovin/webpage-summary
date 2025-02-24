@@ -7,16 +7,12 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig({
   extensionApi: 'chrome',
   modules: ['@wxt-dev/module-vue'],
-  // vue:{
-  //   // @ts-ignore
-  //   sourceMap:true,
-  // },
   imports: false,
   vite: (configEnv) => ({
     // Override config here, same as `defineConfig({ ... })`
     // inside vite.config.ts files
     build: {
-      // sourcemap: true
+      // sourcemap: true,
       rollupOptions: {
         external: (id) => {
           return (id.includes('src/components/debug'))
@@ -54,7 +50,7 @@ export default defineConfig({
     // name: 'Webpage Summary',
     // description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
     default_locale: 'en',
-    permissions: ['storage','contextMenus','scripting','activeTab '],
+    permissions: ['storage','contextMenus','scripting','activeTab'],
     icons: {
       // 16: '/icon/16.png',
       32: '/icon/32.png',

@@ -4,12 +4,12 @@
 
 
 
-Try this open-source, single-purpose extension to summarize the webpages in comfortable and secure way! 🚀 No complex features and cluttered interface, just one-click summarization. 📚
+Try this open-source, single-purpose light extension to summarize the webpages in comfortable and secure way! 🚀 No complex features and cluttered interface, just one-click summarization. 📚
 
 Key Advantages:
 
 *   ✅ Simple & Easy: Focuses on one thing - summarizing webpages.
-*   🔓 Open Source on Github: Worry-free privacy, login-less, free to use, and runs entirely in your browser!  🛡️
+*   🔓 Open Source on Github: Worry-free privacy, login-less, free, light, no serverside and runs entirely in your browser!  🛡️
 *   ⚙️ Fully Customizable: Configure your own AI provider, prompts, opening method, and customized appearance. 🎛️
 
 
@@ -27,7 +27,7 @@ Key Advantages:
 主要优势：
 
 *   ✅ 简单易用：专注于一件事 - 总结网页。
-*   🔓 Github开源：隐私无忧, 开源免费, 完全在您的浏览器中运行! 无登陆注册。🛡️
+*   🔓 Github开源：隐私无忧, 开源免费, 轻量不臃肿, 没有登录注册和服务端, 完全在浏览器中运行! 🛡️
 *   ⚙️ 完全可定制：配置你自己的AI提供商、提示词、打开方式和定制外观。 🎛️
 
 
