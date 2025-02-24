@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.2] - 2025-02-25
+1. add multiple llm providers.
+2. fix `open setting` context button not work outside page
+3. fix page problems: model config list page: add i18n, use full width,  model edit: query problems
+  
 ## [0.1.1] - 2025-02-24
 
 1. change shortcut of user chatbox:  `Shift+Enter : Submit` -> `Shift+Enter: newline` and `Enter: Submit`

@@ -109,7 +109,7 @@ const handleLocate = (id: string | undefined) => {
 
     </div>
     <!-- list -->
-    <div class="relative">
+    <div class="relative w-[calc(100vw-16rem)]">
       <TransitionGroup name="list" tag="div" class="w-full flex flex-row flex-wrap items-stretch gap-8">
         <template v-for="model in models" :key="model.id">
           <div class="flex items-center gap-2 mb-4 w-fit min-w-96" :id="model.id">

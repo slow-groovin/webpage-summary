@@ -43,5 +43,5 @@ async function submitCreate(value: Omit<ModelConfigItem,'id'>) {
 
 <template>
   <h2 class="text-2xl mb-4">{{ t('Create_Model_Config') }}</h2>
-  <ModelConfigEditComponent v-if="!copy || (copy && toCopyItem)" :item="toCopyItem" @sumbit="submitCreate" />
+  <ModelConfigEditComponent v-if="!copy || (copy && toCopyItem)" :item="toCopyItem"  @sumbit="submitCreate" />
 </template>

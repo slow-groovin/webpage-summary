@@ -49,7 +49,7 @@ async function addContextMenus() {
       activePageAndInvokeSummary(tab)
     }
 
-    if (info.menuItemId === "open-setting" && tab) {
+    if (info.menuItemId === "open-setting") {
       browser.tabs.create({url:'/options.html#/'})
     }
   });

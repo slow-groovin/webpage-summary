@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import HoverInfoIconBadget from '@/src/components/common/HoverInfoIconBadget.vue'
+import HoverBadget from '@/src/components/common/HoverTextBadget.vue'
 import EditControlInput from '@/src/components/custom-ui/EditControlInput.vue'
 import Button from '@/src/components/ui/button/Button.vue'
+import Collapsible from '@/src/components/ui/collapsible/Collapsible.vue'
+import CollapsibleContent from '@/src/components/ui/collapsible/CollapsibleContent.vue'
+import CollapsibleTrigger from '@/src/components/ui/collapsible/CollapsibleTrigger.vue'
 import {
   FormControl,
   FormDescription,
@@ -11,35 +16,35 @@ import {
 } from '@/src/components/ui/form'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/src/components/ui/hover-card'
 import { Input } from '@/src/components/ui/input'
-import { modelProviderPresets } from '@/src/presets/model-providers'
+import { modelProviderPresets, ProviderKey } from '@/src/presets/model-providers'
 import { ModelConfigItem } from '@/src/types/config/model'
+import { t } from '@/src/utils/extension'
 import { toTypedSchema } from '@vee-validate/zod'
-import { ChevronsDownIcon, CircleAlertIcon, InfoIcon } from 'lucide-vue-next'
+import { ChevronsDownIcon, InfoIcon } from 'lucide-vue-next'
+import { draw } from 'radash'
 import { useForm } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { z } from 'zod'
-import { t } from '@/src/utils/extension';
 import ModelProviderSelect from './ModelProviderSelect.vue'
-import HoverBadget from '@/src/components/common/HoverTextBadget.vue'
-import Collapsible from '@/src/components/ui/collapsible/Collapsible.vue'
-import CollapsibleTrigger from '@/src/components/ui/collapsible/CollapsibleTrigger.vue'
-import CollapsibleContent from '@/src/components/ui/collapsible/CollapsibleContent.vue'
-import { Slider } from '@/src/components/ui/slider'
-import HoverInfoIconBadget from '@/src/components/common/HoverInfoIconBadget.vue'
 
+const { query } = useRoute()
+const { push,replace } = useRouter()
+
+const { type } = query
 
 const { item } = defineProps<{
   item?: ModelConfigItem
 }>()
-
-const providerType = ref<keyof typeof modelProviderPresets>(item?.providerType ?? 'openai')
+const providerKey = (item?.providerType as ProviderKey)  ?? (type as ProviderKey) ?? 'openai'
+const providerType = ref<ProviderKey>(providerKey)
 const emit = defineEmits<{
   sumbit: [Omit<ModelConfigItem, 'id'>]
 }>()
 
 const provider = computed(() => modelProviderPresets[providerType.value])
 
-const v1 = ref([0])
+
 /*
 here, I want maxContentLength to be undefined to make it unlimited.
 So the value need to be undefined when delete all number, it's a big trouble, vue Input will update the value to empty string when delete all number, 
@@ -97,6 +102,7 @@ const { handleSubmit, setFieldValue, } = useForm({
 
 //modifying form when select different provider
 watch(provider, (newProvider) => {
+  replace({ query: { ...query, type: newProvider.providerType } })
   if (item) {
     return
   }
@@ -153,9 +159,10 @@ const onSubmit = handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="modelName">
         <FormItem>
-          <FormLabel>Model Name </FormLabel>
+          <FormLabel>Model Name  </FormLabel>
           <FormControl>
-            <Input type="text" placeholder="gpt-3.5-turbo" v-bind="componentField" />
+            <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])"
+              v-bind="componentField" />
           </FormControl>
 
           <FormMessage />
@@ -166,27 +173,16 @@ const onSubmit = handleSubmit(async (values) => {
         <FormItem>
           <FormLabel class="flex flex-row items-center gap-2">
             Max Content Length(input)
-            <HoverCard :close-delay="1500">
-              <HoverCardTrigger>
-                <CircleAlertIcon class="text-gray-500 h-5 w-5" />
-              </HoverCardTrigger>
-              <HoverCardContent class=" ">
-                calc by String.length<br />
-                You could adjust it based on your language<br>
-                (for example, for Chinese : 1 length = 1 token, for English, 1 word = n length = n token)<br />
-              </HoverCardContent>
-            </HoverCard>
-            <HoverBadget class="text-nowrap" title="Why not tokenizer?" description="1.The token calculation method varies greatly between different models,
-making it impossible to use a single model for accurate calculation 
-2.token calculation duration is too large, 
-3.tokenizer lib will lead to a large package size." />
+            <HoverBadget title="?" :description="t('max_content_length_CALC_INFO')"/>
+            
+            <HoverBadget class="text-nowrap" :title="t('max_content_length_TOKENIZER_TITLE')" :description="t('max_content_length_TOKENIZER_INFO')" />
 
           </FormLabel>
           <FormControl>
-            <Input type="number" placeholder="leave empty to not limit" class="w-56" v-bind="componentField" />
+            <Input type="number" :placeholder="t('leave_empty_to_not_limit')" class="w-56" v-bind="componentField" />
           </FormControl>
           <FormDescription>
-            limit the max length of the webpage content text
+            {{ t('max_content_length_DESC') }}
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -198,10 +194,10 @@ making it impossible to use a single model for accurate calculation
             maxTokens (output)
           </FormLabel>
           <FormControl>
-            <Input type="number" placeholder="leave empty to not limit" class="w-56" v-bind="componentField" />
+            <Input type="number" :placeholder="t('leave_empty_to_not_limit')" class="w-56" v-bind="componentField" />
           </FormControl>
           <FormDescription>
-            set model's maximum output tokens
+            {{ t('maxTokens_DESC') }}
           </FormDescription>
           <FormMessage />
         </FormItem>
@@ -242,20 +238,20 @@ making it impossible to use a single model for accurate calculation
       </FormField>
 
       <Collapsible class="col-span-2">
-              <CollapsibleTrigger class="flex flex-row items-center text-blue-500 font-semibold ">
-                <ChevronsDownIcon />
-                {{ t('Optional_Settings') }}
-              </CollapsibleTrigger>
+        <CollapsibleTrigger class="flex flex-row items-center text-blue-500 font-semibold ">
+          <ChevronsDownIcon />
+          {{ t('Optional_Settings') }}
+        </CollapsibleTrigger>
         <CollapsibleContent class="grid grid-cols-2 gap-4 p-2">
 
 
           <FormField v-slot="{ componentField }" name="inputTokenPrice">
             <FormItem>
               <FormLabel class="flex flex-row items-center gap-2">
-                input token price
+                {{ t('input_token_price') }}
               </FormLabel>
               <FormControl>
-                <Input type="number" placeholder="empty to unset" v-bind="componentField" :step="0.01" />
+                <Input type="number" :placeholder="t('empty_to_unset')" v-bind="componentField" :step="0.01" />
               </FormControl>
               <FormDescription> per million tokens, only to display usage </FormDescription>
 
@@ -266,10 +262,11 @@ making it impossible to use a single model for accurate calculation
           <FormField v-slot="{ componentField }" name="outputTokenPrice">
             <FormItem>
               <FormLabel class="flex flex-row items-center gap-2">
-                output token price
+                {{ t('output_token_price') }}
+
               </FormLabel>
               <FormControl>
-                <Input type="number" placeholder="empty to unset" v-bind="componentField" :step="0.01" />
+                <Input type="number" :placeholder="t('empty_to_unset')" v-bind="componentField" :step="0.01" />
               </FormControl>
               <FormDescription> per million tokens, only to display usage </FormDescription>
               <FormMessage />
@@ -360,7 +357,7 @@ making it impossible to use a single model for accurate calculation
 
       <div class="col-span-2">
         <Button type="submit" class="">
-          Submit
+          {{ t('Submit') }}
         </Button>
       </div>
     </form>

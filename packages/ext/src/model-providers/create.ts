@@ -1,10 +1,52 @@
 import { createOpenAI } from "@ai-sdk/openai"
 
-import { createOpenRouter, openrouter } from "@openrouter/ai-sdk-provider"
+import { createOpenRouter, openrouter, OpenRouterProvider } from "@openrouter/ai-sdk-provider"
 import { ModelConfigItem } from "../types/config/model"
-import { createDeepSeek } from "@ai-sdk/deepseek"
+import { createDeepSeek, deepseek } from "@ai-sdk/deepseek"
+import { Provider } from "ai"
+import { type ProviderV1 } from '@ai-sdk/provider'
+import { modelProviderPresets, ProviderKey } from "../presets/model-providers"
+import { createAnthropic } from '@ai-sdk/anthropic'
+import { createCohere } from '@ai-sdk/cohere'
+import { createDeepInfra } from '@ai-sdk/deepinfra'
+import { createGoogleGenerativeAI } from '@ai-sdk/google'
+import { createMistral } from '@ai-sdk/mistral'
+import { createPerplexity } from '@ai-sdk/perplexity'
+import { createTogetherAI } from '@ai-sdk/togetherai'
+import { createXai } from '@ai-sdk/xai'
+import { createOpenAICompatible, type OpenAICompatibleProvider } from '@ai-sdk/openai-compatible'
+import { createOllama } from 'ollama-ai-provider';
+
+type Options = {
+  /**
+    Base URL for the OpenAI API calls.
+  */
+  baseURL?: string;
+  /**
+  API key for authenticating requests.
+  */
+  apiKey?: string;
+}
+const providerMap: Record<ProviderKey, (opts: Options) => Provider | ProviderV1 | OpenRouterProvider | OpenAICompatibleProvider> = {
+  'openai': createOpenAI,
+  'openai-compitable': createOpenAI,
+  'deepseek': createDeepSeek,
+  'openrouter': createOpenRouter,
+  'anthropic': createAnthropicWrapper,
+  'mistral': createMistral,
+  'perplexity': createPerplexity,
+  'xAI': createXai,
+  'together.ai': createTogetherAI,
+  'cohere': createCohere,
+  'deepinfra': createDeepInfra,
+  'google-generative': createGoogleGenerativeAI,
+  'lm-studio': createOpenAICompatibleWrapper,
+  'siliconflow': createOpenAICompatibleWrapper,
+  'ollama': createOllama,
+}
+
 export function createVercelModel(config: ModelConfigItem) {
-  const option: { apiKey?: string; baseURL?: string } = {}
+  const option: Options = {}
 
   if (config.apiKey) {
     option.apiKey = config.apiKey
@@ -13,20 +55,26 @@ export function createVercelModel(config: ModelConfigItem) {
   if (config.baseURL) {
     option.baseURL = config.baseURL
   }
+  return providerMap[config.providerType as keyof typeof modelProviderPresets](option).languageModel(config.modelName)
+}
 
-  switch (config.providerType) {
-    case "openai":
-    case "openai-compitable":
-      return createOpenAI(option).languageModel(config.modelName)
-    case "deepseek":
-      return createDeepSeek(option).languageModel(config.modelName)
-    case "openrouter":
-      return createOpenRouter(option).languageModel(config.modelName)
-  }
 
-  return createOpenAI({
-    ...option,
-    
-  }).languageModel(config.modelName)
+function createOpenAICompatibleWrapper(opt: Options): Provider | ProviderV1 | OpenRouterProvider | OpenAICompatibleProvider {
+  return createOpenAICompatible(
+    {
+      ...opt,
+      baseURL: opt.baseURL ?? '',
+      name: 'lmstudio'
+    }
+  )
+}
+
+function createAnthropicWrapper(opt: Options): Provider | ProviderV1{
+  return createAnthropic({
+    ...opt,
+    headers:{
+      "anthropic-dangerous-direct-browser-access": "true",
+    }
+  })
 
 }

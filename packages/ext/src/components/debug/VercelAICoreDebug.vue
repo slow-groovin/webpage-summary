@@ -3,18 +3,19 @@ import { ref } from 'vue';
 import { generateText, streamText } from 'ai';
 import { createOpenAI, openai, OpenAIProvider } from '@ai-sdk/openai'; // Ensure OPENAI_API_KEY environment variable is set
 import { Readability } from '@mozilla/readability';
+import { createAnthropic } from '@ai-sdk/anthropic';
 
-const platform = ['OPENROUTER', 'SILICONFLOW', 'DEEPSEEK', 'API2D','OPENAI']
+const platform = ['OPENROUTER', 'SILICONFLOW', 'DEEPSEEK', 'API2D', 'OPENAI']
 const result = ref(new Map<string, string>());
-const textStreamResult=ref<string>('')
+const textStreamResult = ref<string>('')
 
-function createModel(platform: string){
-  if(platform==='OPENAI'){
+function createModel(platform: string) {
+  if (platform === 'OPENAI') {
     return createOpenAI({
       apiKey: 'sk-1211111111111111111111',
 
     }).languageModel('gpt-4o-mini')
-    
+
   }
   const baseURL = import.meta.env[`VITE_${platform}_BASE_URL`]
   const apiKey = import.meta.env[`VITE_${platform}_API_KEY`]
@@ -29,16 +30,16 @@ function createModel(platform: string){
     alert("modelName is undefined.")
   }
   return createOpenAI({
-      baseURL: baseURL,
-      apiKey: apiKey,
+    baseURL: baseURL,
+    apiKey: apiKey,
 
-    }).languageModel(modelName)
+  }).languageModel(modelName)
 }
-async function summaryByGenerateText(model:ReturnType<typeof createModel>) {
+async function summaryByGenerateText(model: ReturnType<typeof createModel>) {
   const documentClone = document.cloneNode(true);
   const _article = new Readability(documentClone as Document, {}).parse();
   const content = _article?.textContent.slice(0, 1000) ?? 'no page content';
-  
+
   const { text } = await generateText({
     model: model,
 
@@ -49,11 +50,11 @@ async function summaryByGenerateText(model:ReturnType<typeof createModel>) {
 }
 
 
-async function summaryByStreamText(model:ReturnType<typeof createModel>) {
+async function summaryByStreamText(model: ReturnType<typeof createModel>) {
   const documentClone = document.cloneNode(true);
   const _article = new Readability(documentClone as Document, {}).parse();
   const content = _article?.textContent.slice(0, 1000) ?? 'no page content';
-  
+
   const { textStream } = await streamText({
     model: model,
 
@@ -63,19 +64,63 @@ async function summaryByStreamText(model:ReturnType<typeof createModel>) {
   return textStream;
 }
 
-async function runGenerateText(platform:string){
-  const model=createModel(platform)
-  const text=await summaryByGenerateText(model)
+async function runGenerateText(platform: string) {
+  const model = createModel(platform)
+  const text = await summaryByGenerateText(model)
   return text
 }
 
-async function runStreamText(platform:string){
-  textStreamResult.value=`[by ${platform}]`
-  const model=createModel(platform)
-  const textStream=await summaryByStreamText(model)
+async function runStreamText(platform: string) {
+  textStreamResult.value = `[by ${platform}]`
+  const model = createModel(platform)
+  const textStream = await summaryByStreamText(model)
   for await (const textPart of textStream) {
-    textStreamResult.value+=textPart
+    textStreamResult.value += textPart
   }
+}
+
+async function testAnthropic() {
+
+  
+
+
+  try {
+    const { text } = await generateText({
+      model: createAnthropic({
+        apiKey: 'ff',
+        headers: {
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
+      }).languageModel('claude-3-5-haiku-20241022'),
+      prompt: "hello? who are you?"
+
+    })
+    console.log('text', text)
+
+  } catch (e) {
+    console.error(e)
+  }
+
+
+  try {
+    const { text } = streamText({
+      model: createAnthropic({
+        apiKey: 'ff',
+        headers: {
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
+      }).languageModel('claude-3-5-haiku-20241022'),
+      prompt: "hello? who are youx?"
+
+    })
+    console.log('text',await text)
+
+  } catch (e) {
+    console.error(e)
+  }
+  
+
+
 }
 </script>
 
@@ -111,10 +156,13 @@ async function runStreamText(platform:string){
     <div>
 
     </div>
-    
+
 
   </details>
-
+  <details open>
+    <summary>anthropic</summary>
+    <button @click="testAnthropic">anthropic</button>
+  </details>
 
 </template>
 
