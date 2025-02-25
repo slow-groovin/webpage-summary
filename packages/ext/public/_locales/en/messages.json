@@ -60,7 +60,13 @@
     "message": "Auto open summary panel on new tab"
   },
   "Enable_popup_click_trigger": {
-    "message": "Enable popup click trigger"
+    "message": "Enable action click trigger"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger":{
+    "message":"Auto begin summary when triggered by action or context menu"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
+    "message":"when summary panel is opened by action trigger or context menu trigger(all except floating ball or auto-open), auto begin summary"
   },
   "Always_expand_the_chat_box": {
     "message": "Always expand the chat box"

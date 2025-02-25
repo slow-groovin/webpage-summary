@@ -54,14 +54,20 @@
     "message": "启用悬浮球"
   },
   "Auto_begin_summary":{
-    "message": "自动开始总结"
+    "message": "面板打开时自动开始总结"
   },
   "Auto_open_summary_panel_on_new_tab":{
     "message": "打开新页面时, 自动打开总结面板"
   },
   "Enable_popup_click_trigger":{
-    "message": "点击pop按钮后, 打开总结面板"
+    "message": "点击action时, 打开总结面板"
+  },
 
+  "Auto_begin_summary_by_action_or_context_trigger":{
+    "message":"使用action或者右键菜单触发总结, 面板打开时自动开始总结"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
+    "message":"使用点击action(扩展小图标)或者点击右键菜单触发总结时(除了悬浮球和自动打开以外的所有的方式), 在总结面板打开时自动开始总结"
   },
   "Always_expand_the_chat_box":{
     "message": "总是展开聊天输入框"

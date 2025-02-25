@@ -18,11 +18,14 @@ Trigger Settings
  */
 export const ENABLE_AUTO_BEGIN_SUMMARY='local:enable-auto-begin-summary'
 
+export const ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER='local:enable-auto-begin-summary-by-action-or-context-trigger'
+
 export const ENABLE_SUMMARY_WINDOW_DEFAULT='local:enable-summary-window-default'
 
 export const ENABLE_FLOATING_BALL='local:enable-floating-ball'
 
 export const POPUP_CLICK_TRIGGER='local:popup-click-trigger'
+
 
 
 /*

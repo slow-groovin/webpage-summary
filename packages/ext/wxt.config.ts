@@ -15,7 +15,7 @@ export default defineConfig({
       // sourcemap: true,
       rollupOptions: {
         external: (id) => {
-          return (id.includes('src/components/debug'))
+          return (import.meta.env.PROD && id.includes('src/components/debug'))
         }
       }
     },

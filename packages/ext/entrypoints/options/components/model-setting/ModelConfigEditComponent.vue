@@ -56,7 +56,7 @@ so it will trigger the validation error, and the form will be invalid.
 const typeschema = toTypedSchema(z.object({
   name: z.string().min(1),
   modelName: z.string().min(1),
-  apiKey: z.string(),
+  apiKey: z.string().nullish(),
   baseURL: z.string().optional().refine((v) => {
     // only when provider has defaultApiBase, baseURL can be empty
     const isValid = !!provider.value.defaultApiBase || (v !== null && v !== undefined && v !== '')

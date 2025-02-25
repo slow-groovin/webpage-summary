@@ -2,9 +2,8 @@
  <img src="./packages/ext/assets/16.png" width="26"/>
  <span> Webpage Summary</span>
 </h1>
-<p align="center">Browser extension for summarizing webpage text content with AI (LLM)</p>
+<p>Browser extension for summarizing webpage text content with AI (LLM)</p>
 
-<hr>
 
 
 
@@ -49,20 +48,12 @@
 11. (Future) Cross-site LLM request (using session requests from LLM websites)
 
 ## 2. Install
+[![](/docs/img/google-store.svg) Chrome Webstore](https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg)
 
+[![](/docs//img/edge.svg) Edge Addons](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
 
-<div align="" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:2.25em;">
-  <a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp/">
-    <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg" height="40" target="_blank"/ >
-  </a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail//
-jidechjgegiafmcmmhlifebacppcfboe" disabled>
-    <img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png" height="30"/  target="_blank">
-  </a>
-  <a href="https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/">
-    <img src="https://addons.mozilla.org/static-frontend/459ebe418a9783cd0b80bdd8b98e5faa.svg" height="30"/ target="_blank" >
-  </a>
-</div>
+[![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/)
+
 
 or download from [Github Releases](https://github.com/slow-groovin/webpage-summary/releases) and manually install
 

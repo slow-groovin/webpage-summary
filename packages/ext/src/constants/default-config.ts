@@ -10,4 +10,5 @@ export const DefaultConfig = {
   ENABLE_FLOATING_BALL: true,
   ENABLE_POPUP_CLICK_TRIGGER: false,
   SUMMARY_INPUT_EXCEED_BEHAVIOUR: 'cut-preserve-front' as InputContentLengthExceededStrategy, 
+  ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER: true,
 } as const
