@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [0.1.5] - 2025-02-27
+1. input length calculation now does not include continuous '\n', ' '
+
 ## [0.1.4] - 2025-02-27
 1. fix: double panel appears when trigger by action/contentMenu under `on click` permission mode
 2. add language:zh for chrome store
