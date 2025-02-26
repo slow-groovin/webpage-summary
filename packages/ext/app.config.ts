@@ -8,5 +8,5 @@ declare module 'wxt/sandbox' {
 }
 
 export default defineAppConfig({
-  version: '0.1.4',
+  version: '0.1.5',
 });

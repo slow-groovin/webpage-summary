@@ -1,5 +1,4 @@
 import { Readability } from "@mozilla/readability";
-import { InputContentLengthExceededStrategy } from "../types/summary";
 
 
 
@@ -11,6 +10,7 @@ export function simpleParseRead() {
     console.warn("article is null.")
     return
   }
+  _article.textContent=cleanString(_article.textContent)
   const articleUrl = window.location.href;
   return {
     ..._article,
@@ -27,3 +27,16 @@ export function simpleParseRead() {
 }
 
 
+/**
+ * 将连续的\n ' '替换为单个
+ * @param input 
+ * @returns 
+ */
+export function cleanString(input: string): string {
+  return input.replace(/(\n+\s+\n)|(\s{2,})/g, match => {
+    if (match.includes('\n')) {
+      return '\n';
+    }
+    return ' ';
+  });
+}
