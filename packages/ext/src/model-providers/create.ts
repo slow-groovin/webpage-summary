@@ -40,8 +40,8 @@ const providerMap: Record<ProviderKey, (opts: Options) => Provider | ProviderV1 
   'cohere': createCohere,
   'deepinfra': createDeepInfra,
   'google-generative': createGoogleGenerativeAI,
-  'lm-studio': createOpenAICompatibleWrapper,
-  'siliconflow': createOpenAICompatibleWrapper,
+  'lm-studio': createOpenAICompatibleWrapper(),
+  'siliconflow': createOpenAICompatibleWrapper(modelProviderPresets['siliconflow'].defaultApiBase),
   'ollama': createOllama,
 }
 
@@ -59,20 +59,20 @@ export function createVercelModel(config: ModelConfigItem) {
 }
 
 
-function createOpenAICompatibleWrapper(opt: Options): Provider | ProviderV1 | OpenRouterProvider | OpenAICompatibleProvider {
-  return createOpenAICompatible(
+function createOpenAICompatibleWrapper(defaultBaseUrl?: string) {
+  return (opt: Options) => createOpenAICompatible(
     {
       ...opt,
-      baseURL: opt.baseURL ?? '',
+      baseURL: defaultBaseUrl ?? opt.baseURL!,
       name: 'lmstudio'
     }
   )
 }
 
-function createAnthropicWrapper(opt: Options): Provider | ProviderV1{
+function createAnthropicWrapper(opt: Options): Provider | ProviderV1 {
   return createAnthropic({
     ...opt,
-    headers:{
+    headers: {
       "anthropic-dangerous-direct-browser-access": "true",
     }
   })

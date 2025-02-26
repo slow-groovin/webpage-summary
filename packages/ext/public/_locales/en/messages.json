@@ -2,11 +2,14 @@
   "helloWorld": {
     "message": "Hello world!"
   },
+  "extStoreName": {
+    "message": "Webpage Summary- AI|OpenSource|Light|Privacy"
+  },
   "extName": {
     "message": "Webpage Summary"
   },
   "extDescription": {
-    "message": "(open source) webpage summary with AI, customization of llm-provider/prompt-template, no worries abound privacy"
+    "message": "(open source) webpage summary with LLM Api , customization of llm-provider/prompt-template, lightweight, no subscription/service, pure extension, no worries abound privacy"
   },
   "sum": {
     "message": "sum"
@@ -192,7 +195,7 @@
     "message":"Export"
   },
   "Export_if_with_apiKeys":{
-    "message":"export with apiKeys?"
+    "message":"export with apiKeys?(Default no apiKeys included)"
   },
   "Export_if_with_apiKeys_Alert":{
     "message":"your credential will be inlcuded in the export file."

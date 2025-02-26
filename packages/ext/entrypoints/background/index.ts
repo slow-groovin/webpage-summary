@@ -1,7 +1,7 @@
 import { sendMessage } from "@/messaging";
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/sandbox";
-import { registerControlMessages } from "./control";
+import { addContextMenus, registerControlMessages } from "./control";
 import { registerDebugMessages } from "./debug";
 import { registerLLMMessages } from './llm';
 import { onInstallHook } from "./onInstall";
@@ -30,5 +30,9 @@ export default defineBackground(() => {
     onInstallHook(d)
     
   })
+  
+  //contextMenu
+  addContextMenus()
+
 
 });

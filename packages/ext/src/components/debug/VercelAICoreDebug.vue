@@ -4,6 +4,7 @@ import { generateText, streamText } from 'ai';
 import { createOpenAI, openai, OpenAIProvider } from '@ai-sdk/openai'; // Ensure OPENAI_API_KEY environment variable is set
 import { Readability } from '@mozilla/readability';
 import { createAnthropic } from '@ai-sdk/anthropic';
+import { sendConnectMessage } from '@/connect-messaging';
 
 const platform = ['OPENROUTER', 'SILICONFLOW', 'DEEPSEEK', 'API2D', 'OPENAI']
 const result = ref(new Map<string, string>());
@@ -80,10 +81,6 @@ async function runStreamText(platform: string) {
 }
 
 async function testAnthropic() {
-
-  
-
-
   try {
     const { text } = await generateText({
       model: createAnthropic({
@@ -98,11 +95,12 @@ async function testAnthropic() {
     console.log('text', text)
 
   } catch (e) {
-    console.error(e)
+    console.error(1, e)
   }
 
 
   try {
+    console.log('begin streamText')
     const { text } = streamText({
       model: createAnthropic({
         apiKey: 'ff',
@@ -110,16 +108,70 @@ async function testAnthropic() {
           "anthropic-dangerous-direct-browser-access": "true",
         },
       }).languageModel('claude-3-5-haiku-20241022'),
-      prompt: "hello? who are youx?"
+      prompt: "hello? who are youx?",
+      onError(e) {
+        console.error('onError:', e)
+      },
 
     })
-    console.log('text',await text)
+    console.log('text', await text)
 
   } catch (e) {
-    console.error(e)
+    console.error(2, e)
   }
-  
+}
 
+
+
+async function testStreamTextError() {
+  try {
+    console.log('begin streamText')
+    const { text,warnings,textStream,finishReason } = streamText({
+      
+      model: createOpenAI({
+        apiKey: 'ff',
+        headers: {
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
+      }).languageModel('claude-3-5-haiku-20241022'),
+      prompt: "hello? who are youx?",
+      onError(e) {
+        console.error('onError:', e)  // it can only be catched here
+      },
+
+    })
+    for await(const c of textStream){
+      console.log('c',c)
+    }
+    console.log('text', await text)
+    console.log('warnings',await warnings)
+    console.log('finishReason',await finishReason)
+
+  } catch (e) {
+    console.error(2, e)
+  }
+  console.log('')
+}
+
+async function testSendMessageCallLLM() {
+  const { textStream } = await sendConnectMessage('streamTextViaConnect', {
+    messages: [
+      { role: 'user', content: 'hellO?' }
+    ],
+    modelConfig: {
+      apiKey: '3241',
+      modelName: 'claude-3-5-sonnet-20240620',
+      providerType: 'anthropic',
+      id: 'j4lj',
+      name: "myconfig",
+      at: 0,
+    }
+  }, {
+    onError(e) {
+      console.error(e)
+    }
+
+  })
 
 }
 </script>
@@ -162,6 +214,8 @@ async function testAnthropic() {
   <details open>
     <summary>anthropic</summary>
     <button @click="testAnthropic">anthropic</button>
+    <button @click="testStreamTextError">testStreamTextError</button>
+    <button @click="testSendMessageCallLLM">sendMessageCallLLM</button>
   </details>
 
 </template>

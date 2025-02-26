@@ -67,9 +67,9 @@ onMessage('invokeSummary', () => {
 </script>
 
 <template>
-  <div class="relative z-[9999] user-setting-style">
+  <div class="relative z-[99999] user-setting-style">
 
-    <Toaster class="top-0 left-1/2" />
+    <Toaster  />
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" ref="summaryRef" @minimize-panel="toggleShowWrap"
       class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />

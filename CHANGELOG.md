@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4] - 2025-02-27
+1. fix: double panel appears when trigger by action/contentMenu under `on click` permission mode
+2. add language:zh for chrome store
+3. toaster background color: transparent -> white(80%)
+4. fix: error hint not show when call llm failed.( streamText() feature changes when updating @ai-sdk version)
+5. fix: openai-compatible default baseURL has no effect.
+
 ## [0.1.3] - 2025-02-26
 1. adaption to firefox 
 2. new feature: export/import settings

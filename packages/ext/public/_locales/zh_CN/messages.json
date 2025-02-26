@@ -5,8 +5,11 @@
   "extName": {
     "message": "网页总结"
   },
+  "extStoreName": {
+    "message": "网页总结: AI总结|开源|轻量|隐私无忧"
+  },
   "extDescription": {
-    "message": "(开源)网页总结插件, 可配置任意大模型API/个性化Prompt模板, 隐私无忧"
+    "message": "(开源)网页总结插件, 可配置任意大模型API/个性化Prompt模板, 轻量无服务纯插件, 隐私无忧"
   },
   "sum": {
     "message": "总结"
@@ -193,7 +196,7 @@
     "message":"导出"
   },
   "Export_if_with_apiKeys":{
-    "message":"是否在导出文件包含apiKeys？"
+    "message":"是否在导出文件包含apiKeys？(导出时默认不会包含apiKeys)"
   },
   "Export_if_with_apiKeys_Alert":{
     "message":"您的凭证将会包含在导出文件中。"
