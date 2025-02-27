@@ -9,7 +9,7 @@ Try this open-source, single-purpose light extension to summarize the webpages i
 Key Advantages:
 
 *   ✅ Simple & Easy: Focuses on one thing - summarizing webpages.
-*   🔓 Open Source on Github: Worry-free privacy, login-less, free, light, no serverside and runs entirely in your browser!  🛡️
+*   🔓 Open Source on Github: Worry-free privacy,free, light, no login no serverside and runs entirely in your browser!  🛡️
 *   ⚙️ Fully Customizable: Configure your own AI provider, prompts, opening method, and customized appearance. 🎛️
 
 
@@ -20,7 +20,7 @@ Key Advantages:
 
 [Chinese]
 
-⚡ Webpage Summary: 开源的网页AI总结, 用你喜欢的大模型和操作方式！ 🤖
+⚡ 网页总结 Webpage Summary: 开源的网页AI总结, 用你喜欢的大模型和操作方式！ 🤖
 
 使用这个开源、单一职责(总结)的扩展，用最舒服和安全的方式总结你浏览的网页！ 🚀 没有复杂的功能和眼花缭乱的界面，只有毫不费力的一键总结。 📚
 
@@ -29,10 +29,6 @@ Key Advantages:
 *   ✅ 简单易用：专注于一件事 - 总结网页。
 *   🔓 Github开源：隐私无忧, 开源免费, 轻量不臃肿, 没有登录注册和服务端, 完全在浏览器中运行! 🛡️
 *   ⚙️ 完全可定制：配置你自己的AI提供商、提示词、打开方式和定制外观。 🎛️
-
-
-
-
 
 -----------------------------------------------------------------------
 ⏳项目地址: https://github.com/slow-groovin/webpage-summary

@@ -1,9 +1,9 @@
 
-<h1 style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
+<h1 style="display: flex; flex-direction: row; align-items: center; gap:.25em;">
  <img src="../packages/ext/assets/16.png" width="26"/>
  <span> 网页总结 Webpage Summary</span>
 </h1>
-<p align="center">使用AI对网页内容进行总结的浏览器插件</p>
+<p>使用AI(LLM Api)对网页内容进行总结的浏览器插件</p>
 
 
 [![wakatime](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7.svg)](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7)
@@ -28,7 +28,7 @@
 
 ## 1. Features
 
-1. 配置任何 AI(llm)
+1. 配置任何 AI(LLM Api)
 2. 自定义 prompt 模板
 3. 在页面中即时切换不同的模型/prompt
 4. 输入上下文长度调整/限制 & token 使用情况查看
@@ -42,18 +42,11 @@
 
 
 ##  2. Install
-<div align="" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:2.25em;">
-  <a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp/">
-    <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg" height="40" target="_blank"/ >
-  </a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail//
-jidechjgegiafmcmmhlifebacppcfboe" disabled>
-    <img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png" height="30"/  target="_blank">
-  </a>
-  <a href="https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/">
-    <img src="https://addons.mozilla.org/static-frontend/459ebe418a9783cd0b80bdd8b98e5faa.svg" height="30"/ target="_blank" >
-  </a>
-</div>
+[![](/docs/img/google-store.svg) Chrome Webstore](https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg)
+
+[![](/docs//img/edge.svg) Edge Addons (正在审核)](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
+
+[![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/)
 
 或者手动下载安装 [Github Relases](https://github.com/slow-groovin/webpage-summary/releases)
 
@@ -107,13 +100,18 @@ jidechjgegiafmcmmhlifebacppcfboe" disabled>
 ## 4. 启发
 把网页内容复制进大模型网站, 然后输入提示词并查看结果, 这是无数人今天日常要做的事情, 需要一个浏览器插件让这个过程简化一点
 
-目前提供这个功能的有:
-- 一些小型公司的产品如 sider.ai, briefy.ai, 需要不菲的订阅价格
-- 一些大模型厂商提供的免费插件端, 如豆包插件,Kimi浏览器插件, 它们完全免费, 豆包插件的使用体验甚至远超 59 元订阅费的 sider.ai, 但是它完全接管了你的页面, 而且在性能方面有些卡顿, 它甚至无法上架浏览器的应用商店, 如果你完全不在乎隐私的话, 豆包插件是一个最好的选择.
-- 浏览器商店中的大量个人开发者的 ai 应用插件, 简单的封装了个 llm api, 功能能不能用先不说, 都不是开源
-- [chatGPTBox](https://github.com/josStorer/chatGPTBox): 我找到的唯一一款的开源的网页总结插件, 支持多种模型配置并做了特定网站的定制, 本项目的界面设计受其启发
+在当前(*~2025.1), 提供这个功能的有:
 
-[chatGPTBox](https://github.com/josStorer/chatGPTBox) 是一个很棒的项目, 但是它缺少 prompt 定制功能, 加上它的技术栈 (React) 与我不同, 因此我决定用自己的技术栈 (vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)) 开发一个新的网页总结浏览器插件
+| 类型  | 产品 | 费用 | 概述| 是否开源 | 使用体验 |
+| --- | --- | ---- | ---- | -------- | -------- |
+| 小型公司的商业产品 | sider.ai, briefy.ai, monica.ai | ≈10$/m| 想要打造all in one的复杂系统，无时无刻的遥测 | 否 | 好 |
+| 大模型厂商插件端 | 豆包插件,Kimi浏览器| 完全免费(但是必须要问一下But at what cost) | 豆包：想要打造all in one的复杂系统，卡顿，无时无刻的遥测，甚至无法在应用商店上架 | 否 | 佳 |
+| 个人开发者在应用商店上架的产品 | | 免费或≈4$/m | 没有维护，很多不可用  | 否 | 差 |
+| 开源 |[chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | 免费  | 支持多种模型配置并做了特定网站的定制| **是**| 好 |
+
+
+
+[chatGPTBox](https://github.com/josStorer/chatGPTBox) 是我找到的唯一一款开源的完整可用的网页总结插件, 是一个很棒的项目, 本项目的界面设计受其启发, 但是它缺少 prompt 定制功能, 加上它的技术栈 (React) 与我不同, 因此我决定用自己的技术栈 (vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)) 开发一个新的网页总结浏览器插件
 
 
 

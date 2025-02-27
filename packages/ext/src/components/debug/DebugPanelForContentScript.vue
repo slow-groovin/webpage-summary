@@ -10,8 +10,7 @@ import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 import StorageDebug from './StorageDebug.vue';
 import SummaryHeaderDebug from './SummaryBoxDebug.vue';
 import VercelAICoreDebug from './VercelAICoreDebug.vue';
-const { query: { index } } = useRoute()
-const {replace}=useRouter()
+
 const components = [
   ReadabilityDebug,
   // DragShadowRoot,
@@ -29,8 +28,6 @@ const components = [
 <template>
 
   <SimpleTabsContainer :tabs="components.map(t => ({ name: t.__name ?? '', label: t.__name ?? '' }))"
-    :initial-tab="Number(index)??0" 
-    @tab-change="(i)=>replace({query:{index:i}})"
     class="pure-css p-4 bg-gray-100">
     <template v-for="(t) in components" v-slot:[t.__name]>
       <!-- {{ t.__name }} -->
@@ -40,7 +37,6 @@ const components = [
   </SimpleTabsContainer>
 
 </template>
-
 <style lang="postcss" scoped>
 
 :deep(button) {

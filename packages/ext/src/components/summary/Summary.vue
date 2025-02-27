@@ -126,6 +126,7 @@ provide('scroll-bottom', () => scrollToId('dialog-bottom-anchor'))
 const event=new EventEmitter()
 /*expose funcs */
 defineExpose({
+  status: ()=>status.value,
   refreshSummary,
   on: (name:string,fn:Parameters<typeof event.on>[1])=>event.on(name,fn),
 })

@@ -15,7 +15,7 @@ export default defineConfig({
       // sourcemap: true,
       rollupOptions: {
         external: (id) => {
-          return (id.includes('src/components/debug'))
+          return (configEnv.mode === 'production' && id.includes('src/components/debug'))
         }
       }
     },
@@ -36,21 +36,23 @@ export default defineConfig({
 
   hooks: {
     'build:manifestGenerated': (wxt, manifest) => {
+      manifest.description = manifest.description + ` (${wxt.config.browser})`
+
       if (wxt.config.mode === 'development') {
         // console.log('manifest',manifest)
-        manifest.name += ' (DEV)';
+        manifest.name = 'summary-ext(DEV) ' + wxt.config.browser;
       }
     },
   },
 
 
   manifest: {
-    name: '__MSG_extName__',
+    name: '__MSG_extStoreName__',
     description: '__MSG_extDescription__',
     // name: 'Webpage Summary',
     // description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
     default_locale: 'en',
-    permissions: ['storage','contextMenus','scripting','activeTab'],
+    permissions: ['storage', 'contextMenus', 'scripting', 'activeTab'],
     icons: {
       // 16: '/icon/16.png',
       32: '/icon/32.png',

@@ -2,11 +2,14 @@
   "helloWorld": {
     "message": "Hello world!"
   },
+  "extStoreName": {
+    "message": "Webpage Summary- AI|OpenSource|Light|Privacy"
+  },
   "extName": {
     "message": "Webpage Summary"
   },
   "extDescription": {
-    "message": "(open source) webpage summary with AI, customization of llm-provider/prompt-template, no worries abound privacy"
+    "message": "(open source) webpage summary with LLM Api , customization of llm-provider/prompt-template, lightweight, no subscription/service, pure extension, no worries abound privacy"
   },
   "sum": {
     "message": "sum"
@@ -60,7 +63,13 @@
     "message": "Auto open summary panel on new tab"
   },
   "Enable_popup_click_trigger": {
-    "message": "Enable popup click trigger"
+    "message": "Enable action click trigger"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger":{
+    "message":"Auto begin summary when triggered by action or context menu"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
+    "message":"when summary panel is opened by action trigger or context menu trigger(all except floating ball or auto-open), auto begin summary"
   },
   "Always_expand_the_chat_box": {
     "message": "Always expand the chat box"
@@ -186,7 +195,7 @@
     "message":"Export"
   },
   "Export_if_with_apiKeys":{
-    "message":"export with apiKeys?"
+    "message":"export with apiKeys?(Default no apiKeys included)"
   },
   "Export_if_with_apiKeys_Alert":{
     "message":"your credential will be inlcuded in the export file."

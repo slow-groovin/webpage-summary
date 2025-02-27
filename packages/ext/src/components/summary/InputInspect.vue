@@ -99,9 +99,8 @@ const { webpagContent, maxContentLength, class: clazz } = defineProps<{
   maxContentLength?: number,
   class?: HTMLAttributes['class']
 }>()
-const length = webpagContent.length ?? 0
+const length = webpagContent.textContent?.length ?? 0
 const maxLength = maxContentLength ?? length
-
 const isViewContent = ref(false)
 
 const contentTrimmerFunction = defineModel<{ trim: (s: string) => string }>('content-trimmer')

@@ -5,8 +5,11 @@
   "extName": {
     "message": "网页总结"
   },
+  "extStoreName": {
+    "message": "网页总结: AI总结|开源|轻量|隐私无忧"
+  },
   "extDescription": {
-    "message": "(开源)网页总结插件, 可配置任意大模型API/个性化Prompt模板, 隐私无忧"
+    "message": "(开源)网页总结插件, 可配置任意大模型API/个性化Prompt模板, 轻量无服务纯插件, 隐私无忧"
   },
   "sum": {
     "message": "总结"
@@ -54,14 +57,20 @@
     "message": "启用悬浮球"
   },
   "Auto_begin_summary":{
-    "message": "自动开始总结"
+    "message": "面板打开时自动开始总结"
   },
   "Auto_open_summary_panel_on_new_tab":{
     "message": "打开新页面时, 自动打开总结面板"
   },
   "Enable_popup_click_trigger":{
-    "message": "点击pop按钮后, 打开总结面板"
+    "message": "点击action时, 打开总结面板"
+  },
 
+  "Auto_begin_summary_by_action_or_context_trigger":{
+    "message":"使用action或者右键菜单触发总结, 面板打开时自动开始总结"
+  },
+  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
+    "message":"使用点击action(扩展小图标)或者点击右键菜单触发总结时(除了悬浮球和自动打开以外的所有的方式), 在总结面板打开时自动开始总结"
   },
   "Always_expand_the_chat_box":{
     "message": "总是展开聊天输入框"
@@ -187,7 +196,7 @@
     "message":"导出"
   },
   "Export_if_with_apiKeys":{
-    "message":"是否在导出文件包含apiKeys？"
+    "message":"是否在导出文件包含apiKeys？(导出时默认不会包含apiKeys)"
   },
   "Export_if_with_apiKeys_Alert":{
     "message":"您的凭证将会包含在导出文件中。"

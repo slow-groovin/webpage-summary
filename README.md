@@ -2,9 +2,8 @@
  <img src="./packages/ext/assets/16.png" width="26"/>
  <span> Webpage Summary</span>
 </h1>
-<p align="center">Browser extension for summarizing webpage text content with AI (LLM)</p>
+<p>Browser extension for summarizing webpage text content with AI (LLM Api)</p>
 
-<hr>
 
 
 
@@ -36,7 +35,7 @@
 
 ## 1. Features
 
-1.  Custom AI (LLM) provider configuration, use any provider you like
+1.  Custom LLM Api provider configuration, use any provider you like
 2.  Custom prompt templates
 3.  Switch between different models or prompts on the page
 4.  Input context length adjustment/limit & token usage view
@@ -49,20 +48,12 @@
 11. (Future) Cross-site LLM request (using session requests from LLM websites)
 
 ## 2. Install
+[![](/docs/img/google-store.svg) Chrome Webstore](https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg)
 
+[![](/docs//img/edge.svg) Edge Addons (Under Review)](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
 
-<div align="" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:2.25em;">
-  <a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp/">
-    <img src="https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg" height="40" target="_blank"/ >
-  </a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail//
-jidechjgegiafmcmmhlifebacppcfboe" disabled>
-    <img src="https://uhf.microsoft.com/images/microsoft/RE1Mu3b.png" height="30"/  target="_blank">
-  </a>
-  <a href="https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/">
-    <img src="https://addons.mozilla.org/static-frontend/459ebe418a9783cd0b80bdd8b98e5faa.svg" height="30"/ target="_blank" >
-  </a>
-</div>
+[![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/)
+
 
 or download from [Github Releases](https://github.com/slow-groovin/webpage-summary/releases) and manually install
 
@@ -117,14 +108,16 @@ This plugin does not provide proxy functionality itself. It can be used with oth
 
 Copying webpage content into a llm website, then entering prompts and viewing the results is a common workflow for many people today. A browser plugin is needed to replace this process.
 
-Currently, the following provide this functionality:
+Currently(*~2025.1), the following provide this functionality:
 
-- Some small company products such as sider.ai, briefy.ai, require a considerable subscription price.
-- Some large model vendors provide free plugin ends, such as Doubao plugin, Kimi browser plugin. They are completely free. The user experience of Doubao plugin even far exceeds sider.ai with a subscription fee of $8/m, but it completely takes over your page and is somewhat laggy in terms of performance. It cannot even be put on the browser's extension store. If you don't care about privacy at all, Doubao plugin is the best choice.
-- A large number of AI application plugins from individual developers in the browser store simply encapsulate an LLM API, and none of them are open source.
-- [chatGPTBox](https://github.com/josStorer/chatGPTBox): The only open-source webpage summary plugin I found, it supports multiple model configurations and has made specific website customizations. The interface design of this project is inspired by it.
+| Type  | Product | Cost | Overview| Open Source | User Experience |
+| --- | --- | ---- | ---- | -------- | -------- |
+| Small company commercial products | sider.ai, briefy.ai, monica.ai | ≈10$/m| Want to create a complex all-in-one system, with endless telemetry | No | Good |
+| Large model vendor plugin ends | Doubao plugin, Kimi plugin | Completely free | Doubao: Wants to create a complex all-in-one system, laggy, endless telemetry, cannot even be put on the extension store | No | Good+ |
+| Products listed in the app store by individual developers | | Free or ≈4$/m | No maintenance, many are unavailable | No | Poor |
+| Open source |[chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | Free  | Supports multiple model configurations and has made specific website customizations | **Yes**| Good |
 
-[chatGPTBox](https://github.com/josStorer/chatGPTBox) is a nice project, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
+[chatGPTBox](https://github.com/josStorer/chatGPTBox) is the only open-source, fully functional webpage summary plugin I found. It is a great project. The interface design of this project is inspired by it, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
 
 ## 5. Feedback&Suggestions
 

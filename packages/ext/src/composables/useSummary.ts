@@ -43,11 +43,12 @@ export function useSummary() {
   const isPreparing = ref(true)
 
   const status = computed<'preparing' | 'failed' | 'ready' | 'running'>(() => {
+    
     if (isRunning.value) {
       return 'running'
     }
 
-    if (isFailed.value) {
+    if (isFailed.value || error.value) {
       return 'failed'
     }
 

@@ -1,5 +1,5 @@
 import { storage } from "wxt/storage";
-import {  SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL } from "../constants/storage-key";
+import {  SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL, ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
 import { InputContentLengthExceededStrategy } from "../types/summary";
@@ -16,7 +16,9 @@ async function getAllExtConfigs() {
     { key: ENABLE_USER_CHAT_DEFAULT, fallback: DefaultConfig.ENABLE_USER_CHAT_DEFAULT },
     { key: ENABLE_AUTO_BEGIN_SUMMARY, fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY },
     { key: ENABLE_SUMMARY_WINDOW_DEFAULT, fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT },
-    { key: SUMMARY_INPUT_EXCEED_BEHAVIOUR, fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR }
+    { key: SUMMARY_INPUT_EXCEED_BEHAVIOUR, fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR },
+    { key: ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER },
+
   ]);
 
   return {
@@ -26,7 +28,8 @@ async function getAllExtConfigs() {
     enableUserChatDefault: result[4].value as boolean ?? DefaultConfig.ENABLE_USER_CHAT_DEFAULT,
     enableAutoBeginSummary: result[5].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY,
     enableSummaryWindowDefault: result[6].value as boolean ?? DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT,
-    summaryInputExceedBehaviour: result[7].value as string ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR
+    summaryInputExceedBehaviour: result[7].value as string ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR,
+    enableAutoBeginSummaryByActionOrContextTrigger: result[8].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER,
   }
 }
 export function useGeneralConfig() {
@@ -128,4 +131,15 @@ export function useSummaryInputExceedBehaviour() {
 
 export async function getSummaryInputExceedBehaviour() {
   return await storage.getItem<InputContentLengthExceededStrategy>(SUMMARY_INPUT_EXCEED_BEHAVIOUR, { fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR })
+}
+
+/**
+ * Reactive enable auto begin summary by action or context trigger config.
+ */
+export function useEnableAutoBeginSummaryByActionOrContextTrigger() {
+  const { state: enableAutoBeginSummaryByActionOrContextTrigger, ...other } = useWxtStorage(ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER)
+  return { enableAutoBeginSummaryByActionOrContextTrigger, ...other }
+}
+export async function getEnableAutoBeginSummaryByActionOrContextTrigger() {
+  return await storage.getItem(ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, { fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER })
 }

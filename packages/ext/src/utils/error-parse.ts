@@ -11,13 +11,19 @@ export function handleConnectError(e: any): any {
     aiApiCallErrorToast(e)
     return e.responseBody
   } else if (e.message === 'Failed to fetch') {
-    networkErrorToase(e.message)
+    networkErrorToast(e.message)
     return e.message
   } else if (e.name === 'AI_TypeValidationError') {
     if (e.value.error.message === 'Provider returned error') {
       toast({
         title: e.name,
         description: e.value.error.metadata.raw,
+        variant: 'destructive',
+      })
+    }else{
+      toast({
+        title: e.name,
+        description: e.value,
         variant: 'destructive',
       })
     }
@@ -42,7 +48,7 @@ function aiApiCallErrorToast(e: any) {
     variant: 'destructive',
   })
 }
-function networkErrorToase(message: string) {
+function networkErrorToast(message: string) {
   toast({
     title: `network error,cause: ${message},`,
     description: 'network error happens when connect llm api, please examine the devtool in extension\'s options page',

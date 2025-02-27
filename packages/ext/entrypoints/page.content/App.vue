@@ -1,37 +1,23 @@
-<!-- content entry, as a router -->
 <script lang="ts" setup>
-// import ContentDebugPanelEntry from '@/src/components/debug/ContentDebugPanelEntry.vue'
-import { onMessage, sendMessage } from '@/messaging'
+import { onMessage } from '@/messaging'
 import RightFloatingBallContainer from '@/src/components/container/RightFloatingBallContainer.vue'
 import HoverCard from '@/src/components/custom-ui/HoverCard.vue'
-import SeparationComponentInContentDebug from '@/src/components/debug/SeparationComponentInContentDebug.vue'
+// import DebugPanelForContentScript from '@/src/components/debug/DebugPanelForContentScript.vue'
 import Summary from '@/src/components/summary/Summary.vue'
-import { toast } from '@/src/components/ui/toast'
 import Toaster from '@/src/components/ui/toast/Toaster.vue'
-import { getEnableAutoBeginSummary, getEnableSummaryWindowDefault, useEnableFloatingBall } from '@/src/composables/general-config'
+import { getEnableAutoBeginSummaryByActionOrContextTrigger, getEnableSummaryWindowDefault, useEnableFloatingBall } from '@/src/composables/general-config'
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { watchOnce } from '@vueuse/core'
-import { sleep, sum } from 'radash'
-import { onMounted, ref, useTemplateRef } from 'vue'
-import { browser } from 'wxt/browser'
+import { sleep } from 'radash'
+import {  ref, useTemplateRef } from 'vue'
 import icon from '~/assets/16.png'
-
-onMounted(() => {
-
-})
-
-
 
 const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
 const { enableFloatingBall } = useEnableFloatingBall()
 const isFloatingBallPulseAnim = ref(false)
-const isOpenDebugPanel = ref(false)
 const summaryRef = useTemplateRef('summaryRef')
 
 
-async function openDebugPanel() {
-  isOpenDebugPanel.value = !isOpenDebugPanel.value
-}
 
 async function toggleShowWrap() {
   toggleShow()
@@ -39,34 +25,51 @@ async function toggleShowWrap() {
   await sleep(1500)
   isFloatingBallPulseAnim.value = false
 }
+
 getEnableSummaryWindowDefault().then(v => {
   isOpenSummaryPanel.value = v
 })
 
+function tryBeginSummary() {
+  if (summaryRef.value) {
+    if (summaryRef.value.status() === 'preparing') {
+      console.debug('[invokeSummary]Summary preparing, hook begin summary on prepared done.')
+      summaryRef.value.on('onPrepareDone', () => {
+        summaryRef.value!.refreshSummary()
+      })
+    } else if (summaryRef.value.status() === 'ready') {
+      console.debug('[invokeSummary]Summary Already prepared, directly begin summary.')
+      summaryRef.value.refreshSummary()
+    }
+  } else {
+    console.warn('[invokeSummary]Summary not mounted.')
+  }
+}
 // trigger by popup/contextMenu, directly begin summary
 onMessage('invokeSummary', () => {
-  console.debug('[invokeSummary]')
+  console.debug('[invokeSummary]received message.')
   tryEnableOrShow() //open panel
-  //invoke begin summary //todo: add a extra contextMenu
-  // if (summaryRef.value) { 
-  //   summaryRef.value.refreshSummary()
-  // } else {//maybe the summary page not prepared when initailly
-  //   watchOnce(summaryRef, () => {
-  //     summaryRef.value!.on('onPrepareDone', () => {
-  //       summaryRef.value!.refreshSummary()
-  //     })
-  //   })
+  // invoke begin summary 
+  getEnableAutoBeginSummaryByActionOrContextTrigger().then(enabled => {
+    if (!enabled) return
 
-  // }
-
+    if (summaryRef.value) {
+      tryBeginSummary()
+    } else {//maybe the summary page not prepared when initailly
+      console.debug('[invokeSummary]Summary not prepared, wait for prepare done.')
+      watchOnce(summaryRef, () => {
+        tryBeginSummary()
+      })
+    }
+  })
 })
 
 </script>
 
 <template>
-  <div class="relative z-[9999] user-setting-style">
+  <div class="relative z-[99999] user-setting-style">
 
-    <Toaster class="top-0 left-1/2" />
+    <Toaster  />
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" ref="summaryRef" @minimize-panel="toggleShowWrap"
       class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />
@@ -85,6 +88,8 @@ onMessage('invokeSummary', () => {
       </HoverCard>
     </RightFloatingBallContainer>
 
+
+    <!-- <DebugPanelForContentScript class="fixed border-amber-200 bg-white max-w-[min(40rem,50vw)] top-0 left-0" /> -->
   </div>
 </template>
 

@@ -180,16 +180,17 @@ function alertAndToast(...args:Parameters<typeof toast>){
     <div class="flex flex-col gap-2 items-start">
       <h2>{{ t('Import') }}</h2>
       <input type="file" class="" ref="fileInput" @change="handleFileSelect" />
-      <br>
-      <Button @click="importConfigWrapper">{{ t('Import') }}</Button>
+      <span class="text-red-500">{{ t('Import_Alert') }}</span>
+
+      <Button @click="importConfigWrapper" :class="{'animate-bounce':!!viewData}">{{ t('Import') }}</Button>
       <!-- view area -->
       <div v-if="viewData" class="border-t grid grid-cols-[auto,1fr] gap-2">
-        <h2 class="col-span-2">View</h2>
+        <h2 class="col-span-2">View before exec import</h2>
         <p class="col-span-2">export date: {{ viewData.exportDate }}</p>
         <template v-for="(value, key) in viewData.data">
           <div class="p-1 rounded border border-gray-500">{{ key }}</div>
 
-          <pre v-if="typeof value !== 'object'">{{ value }}</pre>
+          <pre v-if="typeof value !== `object`"> {{ value }}</pre>
           <details v-else>
             <pre>{{ value }}</pre>
           </details>
