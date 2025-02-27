@@ -9,7 +9,7 @@
     "message": "Webpage Summary"
   },
   "extDescription": {
-    "message": "(open source) webpage summary with LLM Api , customization of llm-provider/prompt-template, lightweight, no subscription/service, pure extension, no worries abound privacy"
+    "message": "summarize text content with LLM Api, api/prompt customization, lightweight, no sub/service,  pure extension, no privacy worries"
   },
   "sum": {
     "message": "sum"

@@ -36,11 +36,9 @@ export default defineConfig({
 
   hooks: {
     'build:manifestGenerated': (wxt, manifest) => {
-      manifest.description = manifest.description + ` (${wxt.config.browser})`
-
       if (wxt.config.mode === 'development') {
         // console.log('manifest',manifest)
-        manifest.name = 'summary-ext(DEV) ' + wxt.config.browser;
+        manifest.name = `(DEV)summary-ext (${wxt.config.browser})`;
       }
     },
   },

@@ -34,3 +34,22 @@ Key Advantages:
 ⏳项目地址: https://github.com/slow-groovin/webpage-summary
 📝入门指南: https://github.com/slow-groovin/webpage-summary/blob/main/docs/README_zh.md#31-quick-start
 🔑隐私协议: https://github.com/slow-groovin/webpage-summary/blob/main/docs/webstore/privacy.md
+
+
+
+[Traditional Chinese]
+
+⚡ 網頁摘要 Webpage Summary: 開源的網頁AI摘要, 用你喜歡的大模型和操作方式！ 🤖
+
+使用這個開源、單一職責(摘要)的擴充功能，用最舒服和安全的方式摘要你瀏覽的網頁！ 🚀 沒有複雜的功能和眼花撩亂的介面，只有毫不費力的一鍵摘要。 📚
+
+主要優勢：
+
+*   ✅ 簡單易用：專注於一件事 - 摘要網頁。
+*   🔓 Github開源：隱私無憂, 開源免費, 輕量不臃腫, 沒有登入註冊和伺服器端, 完全在瀏覽器中運行! 🛡️
+*   ⚙️ 完全可定制：配置你自己的AI提供商、提示詞、打開方式和定制外觀。 🎛️
+
+-----------------------------------------------------------------------
+⏳專案地址: https://github.com/slow-groovin/webpage-summary
+📝入門指南: https://github.com/slow-groovin/webpage-summary/blob/main/docs/README_zh.md#31-quick-start
+🔑隱私協議: https://github.com/slow-groovin/webpage-summary/blob/main/docs/webstore/privacy.md

@@ -48,11 +48,11 @@
 11. (Future) Cross-site LLM request (using session requests from LLM websites)
 
 ## 2. Install
-[![](/docs/img/google-store.svg) Chrome Webstore](https://fonts.gstatic.com/s/i/productlogos/chrome_store/v8/192px.svg)
+[![](/docs/img/google-store.svg) Chrome Webstore](https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp)
 
 [![](/docs//img/edge.svg) Edge Addons (Under Review)](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
 
-[![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/zh-CN/firefox/addon/webpage-summary/)
+[![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/firefox/addon/webpage-summary/)
 
 
 or download from [Github Releases](https://github.com/slow-groovin/webpage-summary/releases) and manually install
