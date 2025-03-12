@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.6] - 2025-03-12
+1. add adaptation to SPA (Single Page Application), input page content will change when SPA change route.
+2. 
+
 
 ## [0.1.5] - 2025-02-27
 1. input length calculation now does not include continuous '\n', ' '

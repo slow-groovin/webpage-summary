@@ -30,6 +30,9 @@ getEnableSummaryWindowDefault().then(v => {
   isOpenSummaryPanel.value = v
 })
 
+/**
+ * try to begin summary, called  after confirming that the `Summary` component is not already, 
+ */
 function tryBeginSummary() {
   if (summaryRef.value) {
     if (summaryRef.value.status() === 'preparing') {
@@ -45,7 +48,10 @@ function tryBeginSummary() {
     console.warn('[invokeSummary]Summary not mounted.')
   }
 }
-// trigger by popup/contextMenu, directly begin summary
+/**
+ * trigger by popup/contextMenu, open the panel, and  begin summary depends on config `ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER`
+ *  
+ * */ 
 onMessage('invokeSummary', () => {
   console.debug('[invokeSummary]received message.')
   tryEnableOrShow() //open panel
@@ -63,6 +69,7 @@ onMessage('invokeSummary', () => {
     }
   })
 })
+
 
 </script>
 

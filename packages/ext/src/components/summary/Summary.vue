@@ -3,7 +3,6 @@
     <DraggableContainer class="w-[var(--webpage-summary-panel-width)]  bg-[--webpage-summary-panel-background] 
        rounded-t-xl rounded-b-xl shadow-2xl">
       <template #header>
-
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
           <template #left-buttons>
@@ -30,9 +29,10 @@
           <template #top-right-buttons>
 
             <!-- length view&manage -->
-            <InputInspect v-if="webpageContent && currentModel && textContentTrimmer" :content-trimmer="textContentTrimmer"
-              :webpag-content="webpageContent" :max-content-length="currentModel?.maxContentLength"
-              class="ml-2" />
+            <InputInspect v-if="webpageContent && currentModel && textContentTrimmer"
+              :content-trimmer="textContentTrimmer" :webpag-content="webpageContent"
+              :max-content-length="currentModel?.maxContentLength"
+              :key="currentModel.name + '_' + webpageContent.articleUrl" class="ml-2" />
 
             <!-- token usage -->
             <div v-if="enableTokenUsageView && tokenUsage.inputToken"
@@ -91,7 +91,7 @@ import { useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composa
 import { useSummary } from '@/src/composables/useSummary';
 import { scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
-import { onMounted, provide, ref, useTemplateRef } from 'vue';
+import { computed, onMounted, provide, ref, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
@@ -119,16 +119,17 @@ const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 
+
 /*provide funcs to SummaryDialog.vue */
 provide('copy-func', copyMessages)
 provide('scroll-bottom', () => scrollToId('dialog-bottom-anchor'))
 
-const event=new EventEmitter()
+const event = new EventEmitter()
 /*expose funcs */
 defineExpose({
-  status: ()=>status.value,
+  status: () => status.value,
   refreshSummary,
-  on: (name:string,fn:Parameters<typeof event.on>[1])=>event.on(name,fn),
+  on: (name: string, fn: Parameters<typeof event.on>[1]) => event.on(name, fn),
 })
 
 enableUserChatDefaultThen(() => {

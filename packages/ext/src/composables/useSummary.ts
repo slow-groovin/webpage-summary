@@ -2,29 +2,36 @@
 import { sendConnectMessage } from '@/connect-messaging';
 import { CoreMessage } from 'ai';
 import { EventEmitter } from 'eventemitter3';
-import { computed, onMounted, ref, toRaw } from 'vue';
+import { computed, onMounted, onUnmounted, Ref, ref, toRaw } from 'vue';
 import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
 import { UIMessage } from '../types/message';
-import { TokenUsage } from '../types/summary';
+import { TokenUsage, WebpageContent } from '../types/summary';
 import { handleConnectError } from '../utils/error-parse';
 import { renderMessages } from '../utils/prompt';
 import { getEnableAutoBeginSummary, getSummaryLanguage } from './general-config';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { useWebpageContent } from './readability';
+import { onSpaRouteChange } from '../utils/document';
+import { simpleParseRead } from '../utils/page-read';
 
 
 
 export function useSummary() {
+  let disconnectOnSPARouteChange: Function
   onMounted(async () => {
+    /*listen SPA change, update webpageContent
+    */
+    disconnectOnSPARouteChange = onSpaRouteChange(() => {
+      webpageContent.value = simpleParseRead()
+    }).disconnect
     try {
       currentModel.value = await modelStorage.getDefaultItem()
       currentPrompt.value = await promptStorage.getDefaultItem()
-      isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
+      isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent.value)
       isPreparing.value = false
-      // await initMessages()
       event.emit('prepare-done')
       if (await getEnableAutoBeginSummary()) {
         refreshSummary()
@@ -34,6 +41,10 @@ export function useSummary() {
       event.emit('prepare-done')
     }
   })
+  onUnmounted(() => {
+    disconnectOnSPARouteChange?.()
+  })
+
   const uiMessages = ref<UIMessage[]>([])
   const messages = ref<CoreMessage[]>([])
 
@@ -43,7 +54,7 @@ export function useSummary() {
   const isPreparing = ref(true)
 
   const status = computed<'preparing' | 'failed' | 'ready' | 'running'>(() => {
-    
+
     if (isRunning.value) {
       return 'running'
     }
@@ -64,7 +75,7 @@ export function useSummary() {
   /**
    * Ref<Function> for dealing with textContent, expose to component to reactivly assign, default is a directly return function
    */
-  const textContentTrimmer = ref<{ trim: (s: string) => string }>({trim:(content: string): string => content})
+  const textContentTrimmer = ref<{ trim: (s: string) => string }>({ trim: (content: string): string => content })
   // const inputContentLengthInfo = reactive<{
   //   totalLength?: number,
   //   clipedLength?: number,
@@ -84,7 +95,7 @@ export function useSummary() {
     outputToken: 0,
   })
 
-  const { webpageContent } = useWebpageContent()
+  let webpageContent: Ref<WebpageContent|undefined>= ref(simpleParseRead())
 
 
 
@@ -121,15 +132,14 @@ export function useSummary() {
     /*
      * render and deal with content length exceed
      */
-
-    if (webpageContent) {
-      if (!webpageContent.textContent) webpageContent.textContent = ''
+    if (webpageContent.value) {
+      if (!webpageContent.value.textContent) webpageContent.value.textContent = ''
 
       if (textContentTrimmer.value) {
-        webpageContent.textContent = textContentTrimmer.value.trim(webpageContent.textContent)
+        webpageContent.value.textContent = textContentTrimmer.value.trim(webpageContent.value.textContent)
       }
       const summaryInput = {
-        ...webpageContent,
+        ...webpageContent.value,
         summaryLanguage: await getSummaryLanguage()
       }
       renderMessages(messages.value, summaryInput)

@@ -60,6 +60,11 @@ html, :host {
   })
 }
 
+/**
+ * for filter user-custom css variables text, filter out line without valid prefix
+ * @param cssVariableText 
+ * @returns 
+ */
 export function filterValidCssVariableText(cssVariableText: string) {
   return cssVariableText
     .split('\n')
@@ -68,4 +73,35 @@ export function filterValidCssVariableText(cssVariableText: string) {
     .join('\n')
 }
 
+/**
+ * listener for SPA route change
+ * set a delay of 1000ms to trigger callback, because that on pathname changed, documents may have not been rendered completely, 
+ * 1000ms as a threshold will not 100% solve the problem, the complete time depends on Framework and network, 
+ * because there is noway to perfectly listen the SPA rerendere done, this is a compromise solution.
+ * @param callback 
+ */
+export function onSpaRouteChange(callback: Function) {
+  let pathname = window.location.pathname
 
+  function detectChange() {
+    let curPathname = window.location.pathname
+    if (curPathname !== pathname) {
+      pathname = curPathname
+      callback()
+    }
+  }
+
+
+  // // 监听 DOM 变化
+  const observer = new MutationObserver(() => {
+    /**
+     * 
+     */
+    setTimeout(() => {
+      detectChange()
+    }, 1000)
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+  return { disconnect: observer.disconnect }
+}

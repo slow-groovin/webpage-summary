@@ -66,7 +66,7 @@
       <div class="relative max-w-[66vw] max-h-[66vh]  overflow-y-auto">
         <span class="">{{ webpagContent.textContent?.substring(0, sliderValue[0]) }}</span>
         <span class="text-green-500 underline">{{ webpagContent.textContent?.substring(sliderValue[0], sliderValue[1])
-          }}</span>
+        }}</span>
         <span class="">{{ webpagContent.textContent?.substring(sliderValue[1]) }}</span>
       </div>
     </div>
@@ -79,16 +79,14 @@
 <script setup lang="ts">
 import { getSummaryInputExceedBehaviour } from "@/src/composables/general-config";
 import { contentLengthExceededStrategys } from "@/src/presets/strategy";
-import { InputContentLengthExceededStrategy, SummaryInput, WebpageContent } from "@/src/types/summary";
+import { InputContentLengthExceededStrategy, WebpageContent } from "@/src/types/summary";
 import { cn } from "@/src/utils/shadcn";
-import { random, sleep } from "radash";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { HTMLAttributes } from 'vue';
 import { Slider } from "../ui/slider";
-import { EyeIcon, Minimize2Icon, MinimizeIcon, ScanEyeIcon } from "lucide-vue-next";
+import { Minimize2Icon, ScanEyeIcon } from "lucide-vue-next";
 import ExtIcon from "../common/ExtIcon.vue";
 import Button from "../ui/button/Button.vue";
-import { browser } from "wxt/browser";
 import { t } from "@/src/utils/extension";
 
 defineOptions({
@@ -116,7 +114,6 @@ const behaviourFunction = computed(() => {
 })
 
 
-
 onMounted(() => {
 
 
@@ -126,9 +123,9 @@ getSummaryInputExceedBehaviour().then(v => {
   exceedBehaviour.value = v
   const { start, end } = behaviourFunction.value(length, maxLength)
   sliderValue.value = [start, end]
-  contentTrimmerFunction.value!.trim=(s: string) => {
-      return s.slice(sliderValue.value[0], sliderValue.value[1])
-    }
+  contentTrimmerFunction.value!.trim = (s: string) => {
+    return s.slice(sliderValue.value[0], sliderValue.value[1])
+  }
 })
 
 
