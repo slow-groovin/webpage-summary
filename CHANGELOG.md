@@ -4,7 +4,7 @@
 1. add adaptation to SPA (Single Page Application), input page content will change when SPA change route.
 2. fix: now chatting directly without first summarizing will send messages with page context.
 3. fix: floating ball y-position using `px` causing it out of view in screen adjustment situations such as changing from vertical to horizontal.
-4. 
+4. feature: add a context menu item to add selection to chat input.
 
 
 ## [0.1.5] - 2025-02-27

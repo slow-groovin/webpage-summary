@@ -9,7 +9,7 @@ import { getEnableAutoBeginSummaryByActionOrContextTrigger, getEnableSummaryWind
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { watchOnce } from '@vueuse/core'
 import { sleep } from 'radash'
-import {  ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import icon from '~/assets/16.png'
 
 const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
@@ -48,10 +48,11 @@ function tryBeginSummary() {
     console.warn('[invokeSummary]Summary not mounted.')
   }
 }
+
 /**
  * trigger by popup/contextMenu, open the panel, and  begin summary depends on config `ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER`
  *  
- * */ 
+ * */
 onMessage('invokeSummary', () => {
   console.debug('[invokeSummary]received message.')
   tryEnableOrShow() //open panel
@@ -70,13 +71,29 @@ onMessage('invokeSummary', () => {
   })
 })
 
+/**
+ * trigger by `add-to-chat` context menu button, add selection text to input dialog
+ */
+onMessage('addContentToChatDialog', (msg) => {
+  const content = msg.data
+  tryEnableOrShow() //open panel
+  if (summaryRef.value) {
+    summaryRef.value.addContentToChatDialog(content)
+  } else {//maybe the summary page not prepared when initailly
+    watchOnce(summaryRef, () => {
+      sleep(500).then(() => {
+        summaryRef.value!.addContentToChatDialog(content)
+      })
+    })
+  }
+})
 
 </script>
 
 <template>
   <div class="relative z-[99999] user-setting-style">
 
-    <Toaster  />
+    <Toaster />
 
     <Summary v-if="isOpenSummaryPanel" v-show="isShow" ref="summaryRef" @minimize-panel="toggleShowWrap"
       class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />

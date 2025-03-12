@@ -23,6 +23,9 @@
   "summarize_this_page": {
     "message": "摘要此頁面"
   },
+  "add_selection_to_chat": {
+    "message": "添加選中文本到摘要聊天框"
+  },
   "Open_Setting":{
     "message": "開啟設定"
   },

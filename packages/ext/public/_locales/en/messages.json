@@ -26,6 +26,9 @@
   "summarize_this_page": {
     "message": "summarize this page"
   },
+  "add_selection_to_chat": {
+    "message": "Add selection to summary chat"
+  },
   "General": {
     "message": "General"
   },

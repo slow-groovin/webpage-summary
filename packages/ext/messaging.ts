@@ -11,7 +11,8 @@ interface ProtocolMap {
   /** for pages beside content to send message to content to invoke summary */
   invokeSummary():void;
 
-  
+  /**for context menu to add selection to chat dialog */
+  addContentToChatDialog(content:string):void;
 
   /*
    * tests  

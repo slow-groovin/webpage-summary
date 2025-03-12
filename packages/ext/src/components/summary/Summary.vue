@@ -70,8 +70,8 @@
           </div>
 
 
-          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status !== 'ready'"
-            class="rounded-b-xl" />
+          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" ref="chatInputBox"
+            :disabled="status !== 'ready'" class="rounded-b-xl" />
         </div>
 
 
@@ -102,6 +102,7 @@ import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import EventEmitter from 'eventemitter3';
 const isChatDialogOpen = ref(false)
+const chatInputText = ref('')
 
 const emit = defineEmits<{
   minimizePanel: []
@@ -118,7 +119,7 @@ const { chat, stop, error, status,
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
-
+const chatInputBox=useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 
 /*provide funcs to SummaryDialog.vue */
 provide('copy-func', copyMessages)
@@ -129,6 +130,7 @@ const event = new EventEmitter()
 defineExpose({
   status: () => status.value,
   refreshSummary,
+  addContentToChatDialog,
   on: (name: string, fn: Parameters<typeof event.on>[1]) => event.on(name, fn),
 })
 
@@ -156,8 +158,13 @@ async function submitUserInput(content: string, onSuc: () => void) {
   chat(content, 'user')
   scrollToId('dialog-bottom-anchor')
   onSuc()
-
 }
+
+async function addContentToChatDialog(content: string) {
+  chatInputBox.value?.appendContent(content)
+  chatInputBox.value?.appendContent(' ')
+}
+
 
 async function viewFailedReason() {
   toast({ title: "ERROR", description: error.value, variant: "destructive" })
