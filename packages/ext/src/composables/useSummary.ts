@@ -26,6 +26,10 @@ export function useSummary() {
     */
     disconnectOnSPARouteChange = onSpaRouteChange(() => {
       webpageContent.value = simpleParseRead()
+      stop();
+      messages.value=[] //reset messages
+      uiMessages.value=[] //reset ui messages
+
     }).disconnect
     try {
       currentModel.value = await modelStorage.getDefaultItem()
@@ -95,7 +99,7 @@ export function useSummary() {
     outputToken: 0,
   })
 
-  let webpageContent: Ref<WebpageContent|undefined>= ref(simpleParseRead())
+  let webpageContent: Ref<WebpageContent | undefined> = ref(simpleParseRead())
 
 
 
@@ -159,8 +163,7 @@ export function useSummary() {
 
   async function refreshSummary() {
     try {
-      await initMessages()
-      append('', 'assistant')
+      chat('', 'assistant')
 
     } catch (e) {
       console.error(e)
@@ -174,9 +177,12 @@ export function useSummary() {
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
 
-  async function append(content: string, role: 'user' | 'assistant') {
+  async function chat(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
+    }
+    if (messages.value.length == 0) {
+      await initMessages()
     }
     /*content can be '', for reusing this function to trigger initial summary with the first two messages.    */
     if (content) {
@@ -253,7 +259,7 @@ export function useSummary() {
     webpageContent,
     onChunk,
     onPrepareDone: onPrepareDone,
-    append,
+    chat,
     stop,
     refreshSummary,
     currentModel,

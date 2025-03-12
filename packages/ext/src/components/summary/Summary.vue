@@ -109,7 +109,7 @@ const emit = defineEmits<{
 
 
 
-const { append, stop, error, status,
+const { chat, stop, error, status,
   currentModel, currentPrompt, uiMessages,
   refreshSummary, onPrepareDone, onChunk,
   textContentTrimmer, tokenUsage, copyMessages,
@@ -153,7 +153,7 @@ onPrepareDone(() => {
 
 async function submitUserInput(content: string, onSuc: () => void) {
   if (!content || status.value !== 'ready') return
-  append(content, 'user')
+  chat(content, 'user')
   scrollToId('dialog-bottom-anchor')
   onSuc()
 
