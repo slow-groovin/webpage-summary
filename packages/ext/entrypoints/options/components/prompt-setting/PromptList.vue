@@ -3,13 +3,16 @@
 import Button from '@/src/components/ui/button/Button.vue';
 import { usePromptConfigs, usePromptConfigStorage } from '@/src/composables/prompt';
 import PromptConfigItemComponent from './PromptConfigItem.vue';
-import { Edit, ArrowUpFromLine, ArrowDownFromLine, Delete, CircleX, LocateFixed, SquarePlusIcon } from 'lucide-vue-next'
+import { Edit, ArrowUpFromLine, ArrowDownFromLine, Delete, CircleX, LocateFixed, SquarePlusIcon, EyeIcon } from 'lucide-vue-next'
 import { useRouter } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
 import { toast } from '@/src/components/ui/toast';
 import { PromptConfigItem } from '@/src/types/config/prompt';
 import RadioButton from '@/src/components/custom-ui/RadioButton.vue';
 import { t } from '@/src/utils/extension';
+import { presetPrompts } from '@/src/presets/prompts';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/src/components/ui/hover-card';
+import PromptPreviewCard from './PromptPreviewCard.vue';
 
 const { listItem, updateConfigOrder, setDefaultItemId, deleteItem, getDefaultItem } = usePromptConfigStorage()
 const { state: prompts } = usePromptConfigs()
@@ -76,19 +79,37 @@ const handleLocate = (id: string | undefined) => {
     }
   }
 };
-
+presetPrompts
 
 </script>
 <template>
   <div>
     <!-- create button -->
-    <div>
-      <Button class="bg-green-600 hover:bg-green-800 pl-2">
-        <RouterLink to="/prompts/create" class="flex items-center [&_svg]:size-6">
-          <SquarePlusIcon class=""/>
+    <div class="flex items-center gap-2 ">
+      <RouterLink to="/prompts/create?preset=basic" class="">
+        <Button class="bg-green-600 hover:bg-green-800 pl-2  [&_svg]:size-6 gap-1 p-2">
+          <SquarePlusIcon class="" />
           {{ t('Create') }}
+        </Button>
+      </RouterLink>
+      <span class="ml-16">从示例中创建:</span>
+      <!-- preview presets -->
+      <template v-for="(preset, index) in presetPrompts" :key="index">
+        <RouterLink :to="'/prompts/create?preset='+index" class="">
+          <HoverCard :open-delay="0" :close-delay="0">
+            <HoverCardTrigger>
+              <Button variant="github"  class="pl-2 text-gray-500 gap-1 p-2 hover:bg-amber-200/30">
+                <EyeIcon/>
+                {{ index }}
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent class="ml-4 w-fit">
+              <PromptPreviewCard :item="preset"/>
+            </HoverCardContent>
+          </HoverCard>
         </RouterLink>
-      </Button>
+      </template>
+
     </div>
     <!-- default -->
     <div class="min-h-16 text-2xl mt-4 flex flex-row items-center gap-2">
@@ -97,7 +118,8 @@ const handleLocate = (id: string | undefined) => {
         {{ defaultPrompt?.name ?? 'NO PROMPT' }}
 
       </span>
-      <LocateFixed @click="handleLocate(defaultPrompt?.id)" class="h-8 w-8 text-green-500 border rounded-2xl p-1 hover:border-green-800" />
+      <LocateFixed @click="handleLocate(defaultPrompt?.id)"
+        class="h-8 w-8 text-green-500 border rounded-2xl p-1 hover:border-green-800" />
 
     </div>
     <!-- list -->
@@ -105,15 +127,16 @@ const handleLocate = (id: string | undefined) => {
       <TransitionGroup name="list" tag="div" class="">
         <template v-for="prompt in prompts" :key="prompt.id">
           <div class="flex items-center gap-2 mb-4" :id="prompt.id">
-            <RadioButton :checked="!!defaultPrompt && defaultPrompt.id === prompt.id" @click="handleSelect(prompt.id)" />
-            <PromptConfigItemComponent :item="prompt" 
+            <RadioButton :checked="!!defaultPrompt && defaultPrompt.id === prompt.id"
+              @click="handleSelect(prompt.id)" />
+            <PromptConfigItemComponent :item="prompt"
               :class="{ ' shadow-green-500 border-blue-500 ring-blue-500 bg-green-300/20 ring-2 shadow-2xl': !!defaultPrompt && defaultPrompt.id === prompt.id }" />
             <div class="flex flex-col justify-center gap-4">
               <Button @click="handleUp(prompt.id)">
                 <ArrowUpFromLine />
               </Button>
               <Button @click="handleEdit(prompt.id)" variant="outline">
-                <Edit ></Edit>
+                <Edit></Edit>
               </Button>
               <Button @click="handleDelete(prompt.id)" variant="destructive">
                 <CircleX />

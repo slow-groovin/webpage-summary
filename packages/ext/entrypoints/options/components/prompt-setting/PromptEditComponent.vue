@@ -1,44 +1,42 @@
 <!-- the component to modify prompt config item fields, child of PromptCreate.vue,PromptEdit.vue -->
 <script setup lang="ts">
+import AutoResizeTextarea from '@/src/components/custom-ui/AutoResizeTextarea.vue';
 import Button from '@/src/components/ui/button/Button.vue';
-import { ModelPreset, modelProviderPresets } from '@/src/presets/model-providers';
-import { provide, ref } from 'vue';
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm } from 'vee-validate'
-import { Input } from '@/src/components/ui/input';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/src/components/ui/collapsible';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage
-} from '@/src/components/ui/form'
-import { z, ZodEffects } from 'zod';
-import EditControlInput from '@/src/components/custom-ui/EditControlInput.vue';
-import { storage } from 'wxt/storage';
-import { uid } from 'radash';
-import { MODEL_CONFIG_KEY } from '@/src/constants/storage-key';
+} from '@/src/components/ui/form';
+import { Input } from '@/src/components/ui/input';
+import { usePromptConfigStorage, usePromptDefaultPreset, usePromptPreset } from '@/src/composables/prompt';
 import { PromptConfigItem } from '@/src/types/config/prompt';
-import { ChevronDownIcon, ChevronsDown, ChevronsUp, ChevronUp, MoveLeftIcon } from 'lucide-vue-next';
-import Textarea from '@/src/components/ui/textarea/Textarea.vue';
-import { presetPrompts } from '@/src/presets/prompts';
-import { usePromptConfigStorage, usePromptDefaultPreset } from '@/src/composables/prompt';
-import AutoResizeTextarea from '@/src/components/custom-ui/AutoResizeTextarea.vue';
-import { useRouter } from 'vue-router';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/src/components/ui/collapsible';
 import { t } from '@/src/utils/extension';
+import { toTypedSchema } from '@vee-validate/zod';
+import { ChevronsDown, ChevronsUp } from 'lucide-vue-next';
+import { useForm } from 'vee-validate';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { z } from 'zod';
 const { isNameExist } = usePromptConfigStorage()
 const { back } = useRouter()
 const isCollapseOpen = ref(true)
-const { item } = defineProps<{
+const defaultPrompt = usePromptDefaultPreset()
+
+
+const { item, presetKey } = defineProps<{
   item?: PromptConfigItem,
-  isDisable?: boolean
+  isDisable?: boolean,
+  presetKey?: string
 }>()
 const emits = defineEmits<{
   submit: [string, string, string]
 }>()
 
+
+const promptPreset = presetKey ? usePromptPreset(presetKey) : defaultPrompt
 
 const formSchema = toTypedSchema(z.object({
   name: z.string().min(1).refine(async (name) => {
@@ -47,14 +45,13 @@ const formSchema = toTypedSchema(z.object({
   systemMessage: z.string().min(1),
   userMessage: z.string().min(1),
 }))
-const defaultPrompt = usePromptDefaultPreset()
 
 const { isFieldDirty, handleSubmit } = useForm({
   validationSchema: formSchema,
   initialValues: {
     name: item?.name ?? 'My prompt',
-    systemMessage: item?.systemMessage ?? defaultPrompt.systemMessage,
-    userMessage: item?.userMessage ?? defaultPrompt.userMessage,
+    systemMessage: item?.systemMessage ?? promptPreset.systemMessage,
+    userMessage: item?.userMessage ?? promptPreset.userMessage,
   }
 })
 
