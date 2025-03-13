@@ -39,8 +39,14 @@
               class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
               <TokenUsageItem :usage="tokenUsage" />
             </div>
-            <!-- 👆push to left -->
-            <div class="grow" />
+
+            <div class="grow" /><!-- grow for pushing 👆 to left -->
+
+            <!-- reset/clear button -->
+            <Button variant="github" size="sm-icon" v-if="uiMessages.filter(m=>!m.hide).length > 0 && status!=='running'" title="Clear all" class=""
+              @click="resetMessages">
+              <img :src="clearAll" />
+            </Button>
           </template>
 
           <!-- markdown render messages  -->
@@ -101,6 +107,8 @@ import { toast } from '../ui/toast';
 import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import EventEmitter from 'eventemitter3';
+import clearAll from '~/assets/svg/clear-all.svg'
+
 const isChatDialogOpen = ref(false)
 const chatInputText = ref('')
 
@@ -113,13 +121,13 @@ const emit = defineEmits<{
 const { chat, stop, error, status,
   currentModel, currentPrompt, uiMessages,
   refreshSummary, onPrepareDone, onChunk,
-  textContentTrimmer, tokenUsage, copyMessages,
+  textContentTrimmer, tokenUsage, copyMessages, resetMessages,
   webpageContent
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
-const chatInputBox=useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
+const chatInputBox = useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 
 /*provide funcs to SummaryDialog.vue */
 provide('copy-func', copyMessages)
@@ -154,6 +162,11 @@ onPrepareDone(() => {
 
 
 async function submitUserInput(content: string, onSuc: () => void) {
+  //if summary is not executed, start the summary for the first time
+  if (!content || status.value === 'ready' && uiMessages.value.filter(m=>!m.hide).length === 0) { 
+    refreshSummary()
+    return;
+  }
   if (!content || status.value !== 'ready') return
   chat(content, 'user')
   scrollToId('dialog-bottom-anchor')

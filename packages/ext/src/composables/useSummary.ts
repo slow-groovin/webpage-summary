@@ -177,6 +177,7 @@ export function useSummary() {
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
 
+  
   async function chat(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
@@ -252,6 +253,12 @@ export function useSummary() {
     isRunning.value = false
   }
 
+  async function resetMessages() {
+    await initMessages()
+    toast({title:'reset summary.', variant:'success'})
+    
+  }
+
   return {
     status,
     error,
@@ -266,6 +273,7 @@ export function useSummary() {
     currentPrompt,
     tokenUsage,
     textContentTrimmer,
-    copyMessages
+    copyMessages,
+    resetMessages
   }
 }

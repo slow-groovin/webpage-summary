@@ -75,7 +75,11 @@ onMessage('invokeSummary', () => {
  * trigger by `add-to-chat` context menu button, add selection text to input dialog
  */
 onMessage('addContentToChatDialog', (msg) => {
-  const content = msg.data
+  let content = msg.data
+  if (!content) {
+    content = window.getSelection()?.toString() ?? ''
+  }
+  if(!content) return
   tryEnableOrShow() //open panel
   if (summaryRef.value) {
     summaryRef.value.addContentToChatDialog(content)

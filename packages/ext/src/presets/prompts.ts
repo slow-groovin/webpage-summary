@@ -95,7 +95,6 @@ const zhTWPresets:Record<string,CoreMessage[]>={
 
 export const presetPrompts=(()=>{
   const lang=browser.i18n.getUILanguage()
-  console.log('lang',lang)
   if(lang==='zh-CN'){
     return zhCNPresets
   }else if(lang==='zh-TW'){

@@ -209,5 +209,8 @@
   },
   "Import_Alert":{
     "message":"⚠ 匯入內容將完全覆蓋您的配置！"
+  },
+   "Commad_Open_Panel_DESC":{
+    "message":"在當前頁面開啟摘要面板"
   }
 }

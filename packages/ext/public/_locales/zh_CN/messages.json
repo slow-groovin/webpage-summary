@@ -209,5 +209,8 @@
   },
   "Import_Alert":{
     "message":"⚠ 导入内容将完全覆盖您的配置！"
+  },
+  "Commad_Open_Panel_DESC":{
+    "message":"在当前页面打开总结面板"
   }
 }

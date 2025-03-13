@@ -209,5 +209,9 @@
 
   "Import_Alert":{
     "message":"⚠ Import will TOTALLY OVERRIDE your config! "
+  },
+
+  "Commad_Open_Panel_DESC":{
+    "message":"open summary panel in current page"
   }
 }

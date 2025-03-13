@@ -24,6 +24,7 @@ const startDrag = (event: MouseEvent) => {
   document.addEventListener('mouseup', endDrag);
 };
 
+
 const drag = (event: MouseEvent) => {
   if (isDragging.value && dragContainer.value) {
     let newX = dragContainer.value.offsetLeft + (event.clientX - initialMousePosition.value.x);
@@ -38,16 +39,19 @@ const drag = (event: MouseEvent) => {
 
     if (newY < 0) {
       newY = 0;
-    } else if (newY + elementHeight.value + THRESHOLD > windowHeight.value) {
-      newY = windowHeight.value - elementHeight.value - THRESHOLD;
+    } else if (newY + THRESHOLD > windowHeight.value) {
+      newY = windowHeight.value - THRESHOLD;
     }
 
-    dragContainer.value.style.left = newX + 'px'
-    dragContainer.value.style.top = newY + 'px'
+    dragContainer.value.style.left = (100 * newX / window.innerWidth) + '%'
+    dragContainer.value.style.top = (100 * newY / window.innerHeight) + '%'
 
     initialMousePosition.value = { x: event.clientX, y: event.clientY };
   }
 };
+/*
+ *  There is a rarely bug in dragging, when window length is too small, dragging of horizontal axis will not work normally, the reason is still unknown
+ */
 
 const endDrag = () => {
   isDragging.value = false;
@@ -70,7 +74,8 @@ onMounted(() => {
 
 <template>
   <div ref="dragContainer" :class="cn('fixed top-0 right-0 w-fit', clazz)">
-    <div class="hover:cursor-move" :class="{ 'cursor-grabbing hover:cursor-grabbing': isDragging }" @mousedown="startDrag">
+    <div class="" :class="{ 'hover:cursor-move': !isDragging, 'cursor-grabbing hover:cursor-grabbing': isDragging }"
+      @mousedown="startDrag">
       <slot name="header">
         <div class="h-8 bg-gray-500 w-full rounded">
         </div>
@@ -82,5 +87,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

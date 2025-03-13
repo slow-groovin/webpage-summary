@@ -79,15 +79,14 @@ function appendContent(content: string) {
     return
   textAreaRef.value.value += content
   textAreaRef.value.dispatchEvent(new Event('input'))
+  textAreaRef.value.focus()
 
 }
 
 async function handleSubmit() {
-  if (inputText.value) {
-    emit('submit', inputText.value, () => {
-      inputText.value = ''
-    })
-  }
+  emit('submit', inputText.value, () => {
+    inputText.value = ''
+  })
 }
 
 </script>
