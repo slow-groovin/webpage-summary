@@ -12,6 +12,7 @@ export const ENABLE_TOKAN_USAGE_VIEW='local:enable-tokan-usage-view'
 
 export const ENABLE_USER_CHAT_DEFAULT='local:enable-user-chat-default'
 
+export const ENABLE_CREATE_NEW_PANEL_BUTTON='local:enable-create-new-panel-button'
 
 /* 
 Trigger Settings

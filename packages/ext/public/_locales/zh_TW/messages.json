@@ -81,6 +81,9 @@
   "Enbale_token_usage_view":{
     "message": "顯示 tokenUsage"
   },
+  "Enbale_create_new_panel_button":{
+    "message": "顯示創建新面板按鈕"
+  },
   "Extract_method":{
     "message": "提取方法"
   },
@@ -211,6 +214,6 @@
     "message":"⚠ 匯入內容將完全覆蓋您的配置！"
   },
    "Commad_Open_Panel_DESC":{
-    "message":"在當前頁面開啟摘要面板"
+    "message":"(在當前頁面)開啟/隐藏摘要面板"
   }
 }

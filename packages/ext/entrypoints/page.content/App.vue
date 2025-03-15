@@ -9,7 +9,7 @@ import { getEnableAutoBeginSummaryByActionOrContextTrigger, getEnableSummaryWind
 import { useEnableOnceAndToggleHide } from '@/src/composables/switch-control'
 import { watchOnce } from '@vueuse/core'
 import { sleep } from 'radash'
-import { ref, useTemplateRef } from 'vue'
+import { ref, useTemplateRef, VNode } from 'vue'
 import icon from '~/assets/16.png'
 
 const { tryEnableOrShow, isEnable: isOpenSummaryPanel, isShow, toggleShow } = useEnableOnceAndToggleHide()
@@ -17,7 +17,29 @@ const { enableFloatingBall } = useEnableFloatingBall()
 const isFloatingBallPulseAnim = ref(false)
 const summaryRef = useTemplateRef('summaryRef')
 
+const panelSerial = ref(1)
+const panelList = ref<{ id: number }[]>([{ id: 0 }])
 
+async function createNewPanel() {
+  panelList.value.push({
+    id: panelSerial.value
+  })
+  panelSerial.value++
+}
+
+async function closePanel(id: number) {
+  panelList.value = panelList.value.filter(item => item.id !== id)
+
+}
+
+/**
+ * make a little offset for new created panel
+ */
+async function movePanelAfterMounted(node: VNode, id: number) {
+  const el = node.el as HTMLElement
+  el.style.left = (el.offsetLeft - 10 * id) + 'px'
+  el.style.top = (el.offsetHeight + 10 * id) + 'px'
+}
 
 async function toggleShowWrap() {
   toggleShow()
@@ -35,15 +57,22 @@ getEnableSummaryWindowDefault().then(v => {
  */
 function tryBeginSummary() {
   if (summaryRef.value) {
-    if (summaryRef.value.status() === 'preparing') {
-      console.debug('[invokeSummary]Summary preparing, hook begin summary on prepared done.')
-      summaryRef.value.on('onPrepareDone', () => {
-        summaryRef.value!.refreshSummary()
-      })
-    } else if (summaryRef.value.status() === 'ready') {
-      console.debug('[invokeSummary]Summary Already prepared, directly begin summary.')
-      summaryRef.value.refreshSummary()
-    }
+    summaryRef.value.forEach(panelRef => {
+      if (!panelRef) {
+        console.warn('[invokeSummary]panelRef in list not mounted.')
+        return
+      }
+      if (panelRef.status() === 'preparing') {
+        console.debug('[invokeSummary]Summary preparing, hook begin summary on prepared done.')
+        panelRef.on('onPrepareDone', () => {
+          panelRef!.refreshSummary()
+        })
+      } else if (panelRef.status() === 'ready') {
+        console.debug('[invokeSummary]Summary Already prepared, directly begin summary.')
+        panelRef.refreshSummary()
+      }
+
+    })
   } else {
     console.warn('[invokeSummary]Summary not mounted.')
   }
@@ -55,10 +84,16 @@ function tryBeginSummary() {
  * */
 onMessage('invokeSummary', () => {
   console.debug('[invokeSummary]received message.')
+
+  if (isShow.value) {//if already open, minimize it
+    toggleShowWrap()
+    return;
+  }
   tryEnableOrShow() //open panel
   // invoke begin summary 
   getEnableAutoBeginSummaryByActionOrContextTrigger().then(enabled => {
     if (!enabled) return
+    
 
     if (summaryRef.value) {
       tryBeginSummary()
@@ -79,14 +114,15 @@ onMessage('addContentToChatDialog', (msg) => {
   if (!content) {
     content = window.getSelection()?.toString() ?? ''
   }
-  if(!content) return
+  if (!content) return
   tryEnableOrShow() //open panel
   if (summaryRef.value) {
-    summaryRef.value.addContentToChatDialog(content)
+    summaryRef.value.forEach(item => item?.addContentToChatDialog(content))
   } else {//maybe the summary page not prepared when initailly
     watchOnce(summaryRef, () => {
       sleep(500).then(() => {
-        summaryRef.value!.addContentToChatDialog(content)
+        summaryRef.value?.forEach(item => item?.addContentToChatDialog(content))
+
       })
     })
   }
@@ -95,15 +131,18 @@ onMessage('addContentToChatDialog', (msg) => {
 </script>
 
 <template>
-  <div class="relative z-[99999] user-setting-style">
+  <div ref="container" class="relative z-[99999] user-setting-style">
 
     <Toaster />
 
-    <Summary v-if="isOpenSummaryPanel" v-show="isShow" ref="summaryRef" @minimize-panel="toggleShowWrap"
-      class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right]" />
+    <Summary v-if="isOpenSummaryPanel" v-for="{ id } in panelList" :key="id" v-show="isShow" ref="summaryRef"
+      @minimize-panel="toggleShowWrap" @create-new-panel="createNewPanel" :close-or-hide="id === 0 ? 'hide' : 'close'"
+      @close-panel="closePanel(id)" @vue:mounted="(node) => movePanelAfterMounted(node, id)"
+      class="h-fit top-[--webpage-summary-panel-top] bottom-[--webpage-summary-panel-bottom] left-[--webpage-summary-panel-left] right-[--webpage-summary-panel-right] scale-[--webpage-summary-calc-scale] origin-top-right" />
 
-    <RightFloatingBallContainer v-if="enableFloatingBall" class="" :init-closed-btn-hidden="false"
-      :storage-key="'page'">
+
+    <RightFloatingBallContainer v-if="enableFloatingBall" class=" scale-[--webpage-summary-calc-scale] origin-top-right"
+      :init-closed-btn-hidden="false" :storage-key="'page'">
       <HoverCard position="left" alignment="middle">
         <div @click="tryEnableOrShow" :class="{ 'animate-bounce duration-500': isFloatingBallPulseAnim }"
           class="w-fit h-fit p-1 aspect-square rounded-full border-[1px] border-purple-700">

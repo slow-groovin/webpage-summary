@@ -17,60 +17,61 @@
       <ScanEyeIcon class="w-6 h-6 text-gray-500/70" />
     </Button>
 
-    <div v-if="isViewContent"
-      class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-wrap border rounded p-2 bg-secondary    ">
+    <Teleport v-if="root" :to="root">
+      <div v-if="isViewContent"
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-wrap border rounded p-2 bg-secondary    ">
 
-      <!-- view header -->
-      <div class="flex items-center gap-2 text-sm mb-2">
-        <ExtIcon />
-        <h1 class="font-bold text-xl"> Input Content View</h1>
+        <!-- view header -->
+        <div class="flex items-center gap-2 text-sm mb-2">
+          <ExtIcon />
+          <h1 class="font-bold text-xl"> Input Content View</h1>
 
-        <!-- slide bar -->
-        <div class="relative flex flex-col font-xs border p-2 pr-5 bg-white">
-          <Slider v-model.lazy="sliderValue" :min="0" :max="length" class="w-32" />
-          <div class="relative h-4 w-full">
-            <div :style="{ left: (sliderValue[0] / length * 100) + '%' }" class="absolute">
-              {{ showNum(sliderValue[0]) }}
-            </div>
-            <div :style="{ left: (sliderValue[1] / length * 100) + '%' }" class="absolute">
-              {{ showNum(sliderValue[1]) }}
+          <!-- slide bar -->
+          <div class="relative flex flex-col font-xs border p-2 pr-5 bg-white">
+            <Slider v-model.lazy="sliderValue" :min="0" :max="length" class="w-32" />
+            <div class="relative h-4 w-full">
+              <div :style="{ left: (sliderValue[0] / length * 100) + '%' }" class="absolute">
+                {{ showNum(sliderValue[0]) }}
+              </div>
+              <div :style="{ left: (sliderValue[1] / length * 100) + '%' }" class="absolute">
+                {{ showNum(sliderValue[1]) }}
+              </div>
             </div>
           </div>
+
+          <span class="border p-1 rounded">
+            <span class="font-semibold">Content Length: </span>
+            <span class="text-green-700">
+              input:{{ showNum(selectLength) }}/
+            </span>
+            <span class="">
+              total:{{ showNum(length) }}/
+            </span>
+            <span class="text-red-500">
+              max(limit):{{ showNum(maxContentLength) }}
+            </span>
+          </span>
+
+
+          <span class="grow" />
+
+
+          <Button @click="isViewContent = false" variant="github" size="icon">
+            <Minimize2Icon @click="" />
+          </Button>
+
+
         </div>
 
-        <span class="border p-1 rounded">
-          <span class="font-semibold">Content Length: </span>
-          <span class="text-green-700">
-            input:{{ showNum(selectLength) }}/
-          </span>
-          <span class="">
-            total:{{ showNum(length) }}/
-          </span>
-          <span class="text-red-500">
-            max(limit):{{ showNum(maxContentLength) }}
-          </span>
-        </span>
-
-
-        <span class="grow" />
-
-
-        <Button @click="isViewContent = false" variant="github" size="icon">
-          <Minimize2Icon @click="" />
-        </Button>
-
-
+        <!-- view content -->
+        <div class="relative max-w-[66vw] max-h-[66vh]  overflow-y-auto">
+          <span class="">{{ webpagContent.textContent?.substring(0, sliderValue[0]) }}</span>
+          <span class="text-green-500 underline">{{ webpagContent.textContent?.substring(sliderValue[0], sliderValue[1])
+            }}</span>
+          <span class="">{{ webpagContent.textContent?.substring(sliderValue[1]) }}</span>
+        </div>
       </div>
-
-      <!-- view content -->
-      <div class="relative max-w-[66vw] max-h-[66vh]  overflow-y-auto">
-        <span class="">{{ webpagContent.textContent?.substring(0, sliderValue[0]) }}</span>
-        <span class="text-green-500 underline">{{ webpagContent.textContent?.substring(sliderValue[0], sliderValue[1])
-        }}</span>
-        <span class="">{{ webpagContent.textContent?.substring(sliderValue[1]) }}</span>
-      </div>
-    </div>
-
+    </Teleport>
 
 
   </div>
@@ -81,13 +82,14 @@ import { getSummaryInputExceedBehaviour } from "@/src/composables/general-config
 import { contentLengthExceededStrategys } from "@/src/presets/strategy";
 import { InputContentLengthExceededStrategy, WebpageContent } from "@/src/types/summary";
 import { cn } from "@/src/utils/shadcn";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, useShadowRoot } from "vue";
 import type { HTMLAttributes } from 'vue';
 import { Slider } from "../ui/slider";
 import { Minimize2Icon, ScanEyeIcon } from "lucide-vue-next";
 import ExtIcon from "../common/ExtIcon.vue";
 import Button from "../ui/button/Button.vue";
 import { t } from "@/src/utils/extension";
+import { getShadowRootAsync } from "@/src/utils/document";
 
 defineOptions({
   inheritAttrs: false
@@ -97,6 +99,11 @@ const { webpagContent, maxContentLength, class: clazz } = defineProps<{
   maxContentLength?: number,
   class?: HTMLAttributes['class']
 }>()
+const root=ref<ShadowRoot|null>()
+
+getShadowRootAsync().then(r=>root.value=r)
+
+
 const length = webpagContent.textContent?.length ?? 0
 const maxLength = maxContentLength ?? length
 const isViewContent = ref(false)

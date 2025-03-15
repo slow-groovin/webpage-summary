@@ -80,6 +80,9 @@
   "Enbale_token_usage_view": {
     "message": "Enbale token usage view"
   },
+  "Enbale_create_new_panel_button":{
+    "message": "Enbale create new panel button"
+  },
   "Extract_method": {
     "message": "Extract method"
   },
@@ -212,6 +215,6 @@
   },
 
   "Commad_Open_Panel_DESC":{
-    "message":"open summary panel in current page"
+    "message":"open/hide summary panel in current page"
   }
 }

@@ -5,6 +5,12 @@
       <template #header>
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
+          <template #before-icon-buttons>
+            <Button v-if="closeOrHide === 'close'" @click="$emit('closePanel')" variant="github" size="sm-icon"
+              title="close this panel" class=" p-0 text-foreground/80 ">
+              <XIcon />
+            </Button>
+          </template>
           <template #left-buttons>
             <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary"
               @stop="stop" />
@@ -12,10 +18,16 @@
           <template #right-buttons>
 
 
+
+
+            <Button v-if="closeOrHide === 'hide' && enbaleCreateNewPanelButton" @click="$emit('createNewPanel')" variant="github" size="sm-icon"
+              title="create new panel" class=" p-0 text-foreground/50 ">
+              <CopyPlusIcon />
+            </Button>
             <!-- minimize button -->
-            <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
-              class="border-none p-0 [&_svg]:size-6 text-foreground/50">
-              <SquareMinusIcon />
+            <Button v-if="closeOrHide === 'hide'" @click="$emit('minimizePanel')" variant="github" size="sm-icon"
+              title="minimize" class=" p-0 text-foreground/50 ">
+              <Minimize2Icon />
             </Button>
           </template>
         </SummaryHeader>
@@ -43,7 +55,8 @@
             <div class="grow" /><!-- grow for pushing 👆 to left -->
 
             <!-- reset/clear button -->
-            <Button variant="github" size="sm-icon" v-if="uiMessages.filter(m=>!m.hide).length > 0 && status!=='running'" title="Clear all" class=""
+            <Button variant="github" size="sm-icon"
+              v-if="uiMessages.filter(m => !m.hide).length > 0 && status !== 'running'" title="Clear all" class=""
               @click="resetMessages">
               <img :src="clearAll" />
             </Button>
@@ -93,10 +106,10 @@
 <script setup lang="ts">
 import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
-import { useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
+import { useEnableCreateNewPanelButton, useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
 import { useSummary } from '@/src/composables/useSummary';
 import { scrollToId } from '@/src/utils/document';
-import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
+import { ChevronUpIcon, CopyPlusIcon, MessageCirclePlusIcon, Minimize, Minimize2Icon, MinimizeIcon, MinusIcon, PlusIcon, SquareMinusIcon, SquarePlusIcon, XIcon } from 'lucide-vue-next';
 import { computed, onMounted, provide, ref, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
@@ -111,9 +124,13 @@ import clearAll from '~/assets/svg/clear-all.svg'
 
 const isChatDialogOpen = ref(false)
 const chatInputText = ref('')
-
+const { closeOrHide = 'hide' } = defineProps<{
+  closeOrHide?: 'close' | 'hide' //hide: first panel. close: panel created manually
+}>()
 const emit = defineEmits<{
-  minimizePanel: []
+  minimizePanel: [],
+  closePanel: [],
+  createNewPanel: [],
 }>()
 
 
@@ -126,6 +143,7 @@ const { chat, stop, error, status,
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
+const {enbaleCreateNewPanelButton}=useEnableCreateNewPanelButton()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 const chatInputBox = useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 
@@ -163,7 +181,7 @@ onPrepareDone(() => {
 
 async function submitUserInput(content: string, onSuc: () => void) {
   //if summary is not executed, start the summary for the first time
-  if (!content && status.value === 'ready' && uiMessages.value.filter(m=>!m.hide).length === 0) { 
+  if (!content && status.value === 'ready' && uiMessages.value.filter(m => !m.hide).length === 0) {
     refreshSummary()
     return;
   }

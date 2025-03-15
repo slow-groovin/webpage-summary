@@ -13,8 +13,7 @@ import { renderMessages } from '../utils/prompt';
 import { getEnableAutoBeginSummary, getSummaryLanguage } from './general-config';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
-import { useWebpageContent } from './readability';
-import { onSpaRouteChange } from '../utils/document';
+import { writeTextToClipboard, onSpaRouteChange } from '../utils/document';
 import { simpleParseRead } from '../utils/page-read';
 
 
@@ -31,6 +30,7 @@ export function useSummary() {
       uiMessages.value = [] //reset ui messages
 
     }).disconnect
+
     try {
       currentModel.value = await modelStorage.getDefaultItem()
       currentPrompt.value = await promptStorage.getDefaultItem()
@@ -173,7 +173,9 @@ export function useSummary() {
   }
 
   async function copyMessages() {
-    await navigator.clipboard.writeText(uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n'))
+    const text=uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n')
+    await writeTextToClipboard(text)
+    // await navigator.clipboard.writeText()
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
 
@@ -219,7 +221,6 @@ export function useSummary() {
         }
       }
     )
-    stopFunction = stop
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
@@ -245,12 +246,12 @@ export function useSummary() {
   }
 
   async function stop() {
+    isRunning.value = false
     if (!stopFunction) {
-      console.error("stop function is not defined")
+      // console.error("stop function is not defined")
       return
     }
     stopFunction()
-    isRunning.value = false
   }
 
   async function resetMessages() {

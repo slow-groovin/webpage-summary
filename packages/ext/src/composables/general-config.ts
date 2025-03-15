@@ -1,5 +1,5 @@
 import { storage } from "wxt/storage";
-import {  SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL, ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER } from "../constants/storage-key";
+import {  SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL, ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, ENABLE_CREATE_NEW_PANEL_BUTTON } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
 import { InputContentLengthExceededStrategy } from "../types/summary";
@@ -143,3 +143,16 @@ export function useEnableAutoBeginSummaryByActionOrContextTrigger() {
 export async function getEnableAutoBeginSummaryByActionOrContextTrigger() {
   return await storage.getItem(ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, { fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER })
 }
+
+
+
+
+export function useEnableCreateNewPanelButton() {
+  const { state: enbaleCreateNewPanelButton, ...other } = useWxtStorage(ENABLE_CREATE_NEW_PANEL_BUTTON, DefaultConfig.ENABLE_CREATE_NEW_PANEL_BUTTON)
+  return { enbaleCreateNewPanelButton, ...other }
+}
+export async function getEnableCreateNewPanelButton() {
+  return await storage.getItem(ENABLE_CREATE_NEW_PANEL_BUTTON, { fallback: DefaultConfig.ENABLE_CREATE_NEW_PANEL_BUTTON })
+}
+
+

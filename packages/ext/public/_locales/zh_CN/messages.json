@@ -81,6 +81,9 @@
   "Enbale_token_usage_view":{
     "message": "显示tokenUsage"
   },
+  "Enbale_create_new_panel_button":{
+    "message": "显示创建新面板按钮"
+  },
   "Extract_method":{
     "message": "提取方法"
   },
@@ -211,6 +214,6 @@
     "message":"⚠ 导入内容将完全覆盖您的配置！"
   },
   "Commad_Open_Panel_DESC":{
-    "message":"在当前页面打开总结面板"
+    "message":"(在当前页面)打开/最小化总结面板"
   }
 }

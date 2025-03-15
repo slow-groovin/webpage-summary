@@ -1,5 +1,7 @@
 <template>
   <div class="flex items-center justify-start flex-wrap px-1 py-1 gap-1 border" ref="headerRef">
+    <slot name="before-icon-buttons"></slot>
+
     <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded select-none" draggable="false" />
     <slot name="left-buttons"></slot>
 
@@ -7,7 +9,7 @@
 
     <!-- model select -->
     <div class="rounded">
-      <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig?.id ?? ''" >
+      <Select @update:model-value="selectCurrentModel" :model-value="currentModelConfig?.id ?? ''">
         <!-- Select Trigger has bug in headless, so use style to force setting it  -->
         <template #trigger class="h-fit">
           <ModelConfigInlineItem v-if="currentModelConfig" :item="currentModelConfig" :is-selected="true" />
@@ -53,7 +55,7 @@
 
     <!-- right button area -->
     <slot name="right-buttons"></slot>
-    <Button variant="github" size="icon" @click="openExtSettingPage()">
+    <Button variant="github" size="sm-icon" @click="openExtSettingPage()">
       <SettingsIcon class="" />
     </Button>
 

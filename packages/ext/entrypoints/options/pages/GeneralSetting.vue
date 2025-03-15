@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Input from '@/src/components/ui/input/Input.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
-import { useEnableAutoBeginSummary, useEnableAutoBeginSummaryByActionOrContextTrigger, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
+import { useEnableAutoBeginSummary, useEnableAutoBeginSummaryByActionOrContextTrigger, useEnableCreateNewPanelButton, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
 import { DefaultConfig } from '@/src/constants/default-config';
 import DefaultSettingValue from '../components/DefaultSettingValue.vue';
 import { t } from '@/src/utils/extension';
@@ -14,7 +14,7 @@ const { enablePopupClickTrigger } = useEnablePopupClickTrigger()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault } = useEnableUserChatDefault()
 const { enableAutoBeginSummaryByActionOrContextTrigger } = useEnableAutoBeginSummaryByActionOrContextTrigger()
-
+const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
 
 </script>
 <template>
@@ -83,7 +83,7 @@ const { enableAutoBeginSummaryByActionOrContextTrigger } = useEnableAutoBeginSum
     <div class="line">
       <div>
         <div class="title">{{ t('Auto_begin_summary_by_action_or_context_trigger') }}</div>
-        <div class="description">{{t('Auto_begin_summary_by_action_or_context_trigger_DESC')}}</div>
+        <div class="description">{{ t('Auto_begin_summary_by_action_or_context_trigger_DESC') }}</div>
       </div>
       <div class="setting">
         <Switch v-model:checked="enableAutoBeginSummaryByActionOrContextTrigger" />
@@ -111,7 +111,8 @@ const { enableAutoBeginSummaryByActionOrContextTrigger } = useEnableAutoBeginSum
     <div class="line">
       <div>
         <div class="title">{{ t('Enable_popup_click_trigger') }}</div>
-        <div class="description"> change action (extension icon in the left-top of browser) clicked behaviour to opening the
+        <div class="description"> change action (extension icon in the left-top of browser) clicked behaviour to opening
+          the
           summary panel</div>
         <div class="description"> by default, it will open a popup panel</div>
       </div>
@@ -142,6 +143,16 @@ const { enableAutoBeginSummaryByActionOrContextTrigger } = useEnableAutoBeginSum
       <div class="setting">
         <Switch v-model:checked="enableTokenUsageView" />
         <DefaultSettingValue :value="DefaultConfig.ENABLE_TOKAN_USAGE_VIEW" />
+      </div>
+    </div>
+
+    <div class="line">
+      <div>
+        <div class="title">{{ t('Enbale_create_new_panel_button') }}</div>
+      </div>
+      <div class="setting">
+        <Switch v-model:checked="enbaleCreateNewPanelButton" />
+        <DefaultSettingValue :value="DefaultConfig.ENABLE_CREATE_NEW_PANEL_BUTTON" />
       </div>
     </div>
 
