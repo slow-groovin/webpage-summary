@@ -83,9 +83,9 @@ function tryBeginSummary() {
  *  
  * */
 onMessage('invokeSummary', () => {
-  console.debug('[invokeSummary]received message.')
+  console.debug('[invokeSummary]received message.', 'isShow:',isShow.value, 'isOpen:', isOpenSummaryPanel.value)
 
-  if (isShow.value) {//if already open, minimize it
+  if (isOpenSummaryPanel.value) {//if already open, minimize it
     toggleShowWrap()
     return;
   }

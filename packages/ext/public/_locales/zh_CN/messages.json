@@ -44,6 +44,9 @@
   "Prompts":{
     "message": "提示词"
   },
+  "create_from_samples": {
+    "message": "从示例中创建"
+  },
   "Site_Customization":{
     "message": "站点定制"
   },

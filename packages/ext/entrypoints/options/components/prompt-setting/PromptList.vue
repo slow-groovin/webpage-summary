@@ -79,7 +79,7 @@ const handleLocate = (id: string | undefined) => {
     }
   }
 };
-presetPrompts
+
 
 </script>
 <template>
@@ -92,7 +92,7 @@ presetPrompts
           {{ t('Create') }}
         </Button>
       </RouterLink>
-      <span class="ml-16">从示例中创建:</span>
+      <span class="ml-16">{{ t('create_from_samples') }}:</span>
       <!-- preview presets -->
       <template v-for="(preset, index) in presetPrompts" :key="index">
         <RouterLink :to="'/prompts/create?preset='+index" class="">

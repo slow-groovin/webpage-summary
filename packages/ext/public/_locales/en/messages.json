@@ -44,6 +44,9 @@
   "Prompts": {
     "message": "Prompts"
   },
+  "create_from_samples": {
+    "message": "create from samples"
+  },
   "Site_Customization": {
     "message": "Site Customization"
   },
