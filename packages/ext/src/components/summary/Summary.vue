@@ -163,7 +163,7 @@ onPrepareDone(() => {
 
 async function submitUserInput(content: string, onSuc: () => void) {
   //if summary is not executed, start the summary for the first time
-  if (!content || status.value === 'ready' && uiMessages.value.filter(m=>!m.hide).length === 0) { 
+  if (!content && status.value === 'ready' && uiMessages.value.filter(m=>!m.hide).length === 0) { 
     refreshSummary()
     return;
   }

@@ -27,8 +27,8 @@ export function useSummary() {
     disconnectOnSPARouteChange = onSpaRouteChange(() => {
       webpageContent.value = simpleParseRead()
       stop();
-      messages.value=[] //reset messages
-      uiMessages.value=[] //reset ui messages
+      messages.value = [] //reset messages
+      uiMessages.value = [] //reset ui messages
 
     }).disconnect
     try {
@@ -177,7 +177,7 @@ export function useSummary() {
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
 
-  
+
   async function chat(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
@@ -255,8 +255,8 @@ export function useSummary() {
 
   async function resetMessages() {
     await initMessages()
-    toast({title:'reset summary.', variant:'success'})
-    
+    tokenUsage.value = { inputToken: 0, outputToken: 0, cost: 0 }
+    toast({ title: 'reset summary.', variant: 'success' })
   }
 
   return {
