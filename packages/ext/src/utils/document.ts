@@ -49,13 +49,16 @@ export async function getShadowRootAsync(): Promise<ShadowRoot> {
 
 export function injectUserSettingCssVariables(cssVariableText: string) {
   const validText = filterValidCssVariableText(cssVariableText)
-  getShadowRootAsync().then(root => {
-    const style = document.createElement('style');
-    style.innerHTML = `
+  injectCssIntoShadowRoot(`
 html, :host {
   ${validText}
+}`)
 }
-    `;
+
+export function injectCssIntoShadowRoot(css: string) {
+  getShadowRootAsync().then(root => {
+    const style = document.createElement('style');
+    style.innerHTML =css;
     root.querySelector('head')?.append(style)
   })
 }
