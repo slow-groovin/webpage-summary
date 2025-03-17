@@ -39,14 +39,14 @@ const renderedUserMessage = renderMessage(props.item.userMessage)
         <div class="w-16  shrink-0">
           <div class="font-medium rounded-md border px-2 py-1  ">System</div>
         </div>
-        <div class="text-sm text-muted-foreground break-words" v-html="renderedSystemMessage"></div>
+        <div class="text-sm text-muted-foreground break-words  whitespace-pre" v-html="renderedSystemMessage"></div>
       </div>
       <hr>
       <div class="flex items-center space-x-2">
         <div class="w-16  shrink-0">
           <div class="font-medium rounded-md border px-2 py-1 ">User</div>
         </div>
-        <div class="text-sm text-muted-foreground break-words" v-html="renderedUserMessage"></div>
+        <div class="text-sm text-muted-foreground break-words  whitespace-pre" v-html="renderedUserMessage"></div>
       </div>
     </CardContent>
     <CardFooter>

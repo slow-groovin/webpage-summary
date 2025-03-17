@@ -8,7 +8,7 @@
     <!-- User input -->
     <div v-else-if="message.role === 'user'" class="self-end max-w-[80%] space-x-2 ">
       <!-- Use border to create a pointed corner -->
-      <div class="flex-1 rounded-3xl rounded-tr-none border px-4 py-4">
+      <div class="flex-1 rounded-3xl rounded-tr-none border px-4 py-1">
         <div v-html="renderedContent"></div>
       </div>
     </div>

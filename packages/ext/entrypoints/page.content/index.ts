@@ -1,15 +1,14 @@
+import '@/assets/tailwind.css';
+import { createShadowRootUi } from "wxt/client";
 import { defineContentScript } from "wxt/sandbox";
-import { ContentScriptContext, createShadowRootUi } from "wxt/client";
-import '@/assets/tailwind.css'
 
 
 // 1. Import the style
 // import './style.css';
+import { getUserCustomStyle } from "@/src/composables/general-config";
+import { injectUserSettingCssVariables } from "@/src/utils/document";
 import { createApp } from 'vue';
 import App from './App.vue';
-import { toast } from "@/src/components/ui/toast";
-import { injectUserSettingCssVariables } from "@/src/utils/document";
-import { getUserCustomStyle } from "@/src/composables/general-config";
 
 export default defineContentScript({
   matches: [
@@ -31,7 +30,10 @@ export default defineContentScript({
     
 
       onMount: (container, _shadow, shadowHost) => {
-        // console.log(container,_shadow,shadowHost)
+        // console.log(container,_shadow,shadowHost,_shadow.ownerDocument)
+
+        shadowHost.style.visibility='visible'; //force visible. Prevent some websites (such as Reddit) from using selectors to force web components to be hidden.
+
         // applyPageHtmlFont(_shadow,  shadowHost)
         // Define how your UI will be mounted inside the container
         
@@ -40,6 +42,7 @@ export default defineContentScript({
           injectUserSettingCssVariables(style)
         })
         
+
 
         const app = createApp(App);
         app.config.errorHandler = (err:any) => {

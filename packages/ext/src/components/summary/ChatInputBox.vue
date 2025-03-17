@@ -7,7 +7,7 @@
     :class="cn('relative flex flex-row flex-nowrap items-end border p-2 h-fit', isTextAreaFocus ? 'border-primary' : '', props.class)">
     <!-- :class="{ 'border-primary': isTextAreaFocus }"> -->
     <!-- Input box -->
-    <textarea v-model="inputValue" ref="textareaRef"
+    <textarea v-model="inputText" ref="textareaRef"
       :class="cn('w-full h-12 min-h-4  rounded-md border-none text-base focus-visible:outline-none resize-none caret-current bg-transparent', props.class)"
       placeholder="Type your message here... Enter to send, Shift+Enter to insert new line." @input="adjustHeight"
       @focusin="focusin" @focusout="focusout"></textarea>
@@ -16,14 +16,13 @@
     <Button variant="default" class="py-2 h-fit" @click="handleSubmit" :disabled="$attrs.disabled">
       <SendHorizonalIcon class="" />
     </Button>
-
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
 import { cn } from '@/src/utils/shadcn';
-import { ref, useTemplateRef, type HTMLAttributes } from 'vue';
+import { ref, useTemplateRef, watch, type HTMLAttributes } from 'vue';
 import { SendHorizonalIcon } from 'lucide-vue-next';
 import Button from '../ui/button/Button.vue';
 import { getLineHeightOfElement } from '@/src/utils/document';
@@ -33,11 +32,15 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'submit', msg: string, onSuc: () => void): void;
 }>()
-
-const inputValue = ref('')
+defineExpose({
+  appendContent
+})
+const inputText = ref('')
 
 const isTextAreaFocus = ref(false)
 const textAreaRef = useTemplateRef('textareaRef')
+
+
 
 const handleEnterPress = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && event.shiftKey) {
@@ -69,15 +72,21 @@ function adjustHeight(event: Event) {
   } else { // <6 lines, eq to line count * line height
     textarea.style.height = `${textarea.scrollHeight}px`;
   }
+}
+
+function appendContent(content: string) {
+  if (!textAreaRef.value)
+    return
+  textAreaRef.value.value += content
+  textAreaRef.value.dispatchEvent(new Event('input'))
+  textAreaRef.value.focus()
 
 }
 
 async function handleSubmit() {
-  if (inputValue.value) {
-    emit('submit', inputValue.value, () => {
-      inputValue.value = ''
-    })
-  }
+  emit('submit', inputText.value, () => {
+    inputText.value = ''
+  })
 }
 
 </script>

@@ -81,7 +81,8 @@ const drag = (event: MouseEvent) => {
     }
 
     floatingBall.value.style.left = newX + 'px';
-    floatingBall.value.style.top = newY + 'px';
+    
+    floatingBall.value.style.top = (100*newY/windowHeight.value) + '%';
     initialMousePosition.value = { x: event.clientX, y: event.clientY };
   }
 };
@@ -95,9 +96,7 @@ const endDrag = () => {
   if (floatingBall.value) {
     floatingBall.value.style.removeProperty('left')
     floatingBall.value.style.right = '0px'; // 清除x轴位置
-
-    positionStorage.value = floatingBall.value.style.top
-    // console.log('positionStorage.value', positionStorage.value)
+    positionStorage.value=floatingBall.value.style.top
   }
 };
 

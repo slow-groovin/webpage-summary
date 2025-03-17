@@ -2,29 +2,40 @@
 import { sendConnectMessage } from '@/connect-messaging';
 import { CoreMessage } from 'ai';
 import { EventEmitter } from 'eventemitter3';
-import { computed, onMounted, ref, toRaw } from 'vue';
+import { computed, onMounted, onUnmounted, Ref, ref, toRaw } from 'vue';
 import { toast } from '../components/ui/toast';
 import { ModelConfigItem } from '../types/config/model';
 import { PromptConfigItem } from '../types/config/prompt';
 import { UIMessage } from '../types/message';
-import { TokenUsage } from '../types/summary';
+import { TokenUsage, WebpageContent } from '../types/summary';
 import { handleConnectError } from '../utils/error-parse';
 import { renderMessages } from '../utils/prompt';
 import { getEnableAutoBeginSummary, getSummaryLanguage } from './general-config';
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
-import { useWebpageContent } from './readability';
+import { writeTextToClipboard, onSpaRouteChange } from '../utils/document';
+import { simpleParseRead } from '../utils/page-read';
 
 
 
 export function useSummary() {
+  let disconnectOnSPARouteChange: Function
   onMounted(async () => {
+    /*listen SPA change, update webpageContent
+    */
+    disconnectOnSPARouteChange = onSpaRouteChange(() => {
+      webpageContent.value = simpleParseRead()
+      stop();
+      messages.value = [] //reset messages
+      uiMessages.value = [] //reset ui messages
+
+    }).disconnect
+
     try {
       currentModel.value = await modelStorage.getDefaultItem()
       currentPrompt.value = await promptStorage.getDefaultItem()
-      isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent)
+      isFailed.value = !(currentModel.value && currentPrompt.value && webpageContent.value)
       isPreparing.value = false
-      // await initMessages()
       event.emit('prepare-done')
       if (await getEnableAutoBeginSummary()) {
         refreshSummary()
@@ -34,6 +45,10 @@ export function useSummary() {
       event.emit('prepare-done')
     }
   })
+  onUnmounted(() => {
+    disconnectOnSPARouteChange?.()
+  })
+
   const uiMessages = ref<UIMessage[]>([])
   const messages = ref<CoreMessage[]>([])
 
@@ -43,7 +58,7 @@ export function useSummary() {
   const isPreparing = ref(true)
 
   const status = computed<'preparing' | 'failed' | 'ready' | 'running'>(() => {
-    
+
     if (isRunning.value) {
       return 'running'
     }
@@ -64,7 +79,7 @@ export function useSummary() {
   /**
    * Ref<Function> for dealing with textContent, expose to component to reactivly assign, default is a directly return function
    */
-  const textContentTrimmer = ref<{ trim: (s: string) => string }>({trim:(content: string): string => content})
+  const textContentTrimmer = ref<{ trim: (s: string) => string }>({ trim: (content: string): string => content })
   // const inputContentLengthInfo = reactive<{
   //   totalLength?: number,
   //   clipedLength?: number,
@@ -84,7 +99,7 @@ export function useSummary() {
     outputToken: 0,
   })
 
-  const { webpageContent } = useWebpageContent()
+  let webpageContent: Ref<WebpageContent | undefined> = ref(simpleParseRead())
 
 
 
@@ -121,15 +136,14 @@ export function useSummary() {
     /*
      * render and deal with content length exceed
      */
-
-    if (webpageContent) {
-      if (!webpageContent.textContent) webpageContent.textContent = ''
+    if (webpageContent.value) {
+      if (!webpageContent.value.textContent) webpageContent.value.textContent = ''
 
       if (textContentTrimmer.value) {
-        webpageContent.textContent = textContentTrimmer.value.trim(webpageContent.textContent)
+        webpageContent.value.textContent = textContentTrimmer.value.trim(webpageContent.value.textContent)
       }
       const summaryInput = {
-        ...webpageContent,
+        ...webpageContent.value,
         summaryLanguage: await getSummaryLanguage()
       }
       renderMessages(messages.value, summaryInput)
@@ -149,8 +163,7 @@ export function useSummary() {
 
   async function refreshSummary() {
     try {
-      await initMessages()
-      append('', 'assistant')
+      chat('', 'assistant')
 
     } catch (e) {
       console.error(e)
@@ -160,13 +173,19 @@ export function useSummary() {
   }
 
   async function copyMessages() {
-    await navigator.clipboard.writeText(uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n'))
+    const text=uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n')
+    await writeTextToClipboard(text)
+    // await navigator.clipboard.writeText()
     toast({ title: "copied to clipboard success!", variant: 'success' })
   }
 
-  async function append(content: string, role: 'user' | 'assistant') {
+
+  async function chat(content: string, role: 'user' | 'assistant') {
     if (!verfiyReady()) {
       return
+    }
+    if (messages.value.length == 0) {
+      await initMessages()
     }
     /*content can be '', for reusing this function to trigger initial summary with the first two messages.    */
     if (content) {
@@ -202,7 +221,6 @@ export function useSummary() {
         }
       }
     )
-    stopFunction = stop
     // console.log(textStream)
     textStream.onChunk((c) => {
       uiMessages.value[uiMessages.value.length - 1].content += c
@@ -228,12 +246,18 @@ export function useSummary() {
   }
 
   async function stop() {
+    isRunning.value = false
     if (!stopFunction) {
-      console.error("stop function is not defined")
+      // console.error("stop function is not defined")
       return
     }
     stopFunction()
-    isRunning.value = false
+  }
+
+  async function resetMessages() {
+    await initMessages()
+    tokenUsage.value = { inputToken: 0, outputToken: 0, cost: 0 }
+    toast({ title: 'reset summary.', variant: 'success' })
   }
 
   return {
@@ -243,13 +267,14 @@ export function useSummary() {
     webpageContent,
     onChunk,
     onPrepareDone: onPrepareDone,
-    append,
+    chat,
     stop,
     refreshSummary,
     currentModel,
     currentPrompt,
     tokenUsage,
     textContentTrimmer,
-    copyMessages
+    copyMessages,
+    resetMessages
   }
 }

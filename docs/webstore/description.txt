@@ -10,7 +10,7 @@ Key Advantages:
 
 *   ✅ Simple & Easy: Focuses on one thing - summarizing webpages.
 *   🔓 Open Source on Github: Worry-free privacy,free, light, no login no serverside and runs entirely in your browser!  🛡️
-*   ⚙️ Fully Customizable: Configure your own AI provider, prompts, opening method, and customized appearance. 🎛️
+*   ⚙️ Fully Customizable: Configure your own AI provider, prompts, trigger method, and customized appearance. 🎛️
 
 
 -----------------------------------------------------------------------

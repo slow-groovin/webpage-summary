@@ -3,9 +3,14 @@
     <DraggableContainer class="w-[var(--webpage-summary-panel-width)]  bg-[--webpage-summary-panel-background] 
        rounded-t-xl rounded-b-xl shadow-2xl">
       <template #header>
-
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
+          <template #before-icon-buttons>
+            <Button v-if="closeOrHide === 'close'" @click="$emit('closePanel')" variant="github" size="sm-icon"
+              title="close this panel" class=" p-0 text-foreground/80 ">
+              <XIcon />
+            </Button>
+          </template>
           <template #left-buttons>
             <StatusButton :status="status" @view-failed-reason="viewFailedReason" @refresh="refreshSummary"
               @stop="stop" />
@@ -13,10 +18,16 @@
           <template #right-buttons>
 
 
+
+
+            <Button v-if="closeOrHide === 'hide' && enbaleCreateNewPanelButton" @click="$emit('createNewPanel')" variant="github" size="sm-icon"
+              title="create new panel" class=" p-0 text-foreground/50 ">
+              <CopyPlusIcon />
+            </Button>
             <!-- minimize button -->
-            <Button @click="$emit('minimizePanel')" variant="github" size="icon" title="minimize"
-              class="border-none p-0 [&_svg]:size-6 text-foreground/50">
-              <SquareMinusIcon />
+            <Button v-if="closeOrHide === 'hide'" @click="$emit('minimizePanel')" variant="github" size="sm-icon"
+              title="minimize" class=" p-0 text-foreground/50 ">
+              <Minimize2Icon />
             </Button>
           </template>
         </SummaryHeader>
@@ -30,17 +41,25 @@
           <template #top-right-buttons>
 
             <!-- length view&manage -->
-            <InputInspect v-if="webpageContent && currentModel && textContentTrimmer" :content-trimmer="textContentTrimmer"
-              :webpag-content="webpageContent" :max-content-length="currentModel?.maxContentLength"
-              class="ml-2" />
+            <InputInspect v-if="webpageContent && currentModel && textContentTrimmer"
+              :content-trimmer="textContentTrimmer" :webpag-content="webpageContent"
+              :max-content-length="currentModel?.maxContentLength"
+              :key="currentModel.name + '_' + webpageContent.articleUrl" class="ml-2" />
 
             <!-- token usage -->
             <div v-if="enableTokenUsageView && tokenUsage.inputToken"
               class="flex items-center gap-1 border rounded p-1 bg-gray-200" title="Token Usage">
               <TokenUsageItem :usage="tokenUsage" />
             </div>
-            <!-- 👆push to left -->
-            <div class="grow" />
+
+            <div class="grow" /><!-- grow for pushing 👆 to left -->
+
+            <!-- reset/clear button -->
+            <Button variant="github" size="sm-icon"
+              v-if="uiMessages.filter(m => !m.hide).length > 0 && status !== 'running'" title="Clear all" class=""
+              @click="resetMessages">
+              <img :src="clearAll" />
+            </Button>
           </template>
 
           <!-- markdown render messages  -->
@@ -70,8 +89,8 @@
           </div>
 
 
-          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" :disabled="status !== 'ready'"
-            class="rounded-b-xl" />
+          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" ref="chatInputBox"
+            :disabled="status !== 'ready'" class="rounded-b-xl" />
         </div>
 
 
@@ -87,11 +106,11 @@
 <script setup lang="ts">
 import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
-import { useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
+import { useEnableCreateNewPanelButton, useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
 import { useSummary } from '@/src/composables/useSummary';
 import { scrollToId } from '@/src/utils/document';
-import { ChevronUpIcon, MessageCirclePlusIcon, SquareMinusIcon } from 'lucide-vue-next';
-import { onMounted, provide, ref, useTemplateRef } from 'vue';
+import { ChevronUpIcon, CopyPlusIcon, MessageCirclePlusIcon, Minimize, Minimize2Icon, MinimizeIcon, MinusIcon, PlusIcon, SquareMinusIcon, SquarePlusIcon, XIcon } from 'lucide-vue-next';
+import { computed, onMounted, provide, ref, useTemplateRef } from 'vue';
 import DraggableContainer from '../container/DraggableContainer.vue';
 import ChatInputBox from '../summary/ChatInputBox.vue';
 import MessageItem from '../summary/MessageItem.vue';
@@ -101,34 +120,44 @@ import { toast } from '../ui/toast';
 import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import EventEmitter from 'eventemitter3';
-const isChatDialogOpen = ref(false)
+import clearAll from '~/assets/svg/clear-all.svg'
 
+const isChatDialogOpen = ref(false)
+const chatInputText = ref('')
+const { closeOrHide = 'hide' } = defineProps<{
+  closeOrHide?: 'close' | 'hide' //hide: first panel. close: panel created manually
+}>()
 const emit = defineEmits<{
-  minimizePanel: []
+  minimizePanel: [],
+  closePanel: [],
+  createNewPanel: [],
 }>()
 
 
 
-const { append, stop, error, status,
+const { chat, stop, error, status,
   currentModel, currentPrompt, uiMessages,
   refreshSummary, onPrepareDone, onChunk,
-  textContentTrimmer, tokenUsage, copyMessages,
+  textContentTrimmer, tokenUsage, copyMessages, resetMessages,
   webpageContent
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
+const {enbaleCreateNewPanelButton}=useEnableCreateNewPanelButton()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
+const chatInputBox = useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 
 /*provide funcs to SummaryDialog.vue */
 provide('copy-func', copyMessages)
 provide('scroll-bottom', () => scrollToId('dialog-bottom-anchor'))
 
-const event=new EventEmitter()
+const event = new EventEmitter()
 /*expose funcs */
 defineExpose({
-  status: ()=>status.value,
+  status: () => status.value,
   refreshSummary,
-  on: (name:string,fn:Parameters<typeof event.on>[1])=>event.on(name,fn),
+  addContentToChatDialog,
+  on: (name: string, fn: Parameters<typeof event.on>[1]) => event.on(name, fn),
 })
 
 enableUserChatDefaultThen(() => {
@@ -151,12 +180,22 @@ onPrepareDone(() => {
 
 
 async function submitUserInput(content: string, onSuc: () => void) {
+  //if summary is not executed, start the summary for the first time
+  if (!content && status.value === 'ready' && uiMessages.value.filter(m => !m.hide).length === 0) {
+    refreshSummary()
+    return;
+  }
   if (!content || status.value !== 'ready') return
-  append(content, 'user')
+  chat(content, 'user')
   scrollToId('dialog-bottom-anchor')
   onSuc()
-
 }
+
+async function addContentToChatDialog(content: string) {
+  chatInputBox.value?.appendContent(content)
+  chatInputBox.value?.appendContent(' ')
+}
+
 
 async function viewFailedReason() {
   toast({ title: "ERROR", description: error.value, variant: "destructive" })

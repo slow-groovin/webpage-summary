@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.1] - 2025-03-12
+1. feature: a context menu item and a command for adding selection to chat input.
+2. feature: add clear/reset for clearing all the messages in panel's dialog.
+3. feature: support creating multiple panels (for comparing summary of different models or prompts)
+4. add adaptation to SPA (Single Page Application), input page content will change when SPA change route.
+5. fix: now chatting directly without first summarizing will send messages with page context.
+6. fix: draggable functionality using `px` causing it out of view in screen adjustment situations such as changing from vertical to horizontal.
+7. fix: write to clipboar failed in page of http protocol 
+8. optimize prompt item view, add prompt preset view for creating prompt with,  add another two prompt presets, and with langs of `zh-CN` and `zh-TW`.  
+
 
 ## [0.1.5] - 2025-02-27
 1. input length calculation now does not include continuous '\n', ' '

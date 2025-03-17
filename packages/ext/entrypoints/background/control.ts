@@ -1,29 +1,29 @@
-import { onMessage } from "@/messaging";
+import { onMessage, sendMessage } from "@/messaging";
 import { activePageAndInvokeSummary, t } from "@/src/utils/extension";
 import { browser } from "wxt/browser";
 
 
 
-export function registerControlMessages(){
-  onMessage('openOptionPage',async (msg)=>{
-		console.debug('[openOptionPage]',msg.data)
-		return browser.tabs.create({url:msg.data})
-	})
+export function registerControlMessages() {
+  onMessage('openOptionPage', async (msg) => {
+    console.debug('[openOptionPage]', msg.data)
+    return browser.tabs.create({ url: msg.data })
+  })
 
 
-	onMessage('openPopupPage',async (msg)=>{
-		
-		console.debug('[openPopupPage]',msg.data)
-		const {query}=msg.data
-		browser.action.setPopup({
-			popup:'/popup.html?'+query,
-		})
-		browser.action.openPopup({
-			windowId: msg.sender.tab?.windowId
-			
-		})
-		
-	})
+  onMessage('openPopupPage', async (msg) => {
+
+    console.debug('[openPopupPage]', msg.data)
+    const { query } = msg.data
+    browser.action.setPopup({
+      popup: '/popup.html?' + query,
+    })
+    browser.action.openPopup({
+      windowId: msg.sender.tab?.windowId
+
+    })
+
+  })
 }
 
 
@@ -36,10 +36,18 @@ export async function addContextMenus() {
     contexts: import.meta.env.FIREFOX ? ["page", "page_action"] : ["page", "action"]  // add btn to page context menu
   });
 
+  // open-setting
   browser.contextMenus.create({
     id: "open-setting",
     title: t('Open_Setting') + '⚙',
     contexts: import.meta.env.FIREFOX ? ["page_action"] : ["action"] // add btn to page context menu
+  });
+
+  //add selection to chat
+  browser.contextMenus.create({
+    id: "add-to-chat",
+    title: t('add_selection_to_chat')+'📝',  
+    contexts: ["selection"] 
   });
 
   //event handler for context memu click
@@ -51,6 +59,13 @@ export async function addContextMenus() {
 
     if (info.menuItemId === "open-setting") {
       browser.tabs.create({ url: '/options.html#/' })
+    }
+
+    if (info.menuItemId === "add-to-chat") {
+      /*
+       *  `selectionText` will never have newline `/n`
+       */
+      sendMessage('addContentToChatDialog',info.selectionText??'',tab?.id)
     }
   });
 }

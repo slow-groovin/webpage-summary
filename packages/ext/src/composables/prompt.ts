@@ -199,3 +199,11 @@ export function usePromptDefaultPreset() {
     userMessage: basic[1].content as string
   }
 }
+
+export function usePromptPreset(key:string) {
+  const preset = presetPrompts[key]
+  return {
+    systemMessage: preset[0].content as string,
+    userMessage: preset[1].content as string
+  }
+}

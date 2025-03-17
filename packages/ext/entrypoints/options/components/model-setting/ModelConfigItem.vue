@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ModelConfigItem } from '@/src/types/config/model';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/card';
-import { modelProviderPresets } from '@/src/presets/model-providers';
+import { modelProviderPresets, ProviderKey } from '@/src/presets/model-providers';
 import { isNumber } from 'radash';
 
 const props = defineProps<{
@@ -34,8 +34,9 @@ function hiddenApiKey(apiKey: string) {
       <div class="flex flex-col items-start space-y-1">
 
         <div class="flex items-center space-x-1">
-          <img v-if="modelProviderPresets[item.providerType].icon" :src="modelProviderPresets[item.providerType].icon"
-            alt="Model Icon" class="w-6 h-6 text-primary" />
+          <img v-if="modelProviderPresets[item.providerType as ProviderKey].icon"
+            :src="modelProviderPresets[item.providerType as ProviderKey].icon" alt="Model Icon"
+            class="w-6 h-6 text-primary" />
           <div class="text-lg font-semibold">{{ item.providerType }}</div>
 
         </div>
@@ -61,9 +62,12 @@ function hiddenApiKey(apiKey: string) {
         </div>
 
         <div class="flex flex-row gap-1 text-xs font-light">
-          <div v-if="isNumber(item.inputTokenPrice)">{{ item.priceUnit }} {{ item.inputTokenPrice }}/M input tokens</div>
-          <div class="border-l border-muted-foreground w-[1px]" v-if="isNumber(item.inputTokenPrice) && isNumber(item.outputTokenPrice)"></div>
-          <div v-if="isNumber(item.outputTokenPrice)">{{ item.priceUnit }} {{ item.outputTokenPrice }}/M output tokens</div>
+          <div v-if="isNumber(item.inputTokenPrice)">{{ item.priceUnit }} {{ item.inputTokenPrice }}/M input tokens
+          </div>
+          <div class="border-l border-muted-foreground w-[1px]"
+            v-if="isNumber(item.inputTokenPrice) && isNumber(item.outputTokenPrice)"></div>
+          <div v-if="isNumber(item.outputTokenPrice)">{{ item.priceUnit }} {{ item.outputTokenPrice }}/M output tokens
+          </div>
 
         </div>
 

@@ -20,9 +20,13 @@ export default defineBackground(() => {
     if (command === 'COMMAND_INVOKE_SUMMARY' && tab?.id) {
       sendMessage('invokeSummary', undefined, { tabId: tab.id })
       return
+    }else if(command==='COMMAND_ADD_SELECTION' && tab?.id){
+      sendMessage('addContentToChatDialog','',tab?.id)
+      return 
     }
     console.log('[unhandle command]', command)
   })
+  
 
   //onInstall
   browser.runtime.onInstalled.addListener((d) => {

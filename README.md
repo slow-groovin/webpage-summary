@@ -14,12 +14,9 @@
   <a href="./docs/README_zh.md">简体中文</a>
 </p>
 
+https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
 
 ![summary](/docs/img/summary-anim.webp)
-
-
-
-
 
 - [1. Features](#1-features)
 - [2. Install](#2-install)
@@ -50,7 +47,7 @@
 ## 2. Install
 [![](/docs/img/google-store.svg) Chrome Webstore](https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp)
 
-[![](/docs//img/edge.svg) Edge Addons (Under Review)](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
+[![](/docs//img/edge.svg) Edge Addons](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
 
 [![](/docs/img/firefox.svg) Firefox Addons](https://addons.mozilla.org/firefox/addon/webpage-summary/)
 

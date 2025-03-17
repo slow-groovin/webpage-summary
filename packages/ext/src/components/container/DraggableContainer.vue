@@ -10,36 +10,34 @@ const isDragging = ref(false);
 const initialMousePosition = ref({ x: 0, y: 0 });
 const elementWidth = ref(0);
 const elementHeight = ref(0);
-const windowWidth = ref(0);
-const windowHeight = ref(0);
 const THRESHOLD = 10
 
 const startDrag = (event: MouseEvent) => {
-  isDragging.value = true;
   initialMousePosition.value = { x: event.clientX, y: event.clientY };
-  windowWidth.value = window.innerWidth;
-  windowHeight.value = window.innerHeight;
 
   document.addEventListener('mousemove', drag);
   document.addEventListener('mouseup', endDrag);
 };
 
+
 const drag = (event: MouseEvent) => {
+  isDragging.value = true;
   if (isDragging.value && dragContainer.value) {
+
     let newX = dragContainer.value.offsetLeft + (event.clientX - initialMousePosition.value.x);
     let newY = dragContainer.value.offsetTop + (event.clientY - initialMousePosition.value.y);
 
     // Keep within bounds
     if (newX < 0) {
       newX = 0;
-    } else if (newX + elementWidth.value + THRESHOLD > windowWidth.value) {
-      newX = windowWidth.value - elementWidth.value - THRESHOLD;
+    } else if (newX + elementWidth.value + THRESHOLD > window.innerWidth) {
+      newX = window.innerWidth - elementWidth.value - THRESHOLD;
     }
 
     if (newY < 0) {
       newY = 0;
-    } else if (newY + elementHeight.value + THRESHOLD > windowHeight.value) {
-      newY = windowHeight.value - elementHeight.value - THRESHOLD;
+    } else if (newY + THRESHOLD > window.innerHeight) {
+      newY = window.innerHeight - THRESHOLD;
     }
 
     dragContainer.value.style.left = newX + 'px'
@@ -48,9 +46,24 @@ const drag = (event: MouseEvent) => {
     initialMousePosition.value = { x: event.clientX, y: event.clientY };
   }
 };
+/*
+ *  There is a rarely bug in dragging, when window length is too small, dragging of horizontal axis will not work normally, the reason is still unknown
+ */
 
 const endDrag = () => {
-  isDragging.value = false;
+  // const {clientWidth,offsetWidth,scrollWidth,clientHeight,offsetHeight,scrollHeight}=document.documentElement
+  // console.log(clientWidth,offsetWidth,scrollWidth,window.innerWidth,window.outerWidth)
+  // console.log(clientHeight,offsetHeight,scrollHeight,window.innerHeight,window.outerHeight)
+  if (isDragging.value) {
+    isDragging.value = false;
+    if (dragContainer.value) {
+      dragContainer.value.style.left = (100 * dragContainer.value.offsetLeft / document.documentElement.clientWidth) + '%'
+      dragContainer.value.style.top = (100 * dragContainer.value.offsetTop / document.documentElement.clientHeight) + '%'
+    }
+  }
+
+
+
   document.removeEventListener('mousemove', drag);
   document.removeEventListener('mouseup', endDrag);
 };
@@ -70,7 +83,8 @@ onMounted(() => {
 
 <template>
   <div ref="dragContainer" :class="cn('fixed top-0 right-0 w-fit', clazz)">
-    <div class="hover:cursor-move" :class="{ 'cursor-grabbing hover:cursor-grabbing': isDragging }" @mousedown="startDrag">
+    <div class="" :class="{ 'hover:cursor-move': !isDragging, 'cursor-grabbing hover:cursor-grabbing': isDragging }"
+      @mousedown="startDrag">
       <slot name="header">
         <div class="h-8 bg-gray-500 w-full rounded">
         </div>
@@ -82,5 +96,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

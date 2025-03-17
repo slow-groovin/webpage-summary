@@ -1,17 +1,22 @@
 import { Readability } from "@mozilla/readability";
+import { omit } from "radash";
 
 
+/**
+ * use `@mozilla/readability` to get page content
+ * @returns u
+ */
 
 export function simpleParseRead() {
   const documentClone = document.cloneNode(true);
   const _article = new Readability(documentClone as Document, {}).parse();
-
   if (!_article) {
     console.warn("article is null.")
     return
   }
   _article.textContent=cleanString(_article.textContent)
   const articleUrl = window.location.href;
+
   return {
     ..._article,
     articleUrl

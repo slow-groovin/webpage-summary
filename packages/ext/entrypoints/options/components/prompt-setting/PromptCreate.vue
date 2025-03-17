@@ -5,12 +5,14 @@ import { toast } from '@/src/components/ui/toast';
 import { usePromptConfigStorage } from '@/src/composables/prompt';
 import { PromptConfigItem } from '@/src/types/config/prompt';
 import { uid } from 'radash';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import PromptEditComponent from './PromptEditComponent.vue';
 const { createItem } = usePromptConfigStorage()
 const { push } = useRouter()
-async function onSubmit(name: string, systemMessage: string, userMessage: string) {
+const {query}=useRoute()
+const preset=query.preset
 
+async function onSubmit(name: string, systemMessage: string, userMessage: string) {
   const newItem: PromptConfigItem = {
     id: uid(16),
     name,
@@ -44,6 +46,6 @@ async function onSubmit(name: string, systemMessage: string, userMessage: string
 <template>
   <h1 class="text-lg font-bold">{{ t('Create_New_Template') }}</h1>
   <div>
-    <PromptEditComponent @submit="onSubmit" />
+    <PromptEditComponent v-if="preset" @submit="onSubmit" :preset-key="preset as string"/>
   </div>
 </template>
