@@ -14,13 +14,9 @@
   <a href="./docs/README_zh.md">简体中文</a>
 </p>
 
+https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
 
 ![summary](/docs/img/summary-anim.webp)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qLrDdBiQQRQ?si=gYlUT_h1OtddsQ9Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
 
 - [1. Features](#1-features)
 - [2. Install](#2-install)
