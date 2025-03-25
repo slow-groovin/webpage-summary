@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.2] - 2025-03-12
+## [0.2.2] - 2025-03-25
 
 1. fix `--webpage-summary-panel-top` not working
 2. add video tutorial in welcome page
