@@ -36,9 +36,11 @@ async function closePanel(id: number) {
  * make a little offset for new created panel
  */
 async function movePanelAfterMounted(node: VNode, id: number) {
-  const el = node.el as HTMLElement
-  el.style.left = (el.offsetLeft - 10 * id) + 'px'
-  el.style.top = (el.offsetHeight + 10 * id) + 'px'
+  if (panelList.value.length > 1) {
+    const el = node.el as HTMLElement
+    el.style.left = (el.offsetLeft - 10 * id) + 'px'
+    el.style.top = (el.offsetTop + 10 * id) + 'px'
+  }
 }
 
 async function toggleShowWrap() {
@@ -83,7 +85,7 @@ function tryBeginSummary() {
  *  
  * */
 onMessage('invokeSummary', () => {
-  console.debug('[invokeSummary]received message.', 'isShow:',isShow.value, 'isOpen:', isOpenSummaryPanel.value)
+  console.debug('[invokeSummary]received message.', 'isShow:', isShow.value, 'isOpen:', isOpenSummaryPanel.value)
 
   if (isOpenSummaryPanel.value) {//if already open, minimize it
     toggleShowWrap()
@@ -93,7 +95,7 @@ onMessage('invokeSummary', () => {
   // invoke begin summary 
   getEnableAutoBeginSummaryByActionOrContextTrigger().then(enabled => {
     if (!enabled) return
-    
+
 
     if (summaryRef.value) {
       tryBeginSummary()

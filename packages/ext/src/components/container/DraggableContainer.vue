@@ -51,9 +51,6 @@ const drag = (event: MouseEvent) => {
  */
 
 const endDrag = () => {
-  // const {clientWidth,offsetWidth,scrollWidth,clientHeight,offsetHeight,scrollHeight}=document.documentElement
-  // console.log(clientWidth,offsetWidth,scrollWidth,window.innerWidth,window.outerWidth)
-  // console.log(clientHeight,offsetHeight,scrollHeight,window.innerHeight,window.outerHeight)
   if (isDragging.value) {
     isDragging.value = false;
     if (dragContainer.value) {
