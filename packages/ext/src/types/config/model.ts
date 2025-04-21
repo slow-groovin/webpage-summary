@@ -2,40 +2,45 @@ export type ModelConfigItem = {
   /**
    * 16-bit uuid
    */
-  id: string,
+  id: string;
   /**
    * name of this config
    */
-  name: string,
+  name: string;
   /**
-   * 
+   *
    */
-  providerType: string,
+  providerType: string;
   /**
    * model name
    */
-  modelName: string,
+  modelName: string;
 
-  apiKey: string,
-  baseURL?: string,
+  apiKey?: string;
+  baseURL?: string;
 
   /**
    * maximum content length webpage content, undefined means no limit
    */
-  maxContentLength?: number,
+  maxContentLength?: number;
   /**
    * limit max output tokens
    */
-  maxTokens?:number,
-  temperature?: number,
-  topP?: number,
-  topK?: number,
-  presencePenalty?: number,
-  frequencyPenalty?: number,
+  maxTokens?: number;
+  temperature?: number;
+  topP?: number;
+  topK?: number;
+  presencePenalty?: number;
+  frequencyPenalty?: number;
 
+  inputTokenPrice?: number;
+  outputTokenPrice?: number;
+  priceUnit?: string;
 
-  inputTokenPrice?:number,
-  outputTokenPrice?:number,
-  priceUnit?: string,
-  at: number
-}
+  at: number;
+
+  /*
+   * web provider special settings:
+   */
+  use_search?: boolean;
+};

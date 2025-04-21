@@ -14,10 +14,10 @@
   "sum": {
     "message": "摘要"
   },
-  "input_length":{
-    "message":"內容字串長度"
+  "input_length": {
+    "message": "內容字串長度"
   },
-  "summarize":{
+  "summarize": {
     "message": "摘要目前頁面"
   },
   "summarize_this_page": {
@@ -26,158 +26,161 @@
   "add_selection_to_chat": {
     "message": "添加選中文本到摘要聊天框"
   },
-  "Open_Setting":{
+  "Open_Setting": {
     "message": "開啟設定"
   },
-  "General":{
+  "General": {
     "message": "通用"
   },
-  "Page_Extraction":{
+  "Page_Extraction": {
     "message": "頁面提取"
   },
-  "Setting":{
+  "Setting": {
     "message": "設定"
   },
-  "Models":{
+  "Models": {
     "message": "模型"
   },
-  "Prompts":{
+  "Prompts": {
     "message": "提示詞"
   },
   "create_from_samples": {
     "message": "從示例中創建"
   },
-  "Site_Customization":{
+  "Site_Customization": {
     "message": "網站客製化"
   },
-  "Appearance":{
+  "Appearance": {
     "message": "外觀"
   },
-  "Language_Of_Summary":{
+  "Language_Of_Summary": {
     "message": "摘要語言"
   },
-  "Interaction":{
+  "Interaction": {
     "message": "互動"
   },
-  "Enable_floating_ball":{
+  "Enable_floating_ball": {
     "message": "啟用懸浮球"
   },
-  "Auto_begin_summary":{
+  "Auto_begin_summary": {
     "message": "面板開啟時自動開始摘要"
   },
-  "Auto_open_summary_panel_on_new_tab":{
+  "Auto_open_summary_panel_on_new_tab": {
     "message": "開啟新頁面時，自動開啟摘要面板"
   },
-  "Enable_popup_click_trigger":{
+  "Enable_popup_click_trigger": {
     "message": "點擊 action 時，開啟摘要面板"
   },
 
-  "Auto_begin_summary_by_action_or_context_trigger":{
-    "message":"使用 action 或是右鍵選單觸發摘要，面板開啟時自動開始摘要"
+  "Auto_begin_summary_by_action_or_context_trigger": {
+    "message": "使用 action 或是右鍵選單觸發摘要，面板開啟時自動開始摘要"
   },
-  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
-    "message":"使用點擊 action (擴充小圖示) 或是點擊右鍵選單觸發摘要時 (除了懸浮球和自動開啟以外的所有的方式)，在摘要面板開啟時自動開始摘要"
+  "Auto_begin_summary_by_action_or_context_trigger_DESC": {
+    "message": "使用點擊 action (擴充小圖示) 或是點擊右鍵選單觸發摘要時 (除了懸浮球和自動開啟以外的所有的方式)，在摘要面板開啟時自動開始摘要"
   },
-  "Always_expand_the_chat_box":{
+  "Always_expand_the_chat_box": {
     "message": "總是展開聊天輸入框"
   },
-  "Enbale_token_usage_view":{
+  "Enbale_token_usage_view": {
     "message": "顯示 tokenUsage"
   },
-  "Enbale_create_new_panel_button":{
+  "Enbale_create_new_panel_button": {
     "message": "顯示創建新面板按鈕"
   },
-  "Extract_method":{
+  "Extract_method": {
     "message": "提取方法"
   },
-  "Length_exceeding_behaviour":{
+  "Length_exceeding_behaviour": {
     "message": "超出長度限制時的行為"
   },
-  "cut_preserve_front_DESC":{
+  "cut_preserve_front_DESC": {
     "message": "分割內容，保留具有最大長度的前半部分。"
   },
-  "cut_preserve_end_DESC":{
+  "cut_preserve_end_DESC": {
     "message": "分割內容，保留具有最大長度的後半部分。"
   },
-  "cut_preserve_middle_DESC":{
+  "cut_preserve_middle_DESC": {
     "message": "將內容分成 3 部分，保留具有最大長度的中間部分，拋棄均等劃分的兩側部分。"
   },
-  "nothing_DESC":{
+  "nothing_DESC": {
     "message": "不執行任何操作"
   },
-  "Create":{
+  "Create": {
     "message": "建立"
   },
-  "Toggle_edit_mode":{
+  "Toggle_edit_mode": {
     "message": "切換編輯模式"
   },
-  "default":{
+  "default": {
     "message": "預設"
   },
-  "Create_Model_Config":{
+  "Create_Model_Config": {
     "message": "建立模型配置"
   },
-  "Edit_Model_Config":{
+  "Edit_Model_Config": {
     "message": "編輯模型配置"
   },
-  "Selected_Model_Provider":{
+  "Selected_Model_Provider": {
     "message": "選擇的模型提供商"
   },
-  "leave_empty_to_not_limit":{
+  "leave_empty_to_not_limit": {
     "message": "留空表示不限制"
   },
-  "max_content_length_DESC":{
+  "max_content_length_DESC": {
     "message": "限制網頁內容文字的最大長度"
   },
-  "max_content_length_CALC_INFO":{
+  "max_content_length_CALC_INFO": {
     "message": "💡 使用 JavaScript 的 String.length 取得\n💡 這是對輸入內容長度進行硬性限制，即使如此仍然可能發生呼叫 API 請求輸入超出限制的情況，在錯誤後可以在面板上進行調整，請隨意設定此值\n💡 您可以根據您的語言進行調整，例如：<英語：n 長度 = 1 個單字 ≈ 1 個 token> <中文：1 長度 ≈ 1 個 token>"
   },
-  "max_content_length_TOKENIZER_TITLE":{
+  "max_content_length_TOKENIZER_TITLE": {
     "message": "不用分詞器？"
   },
-  "max_content_length_TOKENIZER_INFO":{
+  "max_content_length_TOKENIZER_INFO": {
     "message": "1. 不同模型之間的 token 計算方法差異很大，\n因此無法使用單一分詞模型進行準確計算。\n2. token 計算時間太長。\n3. 分詞器庫會導致外掛打包體積過大。"
   },
-  "maxTokens_DESC":{
+  "maxTokens_DESC": {
     "message": "設定模型輸出的 maxTokens"
   },
-  "empty_to_unset":{
+  "empty_to_unset": {
     "message": "留空表示不設定"
   },
-  "Optional_Settings":{
+  "Optional_Settings": {
     "message": "可選設定"
   },
-  "input_token_price":{
+  "input_token_price": {
     "message": "輸入 token 價格"
   },
-  "output_token_price":{
+  "output_token_price": {
     "message": "輸出 token 價格"
   },
-  "Create_New_Template":{
+  "web_model_desc": {
+    "message": "透過已登入的網頁版發送大模型請求。請確保：\n1. 網頁版已登入。\n2. 插件具有網站的權限。\n3. 模型名稱正確。\n思考模型的思考鏈不會顯示，會導致一個等待的過程。"
+  },
+  "Create_New_Template": {
     "message": "建立新範本"
   },
-  "Edit_Template":{
+  "Edit_Template": {
     "message": "編輯範本"
   },
-  "Template_Variables":{
+  "Template_Variables": {
     "message": "範本變數"
   },
-  "Hide_Template_Variables":{
+  "Hide_Template_Variables": {
     "message": "隱藏範本變數"
   },
-  "Show_Template_Variables":{
+  "Show_Template_Variables": {
     "message": "顯示範本變數"
   },
-  "Submit":{
+  "Submit": {
     "message": "提交"
   },
-  "Custom_css_variables":{
+  "Custom_css_variables": {
     "message": "自訂 CSS 變數"
   },
-  "Custom_css_variables_DESC":{
+  "Custom_css_variables_DESC": {
     "message": "用以修改樣式，如果定義則會注入頁面元件"
   },
-  "Custom_css_variables_INPUT_PLACEHOLDER":{
+  "Custom_css_variables_INPUT_PLACEHOLDER": {
     "message": "有效的 CSS 變數..."
   },
   "Welcome_Title": {
@@ -189,34 +192,34 @@
   "image_error_hint": {
     "message": "圖片不能查看？請嘗試從 github 查看教學"
   },
-   "create_new_model_config": {
+  "create_new_model_config": {
     "message": "1. 建立一個模型配置"
   },
   "open_webpage_click_sum": {
     "message": "2. 開啟一個網頁，點擊懸浮球開啟摘要面板，點擊 \"摘要\" 按鈕開始摘要"
   },
-  "Export_Import":{
-    "message":"匯出/匯入"
+  "Export_Import": {
+    "message": "匯出/匯入"
   },
-  "Export_Import_Desc":{
-    "message":"匯出/匯入您的外掛配置。"
+  "Export_Import_Desc": {
+    "message": "匯出/匯入您的外掛配置。"
   },
-  "Export":{
-    "message":"匯出"
+  "Export": {
+    "message": "匯出"
   },
-  "Export_if_with_apiKeys":{
-    "message":"是否在匯出檔案包含 apiKeys？(Default不會包含 apiKeys)"
+  "Export_if_with_apiKeys": {
+    "message": "是否在匯出檔案包含 apiKeys？(Default不會包含 apiKeys)"
   },
-  "Export_if_with_apiKeys_Alert":{
-    "message":"您的憑證將會包含在匯出檔案中。"
+  "Export_if_with_apiKeys_Alert": {
+    "message": "您的憑證將會包含在匯出檔案中。"
   },
-  "Import":{
-    "message":"匯入"
+  "Import": {
+    "message": "匯入"
   },
-  "Import_Alert":{
-    "message":"⚠ 匯入內容將完全覆蓋您的配置！"
+  "Import_Alert": {
+    "message": "⚠ 匯入內容將完全覆蓋您的配置！"
   },
-   "Commad_Open_Panel_DESC":{
-    "message":"(在當前頁面)開啟/隐藏摘要面板"
+  "Commad_Open_Panel_DESC": {
+    "message": "(在當前頁面)開啟/隐藏摘要面板"
   }
 }

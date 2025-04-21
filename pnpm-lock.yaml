@@ -6,6 +6,12 @@ settings:
 
 importers:
 
+  .:
+    dependencies:
+      chatgpt-web-ai-provider:
+        specifier: ^0.3.0
+        version: 0.3.0
+
   packages/ext:
     dependencies:
       '@ai-sdk/anthropic':
@@ -50,6 +56,9 @@ importers:
       '@openrouter/ai-sdk-provider':
         specifier: ^0.2.2
         version: 0.2.2(zod@3.24.2)
+      '@slow-groovin/moonshot-web-ai-provider':
+        specifier: npm:@jsr/slow-groovin__moonshot-web-ai-provider@^0.0.1
+        version: '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1'
       '@vee-validate/zod':
         specifier: ^4.15.0
         version: 4.15.0(vue@3.5.13(typescript@5.6.3))(zod@3.24.2)
@@ -62,6 +71,9 @@ importers:
       ai:
         specifier: ^4.1.45
         version: 4.1.45(react@19.0.0)(zod@3.24.2)
+      chatgpt-web-ai-provider:
+        specifier: ^0.3.0
+        version: 0.3.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -80,6 +92,9 @@ importers:
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
+      moonshot-web-ai-provider:
+        specifier: ^0.3.0
+        version: 0.3.0
       mustache:
         specifier: ^4.2.0
         version: 4.2.0
@@ -659,6 +674,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
+  '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1':
+    resolution: {integrity: sha512-BiRHNtgF7znkRJN0kfBiVgTMJM+EhboC9X2CBpca8ubOEVfwleGnhRkXxouLOMoTRYktCfm7HaScOR7A/kIZRg==, tarball: https://npm.jsr.io/~/11/@jsr/slow-groovin__moonshot-web-ai-provider/0.0.1.tgz}
+
   '@lukeed/csprng@1.1.0':
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
     engines: {node: '>=8'}
@@ -987,6 +1005,9 @@ packages:
   '@wxt-dev/storage@1.1.0':
     resolution: {integrity: sha512-veya6MAc8B531W/zgm7JcCQa254B2YsMb3h9D48kUUghBDMKXqoioKSfVWEF+TbbswsMP3H9qfZ2bobNKcP+2g==}
 
+  '@wxt-dev/storage@1.1.1':
+    resolution: {integrity: sha512-H1vYWeoWz03INV4r+sLYDFil88b3rgMMfgGp/EXy3bLbveJeiMiFs/G0bsBN2Ra87Iqlf2oVYRb/ABQpAugbew==}
+
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
     engines: {node: '>=0.4.0'}
@@ -1185,6 +1206,9 @@ packages:
   chalk@5.4.1:
     resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  chatgpt-web-ai-provider@0.3.0:
+    resolution: {integrity: sha512-f8UZTXCtEPHEfGGp+IqWKD8Qj3QBWkqekxKpXk/MHnGenS95QW2NahxUutxqYzhfAjobi2Qe3POT+Zyn7oZMOw==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -1897,6 +1921,9 @@ packages:
     resolution: {integrity: sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==}
     hasBin: true
 
+  js-sha3@0.9.3:
+    resolution: {integrity: sha512-BcJPCQeLg6WjEx3FE591wVAevlli8lxsxm9/FzV4HXkV49TmBH38Yvrpce6fjbADGMKFrBMGTqrVz3qPIZ88Gg==}
+
   js-tiktoken@1.0.19:
     resolution: {integrity: sha512-XC63YQeEcS47Y53gg950xiZ4IWmkfMe4p2V9OSaBt26q+p47WHn18izuXzSclCI73B7yGqtfRsT6jcZQI0y08g==}
 
@@ -2179,6 +2206,9 @@ packages:
 
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+
+  moonshot-web-ai-provider@0.3.0:
+    resolution: {integrity: sha512-cs1tfMxikJ7TbNFuQBEFIQvUL/eZPS7tJloHhXAqlmkNVv2F6ap3we8FKf3+0hTh9Ab/BpEzw98YvVYIA4aO+Q==}
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -3537,6 +3567,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1':
+    dependencies:
+      '@ai-sdk/provider': 1.0.7
+      '@wxt-dev/storage': 1.1.1
+
   '@lukeed/csprng@1.1.0': {}
 
   '@mozilla/readability@0.5.0': {}
@@ -3885,6 +3920,11 @@ snapshots:
       async-mutex: 0.5.0
       dequal: 2.0.3
 
+  '@wxt-dev/storage@1.1.1':
+    dependencies:
+      async-mutex: 0.5.0
+      dequal: 2.0.3
+
   acorn@8.14.0: {}
 
   adm-zip@0.5.16: {}
@@ -4080,6 +4120,13 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.4.1: {}
+
+  chatgpt-web-ai-provider@0.3.0:
+    dependencies:
+      '@ai-sdk/provider': 1.0.7
+      js-sha3: 0.9.3
+      radash: 12.1.0
+      zod: 3.24.2
 
   chokidar@3.6.0:
     dependencies:
@@ -4789,6 +4836,8 @@ snapshots:
 
   jiti@1.21.7: {}
 
+  js-sha3@0.9.3: {}
+
   js-tiktoken@1.0.19:
     dependencies:
       base64-js: 1.5.1
@@ -5050,6 +5099,11 @@ snapshots:
 
   moment@2.30.1:
     optional: true
+
+  moonshot-web-ai-provider@0.3.0:
+    dependencies:
+      '@ai-sdk/provider': 1.0.7
+      '@wxt-dev/storage': 1.1.1
 
   ms@2.0.0: {}
 

@@ -34,7 +34,7 @@ function hiddenApiKey(apiKey: string) {
       <div class="flex flex-col items-start space-y-1">
 
         <div class="flex items-center space-x-1">
-          <img v-if="modelProviderPresets[item.providerType as ProviderKey].icon"
+          <img v-if="modelProviderPresets[item.providerType as ProviderKey]?.icon"
             :src="modelProviderPresets[item.providerType as ProviderKey].icon" alt="Model Icon"
             class="w-6 h-6 text-primary" />
           <div class="text-lg font-semibold">{{ item.providerType }}</div>

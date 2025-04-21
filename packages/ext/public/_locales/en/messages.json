@@ -71,11 +71,11 @@
   "Enable_popup_click_trigger": {
     "message": "Enable action click trigger"
   },
-  "Auto_begin_summary_by_action_or_context_trigger":{
-    "message":"Auto begin summary when triggered by action or context menu"
+  "Auto_begin_summary_by_action_or_context_trigger": {
+    "message": "Auto begin summary when triggered by action or context menu"
   },
-  "Auto_begin_summary_by_action_or_context_trigger_DESC":{
-    "message":"when summary panel is opened by action trigger or context menu trigger(all except floating ball or auto-open), auto begin summary"
+  "Auto_begin_summary_by_action_or_context_trigger_DESC": {
+    "message": "when summary panel is opened by action trigger or context menu trigger(all except floating ball or auto-open), auto begin summary"
   },
   "Always_expand_the_chat_box": {
     "message": "Always expand the chat box"
@@ -83,7 +83,7 @@
   "Enbale_token_usage_view": {
     "message": "Enbale token usage view"
   },
-  "Enbale_create_new_panel_button":{
+  "Enbale_create_new_panel_button": {
     "message": "Enbale create new panel button"
   },
   "Extract_method": {
@@ -152,6 +152,9 @@
   "output_token_price": {
     "message": "output token price"
   },
+  "web_model_desc": {
+    "message": "Queries through web version by leveraging your website authentication status. Make sure:\n1. you have logged-in.\n2. the extension have permission to the website.\n3. model name is valid\nThinking model's reasoning process will not be shown, which will result in a longer waiting period."
+  },
   "Create_New_Template": {
     "message": "Create New Tempate"
   },
@@ -194,30 +197,30 @@
   "open_webpage_click_sum": {
     "message": "2. open a webpage, click floating ball to open panel, click \"sum\" button"
   },
-  "Export_Import":{
-    "message":"Export/Import"
+  "Export_Import": {
+    "message": "Export/Import"
   },
-  "Export_Import_Desc":{
-    "message":"export/import your configs."
+  "Export_Import_Desc": {
+    "message": "export/import your configs."
   },
-  "Export":{
-    "message":"Export"
+  "Export": {
+    "message": "Export"
   },
-  "Export_if_with_apiKeys":{
-    "message":"export with apiKeys?(Default no apiKeys included)"
+  "Export_if_with_apiKeys": {
+    "message": "export with apiKeys?(Default no apiKeys included)"
   },
-  "Export_if_with_apiKeys_Alert":{
-    "message":"your credential will be inlcuded in the export file."
+  "Export_if_with_apiKeys_Alert": {
+    "message": "your credential will be inlcuded in the export file."
   },
-  "Import":{
-    "message":"Import"
-  },
-
-  "Import_Alert":{
-    "message":"⚠ Import will TOTALLY OVERRIDE your config! "
+  "Import": {
+    "message": "Import"
   },
 
-  "Commad_Open_Panel_DESC":{
-    "message":"open/hide summary panel in current page"
+  "Import_Alert": {
+    "message": "⚠ Import will TOTALLY OVERRIDE your config! "
+  },
+
+  "Commad_Open_Panel_DESC": {
+    "message": "open/hide summary panel in current page"
   }
 }

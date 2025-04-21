@@ -10,8 +10,9 @@ import ShadcnThemeColorVisual from './ShadcnThemeColorVisual.vue';
 import StorageDebug from './StorageDebug.vue';
 import SummaryHeaderDebug from './SummaryBoxDebug.vue';
 import VercelAICoreDebug from './VercelAICoreDebug.vue';
+import FetchDebug from './FetchDebug.vue';
 const { query: { index } } = useRoute()
-const {replace}=useRouter()
+const { replace } = useRouter()
 const components = [
   ReadabilityDebug,
   // DragShadowRoot,
@@ -23,15 +24,14 @@ const components = [
   CustomSelectDebug,
   ConnectMessageDebug,
   ResizableDebug,
+  FetchDebug
 ]
 </script>
 
 <template>
 
   <SimpleTabsContainer :tabs="components.map(t => ({ name: t.__name ?? '', label: t.__name ?? '' }))"
-    :initial-tab="Number(index)??0" 
-    @tab-change="(i)=>replace({query:{index:i}})"
-    class="pure-css p-4 bg-gray-100">
+    :initial-tab="Number(index) ?? 0" @tab-change="(i) => replace({ query: { index: i } })" class="pure-css p-4 bg-gray-100">
     <template v-for="(t) in components" v-slot:[t.__name]>
       <!-- {{ t.__name }} -->
 
@@ -42,7 +42,6 @@ const components = [
 </template>
 
 <style lang="postcss" scoped>
-
 :deep(button) {
   @apply border border-blue-500 p-1 rounded-lg hover:bg-blue-300;
 }
