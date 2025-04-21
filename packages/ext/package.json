@@ -2,7 +2,7 @@
   "name": "webpage-summary-ext",
   "description": "(open source) webpage summary with AI, customization of llm-provider/prompt-template, no worries abound privacy",
   "private": false,
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -10,11 +10,12 @@
     "dev:edge": "wxt -b edge",
     "build": "wxt build",
     "build:edge": "wxt build -b edge",
+    "build:firefox": "wxt build -b firefox",
     "build:all": "wxt build -b edge & wxt build -b chrome & wxt zip -b firefox",
     "zip": "wxt zip",
     "zip:edge": "wxt zip -b edge",
     "zip:firefox": "wxt zip -b firefox",
-    "zip:all": "wxt zip -b edge & wxt zip -b firefox & wxt zip -b chrome",
+    "zip:all": "wxt zip -b edge && wxt zip -b firefox && wxt zip -b chrome",
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare"
   },

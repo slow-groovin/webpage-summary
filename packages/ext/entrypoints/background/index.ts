@@ -5,7 +5,8 @@ import { addContextMenus, registerControlMessages } from "./control";
 import { registerDebugMessages } from "./debug";
 import { registerLLMMessages } from "./llm";
 import { onInstallHook } from "./onInstall";
-import { forFirefox } from "./firefox";
+import { addWebRequestListnerForModifyHeaders } from "./firefox-rules";
+import { updateDynamicRulesForModifyHeaders } from "./chrome-rules";
 export default defineBackground(() => {
   console.log("Hello background!", { id: browser.runtime.id });
   const extensionUrl = chrome.runtime.getURL("");
@@ -16,8 +17,6 @@ export default defineBackground(() => {
   registerDebugMessages();
 
   registerLLMMessages();
-
-  forFirefox();
 
   // command
   browser.commands.onCommand.addListener((command, tab) => {
@@ -39,4 +38,23 @@ export default defineBackground(() => {
 
   //contextMenu
   addContextMenus();
+
+  /**
+   * dynamic rules
+   */
+  const extensionId = browser.runtime.id; // Get the current extension's ID
+  const domains = [
+    { domain: "chatgpt.com", id: 100 },
+    { domain: "kimi.moonshot.cn", id: 101 },
+  ];
+
+  if (import.meta.env.FIREFOX) {
+    for (const { domain, id } of domains) {
+      addWebRequestListnerForModifyHeaders({ domain }, extensionHost.host);
+    }
+  } else {
+    for (const d of domains) {
+      updateDynamicRulesForModifyHeaders(d, extensionId);
+    }
+  }
 });

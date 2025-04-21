@@ -1,8 +1,12 @@
 # Changelog
 
+## [0.3.2] - 2025-04-20
+
+use dynamic rules to achive scecure declare.
+
 ## [0.3.1] - 2025-04-20
 
-1. feature: support web providers.
+feature: support web providers.
 
 ## [0.2.2] - 2025-03-25
 

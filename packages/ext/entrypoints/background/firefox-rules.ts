@@ -4,14 +4,11 @@
  */
 import { browser, Runtime, WebRequest } from "wxt/browser";
 
-export async function forFirefox() {
-  if (import.meta.env.FIREFOX) {
-    console.log("[Firefox-special]addListeners to modifyHeaders()");
-    addModifyHeadersListener("kimi.moonshot.cn");
-    addModifyHeadersListener("chatgpt.com");
-  }
-}
-async function addModifyHeadersListener(domain: string) {
+export async function addWebRequestListnerForModifyHeaders(
+  options: { domain: string },
+  extensionId: string
+) {
+  const { domain } = options;
   console.log("addModifyHeadersListener for domain: ", domain);
 
   const TARGET_DOMAIN = domain; // Target request domain
@@ -36,7 +33,7 @@ async function addModifyHeadersListener(domain: string) {
     // The initiator property may be unreliable or non-existent in Firefox, so it is safer to use originUrl
     if (
       !details.originUrl ||
-      !details.originUrl.startsWith("moz-extension://")
+      !details.originUrl.startsWith(`moz-extension://${extensionId}`)
     ) {
       // console.log(`Skipping request (originUrl: ${details.originUrl})`);
       return {}; // Not a request initiated by the target extension, do not process
@@ -52,8 +49,6 @@ async function addModifyHeadersListener(domain: string) {
 
     // --- Perform modification (action.modifyHeaders) ---
     let requestHeaders = details.requestHeaders;
-    let originHeaderFound = false;
-    let refererHeaderFound = false;
     if (!requestHeaders) {
       return;
     }
@@ -62,10 +57,8 @@ async function addModifyHeadersListener(domain: string) {
       const headerNameLower = requestHeaders[i].name.toLowerCase();
       if (headerNameLower === "origin") {
         requestHeaders[i].value = NEW_ORIGIN;
-        originHeaderFound = true;
       } else if (headerNameLower === "referer") {
         requestHeaders[i].value = NEW_REFERER;
-        refererHeaderFound = true;
       }
     }
 

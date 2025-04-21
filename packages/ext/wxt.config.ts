@@ -73,15 +73,18 @@ export default defineConfig({
       // description: 'Open source webpage summarize tool, via any llm api, support prompt-template/site customization.',
       default_locale: "en",
       permissions: permissions,
-      declarative_net_request: {
-        rule_resources: [
-          {
-            id: "ruleset",
-            enabled: true,
-            path: "rules.json",
-          },
-        ],
-      },
+      /*
+       * use dynamic rules to filter requests inside extension
+       */
+      // declarative_net_request: {
+      //   rule_resources: [
+      //     {
+      //       id: "ruleset",
+      //       enabled: true,
+      //       path: "rules.json",
+      //     },
+      //   ],
+      // },
       icons: {
         // 16: '/icon/16.png',
         32: "/icon/32.png",
