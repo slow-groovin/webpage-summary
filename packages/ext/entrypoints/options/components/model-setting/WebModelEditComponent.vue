@@ -1,17 +1,7 @@
 <template>
   <form @submit="onSubmit" class="mx-auto  w-fit  grid grid-cols-2  gap-4  rounded p-4 border">
-    <div class="col-span-2 text-sm text-muted-foreground">
-      Queries through chat by leveraging your website authentication status.
-      <br />
-      Make sure:
-      <br>1. you have logged-in.
-      <br>2. the extension have permission to the website.
-      <br>3. model name is right
-
-      <br>
-      <span class="italic">Thinking model's reasoning process will not be shown, which will result in a
-        longer waiting
-        period.</span>
+    <div class="col-span-2 text-sm text-muted-foreground whitespace-pre-line">
+      {{ t('web_model_desc') }}
     </div>
 
     <FormField v-slot="{ componentField, meta }" name="name">
@@ -28,7 +18,31 @@
       <FormItem>
         <FormLabel>Model Name </FormLabel>
         <FormControl>
-          <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])" v-bind="componentField" />
+          <Dialog>
+            <DialogTrigger>
+              <div class="flex items-center gap-4">
+                <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])"
+                  v-bind="componentField" />
+                <Button variant="github" size="icon" @click="getModels">
+                  <EyeIcon />
+                </Button>
+              </div>
+
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>
+                models for {{ providerKey }}
+              </DialogTitle>
+              <DialogDescription>
+                <span v-for="model in modelNames" class="text-green-800 text-xl font-bold mr-4">
+                  {{ model }}
+                </span>
+              </DialogDescription>
+
+
+            </DialogContent>
+          </Dialog>
+
         </FormControl>
 
         <FormMessage />
@@ -99,6 +113,11 @@ import {
 import { ModelPreset } from '@/src/presets/model-providers';
 import { draw } from 'radash';
 import { useForm } from 'vee-validate';
+import { providerMap } from '../../../../src/model-providers/create';
+import { EyeIcon } from 'lucide-vue-next';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/src/components/ui/dialog';
+import DialogTrigger from '@/src/components/ui/dialog/DialogTrigger.vue';
+import { ref } from 'vue';
 const { item, provider, providerKey } = defineProps<{
   item?: ModelConfigItem,
   providerKey: ProviderKey,
@@ -137,4 +156,13 @@ const onSubmit = handleSubmit(async (values) => {
   })
 })
 
+const modelNames = ref<string[]>()
+
+
+async function getModels() {
+  const func = (providerMap[providerKey]({}) as any)['getModels']
+  if (func) {
+    modelNames.value = await func() as string[]
+  }
+}
 </script>

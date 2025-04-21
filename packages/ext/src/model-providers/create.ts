@@ -38,7 +38,7 @@ type Options = {
   */
   apiKey?: string;
 };
-const providerMap: Record<
+export const providerMap: Record<
   ProviderKey,
   (
     opts: Options
