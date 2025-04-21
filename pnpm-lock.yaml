@@ -6,12 +6,6 @@ settings:
 
 importers:
 
-  .:
-    dependencies:
-      chatgpt-web-ai-provider:
-        specifier: ^0.3.0
-        version: 0.3.0
-
   packages/ext:
     dependencies:
       '@ai-sdk/anthropic':
@@ -56,9 +50,6 @@ importers:
       '@openrouter/ai-sdk-provider':
         specifier: ^0.2.2
         version: 0.2.2(zod@3.24.2)
-      '@slow-groovin/moonshot-web-ai-provider':
-        specifier: npm:@jsr/slow-groovin__moonshot-web-ai-provider@^0.0.1
-        version: '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1'
       '@vee-validate/zod':
         specifier: ^4.15.0
         version: 4.15.0(vue@3.5.13(typescript@5.6.3))(zod@3.24.2)
@@ -673,9 +664,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1':
-    resolution: {integrity: sha512-BiRHNtgF7znkRJN0kfBiVgTMJM+EhboC9X2CBpca8ubOEVfwleGnhRkXxouLOMoTRYktCfm7HaScOR7A/kIZRg==, tarball: https://npm.jsr.io/~/11/@jsr/slow-groovin__moonshot-web-ai-provider/0.0.1.tgz}
 
   '@lukeed/csprng@1.1.0':
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
@@ -3566,11 +3554,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@jsr/slow-groovin__moonshot-web-ai-provider@0.0.1':
-    dependencies:
-      '@ai-sdk/provider': 1.0.7
-      '@wxt-dev/storage': 1.1.1
 
   '@lukeed/csprng@1.1.0': {}
 
