@@ -18,30 +18,29 @@
       <FormItem>
         <FormLabel>Model Name </FormLabel>
         <FormControl>
-          <Dialog>
-            <DialogTrigger>
-              <div class="flex items-center gap-4">
-                <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])"
-                  v-bind="componentField" />
-                <Button variant="github" size="icon" @click="getModels">
-                  <EyeIcon />
-                </Button>
-              </div>
+          <div class="flex items-center gap-4">
+            <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])"
+              v-bind="componentField" />
+            <Dialog>
+              <DialogTrigger>
+                <EyeIcon class="size-8 stroke-gray-500 border rounded p-1" />
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>
+                  models for {{ providerKey }}
+                </DialogTitle>
+                <DialogDescription @vue:before-mount="getModels">
+                  <div v-if="isModelLoading"
+                    class="rounded-full animate-spin border border-t-0 size-6 border-green-600">
 
-            </DialogTrigger>
-            <DialogContent>
-              <DialogTitle>
-                models for {{ providerKey }}
-              </DialogTitle>
-              <DialogDescription>
-                <span v-for="model in modelNames" class="text-green-800 text-xl font-bold mr-4">
-                  {{ model }}
-                </span>
-              </DialogDescription>
-
-
-            </DialogContent>
-          </Dialog>
+                  </div>
+                  <span v-for="model in modelNames" class="text-green-800 text-xl font-bold mr-4">
+                    {{ model }}
+                  </span>
+                </DialogDescription>
+              </DialogContent>
+            </Dialog>
+          </div>
 
         </FormControl>
 
@@ -157,12 +156,16 @@ const onSubmit = handleSubmit(async (values) => {
 })
 
 const modelNames = ref<string[]>()
-
+const isModelLoading = ref(false)
 
 async function getModels() {
+  isModelLoading.value = true
+  modelNames.value = []
   const func = (providerMap[providerKey]({}) as any)['getModels']
   if (func) {
     modelNames.value = await func() as string[]
   }
+  isModelLoading.value = false
+
 }
 </script>
