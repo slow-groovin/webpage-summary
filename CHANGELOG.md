@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.1] - 2025-04-20
+
+1. feature: support web providers.
+
 ## [0.2.2] - 2025-03-25
 
 1. fix `--webpage-summary-panel-top` not working

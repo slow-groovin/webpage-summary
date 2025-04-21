@@ -15,20 +15,22 @@ import { TokenUsage } from "./src/types/summary";
  */
 interface ProtocolMap {
   streamTextViaConnect(input: {
-    messages: CoreMessage[],
-    modelConfig: ModelConfigItem,
+    messages: CoreMessage[];
+    modelConfig: ModelConfigItem;
   }): {
-    tokenUsage: Promise<TokenUsage>,
-    textStream: ChunkConsumer,
-
-  }
+    tokenUsage: Promise<TokenUsage>;
+    textStream: ChunkConsumer;
+  };
 
   /**for test */
-  func1(input: { p1: string, p2: number, p3: boolean }): { r1: string, r2: Promise<string>, r3: ChunkConsumer };
+  func1(input: { p1: string; p2: number; p3: boolean }): {
+    r1: string;
+    r2: Promise<string>;
+    r3: ChunkConsumer;
+  };
 }
 
 export const { onConnectMessage, sendConnectMessage } = defineConnectMessage();
-
 
 /*
 IMPLEMETION OF defineConnectMessage 👇👇
@@ -44,7 +46,11 @@ type ResultType = Record<string, any | Promise<any> | ChunkConsumer>;
 type MessageType<I extends InputType, O extends ResultType> = (input: I) => O;
 
 // Get the first parameter type of a function.
-type FirstParameter<T extends (args: any) => any> = T extends (args: infer P) => any ? P : never;
+type FirstParameter<T extends (args: any) => any> = T extends (
+  args: infer P
+) => any
+  ? P
+  : never;
 
 // Define the ChunkConsumer type, which includes onChunk and onComplete callbacks.
 // This type is used for handling streaming data, where onChunk is called for each chunk of data, and onComplete is called when the stream is finished.
@@ -65,14 +71,20 @@ type OnMessage = <T extends keyof ProtocolMap>(
       // Callback to indicate the completion of the message handling.  This signals that the handler has finished processing.
       complete: () => void;
       // Callback to resolve a promise in the return value.  This is used for asynchronous responses.
-      resolve: <K extends keyof ReturnType<ProtocolMap[T]>>(key: K, value: unknown) => void;
+      resolve: <K extends keyof ReturnType<ProtocolMap[T]>>(
+        key: K,
+        value: unknown
+      ) => void;
       // Callback to send a chunk of data. This is used for streaming responses.
-      chunk: <K extends keyof ReturnType<ProtocolMap[T]>>(key: K, value: unknown) => void;
+      chunk: <K extends keyof ReturnType<ProtocolMap[T]>>(
+        key: K,
+        value: unknown
+      ) => void;
       // Callback to indicate the end of a chunked data stream.  This signals the end of a streaming response.
       chunkEnd: <K extends keyof ReturnType<ProtocolMap[T]>>(key: K) => void;
       error: (error: Error) => void;
     }
-  ) => void,
+  ) => void
 ) => void;
 
 // Define the SendMessage type, which is used to send messages.
@@ -81,24 +93,25 @@ type SendMessage = <T extends keyof ProtocolMap>(
   key: T,
   input: FirstParameter<ProtocolMap[T]>,
   opts?: {
-    onError?: (e: any) => void
+    onError?: (e: any) => void;
   }
-) => Promise<ReturnType<ProtocolMap[T]> & {stop:CallableFunction}>;
+) => Promise<ReturnType<ProtocolMap[T]> & { stop: CallableFunction }>;
 
 // Define the ConnectMessage type for .postMessage()
 // This type represents the structure of messages exchanged internally between the sender and receiver.
 type ConnectMessage = {
-  type: 'markReturn' | 'resolve' | 'chunk' | 'chunkEnd' | 'error' | 'stop';
+  type: "markReturn" | "resolve" | "chunk" | "chunkEnd" | "error" | "stop";
   key: string;
   value: unknown;
 };
 
-
-
 // Define the MarkReturnValue type to specify the type of each return value.
 // This type is used to indicate whether a field in the response is a raw value, a promise, or a chunked stream.
-type MarkReturnValue<T extends Record<string, any> = Record<string, any>, K extends keyof T = keyof T> = {
-  type: 'raw' | 'promise' | 'chunk';
+type MarkReturnValue<
+  T extends Record<string, any> = Record<string, any>,
+  K extends keyof T = keyof T
+> = {
+  type: "raw" | "promise" | "chunk";
   key: K;
   value?: T[K];
 }[];
@@ -123,11 +136,11 @@ function defineConnectMessage(): {
       browser.runtime.onConnect.addListener((port) => {
         // Filter by NAME_KEY.  Only process connections with the correct name.
         if (port.name !== NAME_KEY) return;
-        let isPortDisconnect=false
-        port.onDisconnect.addListener(()=>{
-          console.debug(`[${NAME_KEY}][onDisconnect]`)
-          isPortDisconnect=true
-        })
+        let isPortDisconnect = false;
+        port.onDisconnect.addListener(() => {
+          console.debug(`[${NAME_KEY}][onDisconnect]`);
+          isPortDisconnect = true;
+        });
         const onMessageListener = (_msg: any) => {
           // First message is the input parameter.
           input = _msg;
@@ -136,14 +149,18 @@ function defineConnectMessage(): {
            * Marks the return value types.
            * @param retVal - The return value types.  This array describes the expected types of the response fields.
            */
-          const markReturn: Parameters<typeof callbackFunc>[1]['markReturn'] = (retVal) => {
-            port.postMessage({ type: 'markReturn', value: retVal });
+          const markReturn: Parameters<typeof callbackFunc>[1]["markReturn"] = (
+            retVal
+          ) => {
+            port.postMessage({ type: "markReturn", value: retVal });
           };
 
           /**
            * Indicates the completion of the message handling.
            */
-          const complete: Parameters<typeof callbackFunc>[1]['complete'] = () => {
+          const complete: Parameters<
+            typeof callbackFunc
+          >[1]["complete"] = () => {
             port.disconnect();
             // No need to removeListener for port, it's being closed.
           };
@@ -153,16 +170,21 @@ function defineConnectMessage(): {
            * @param key - The key of the chunked data.  This identifies which field the chunk belongs to.
            * @param val - The chunk data.  This is the actual data being sent.
            */
-          const chunk: Parameters<typeof callbackFunc>[1]['chunk'] = (key, val) => {
-            port.postMessage({ type: 'chunk', key: key, value: val });
+          const chunk: Parameters<typeof callbackFunc>[1]["chunk"] = (
+            key,
+            val
+          ) => {
+            port.postMessage({ type: "chunk", key: key, value: val });
           };
 
           /**
            * Indicates the end of a chunked data stream.
            * @param key - The key of the chunked data. This identifies which stream is ending.
            */
-          const chunkEnd: Parameters<typeof callbackFunc>[1]['chunkEnd'] = (key) => {
-            port.postMessage({ type: 'chunkEnd', key: key });
+          const chunkEnd: Parameters<typeof callbackFunc>[1]["chunkEnd"] = (
+            key
+          ) => {
+            port.postMessage({ type: "chunkEnd", key: key });
           };
 
           /**
@@ -170,15 +192,25 @@ function defineConnectMessage(): {
            * @param key - The key of the promise. This identifies which promise to resolve.
            * @param val - The resolved value.  This is the value the promise will resolve with.
            */
-          const resolve: Parameters<typeof callbackFunc>[1]['resolve'] = (key, val) => {
-            port.postMessage({ type: 'resolve', key: key, value: val });
+          const resolve: Parameters<typeof callbackFunc>[1]["resolve"] = (
+            key,
+            val
+          ) => {
+            port.postMessage({ type: "resolve", key: key, value: val });
           };
 
           const error = (e: Error) => {
-            if(isPortDisconnect) return 
-            port.postMessage({ type: 'error', key: 'error', value: e })
-          }
-          callbackFunc(input, { markReturn, complete, chunk, chunkEnd, resolve, error });
+            if (isPortDisconnect) return;
+            port.postMessage({ type: "error", key: "error", value: e });
+          };
+          callbackFunc(input, {
+            markReturn,
+            complete,
+            chunk,
+            chunkEnd,
+            resolve,
+            error,
+          });
         };
         port.onMessage.addListener(onMessageListener);
       });
@@ -200,32 +232,36 @@ function defineConnectMessage(): {
       let markReturnResolve: (v: any) => void; // Callback to resolve the main promise with the marked return values.
       let returnValuePromiseMap: Record<string, (v: any) => void> = {}; // Map of promise keys to their resolve functions.
       let returnValueChunkFuncMap: Record<string, (v: any) => void> = {}; // Map of chunk keys to their chunk functions.
-      let returnValueChunkCompleteFuncMap: Record<string, (v: any) => void> = {}; // Map of chunk keys to their completion functions.
-      let onErrorHook = opt?.onError
+      let returnValueChunkCompleteFuncMap: Record<string, (v: any) => void> =
+        {}; // Map of chunk keys to their completion functions.
+      let onErrorHook = opt?.onError;
       const result = new Promise<any>((resolve, reject) => {
         markReturnResolve = resolve; // Assign the resolve function to markReturnResolve.
       });
 
-      connectPort.onMessage.addListener((_msg: any,port) => {
+      connectPort.onMessage.addListener((_msg: any, port) => {
         const msg = _msg as ConnectMessage;
-        if (msg.type === 'markReturn') {
+        if (msg.type === "markReturn") {
           // Handle the 'markReturn' message, which indicates the structure of the response.
           const markReturnValue = msg.value as MarkReturnValue;
           const returnValue = {} as any;
           // Iterate through the marked return values and construct the response object.
           for (const v of markReturnValue) {
-            if (v.type === 'raw') {
+            if (v.type === "raw") {
               // If the type is 'raw', directly assign the value to the corresponding key.
               returnValue[v.key] = v.value;
-            } else if (v.type === 'promise') {
+            } else if (v.type === "promise") {
               // If the type is 'promise', create a new promise and store its resolve function.
-              const newPromise = new Promise<typeof v.value>((resolve, reject) => {
-                returnValuePromiseMap[v.key] = resolve;
-              });
+              const newPromise = new Promise<typeof v.value>(
+                (resolve, reject) => {
+                  returnValuePromiseMap[v.key] = resolve;
+                }
+              );
               returnValue[v.key] = newPromise;
-            } else if (v.type === 'chunk') {
+            } else if (v.type === "chunk") {
               // If the type is 'chunk', create a chunk processor and store its functions.
-              const { onChunk, chunk, onChunkComplete, chunkComplete } = createChunkProcessor();
+              const { onChunk, chunk, onChunkComplete, chunkComplete } =
+                createChunkProcessor();
               returnValueChunkFuncMap[v.key] = chunk;
               returnValueChunkCompleteFuncMap[v.key] = chunkComplete;
               returnValue[v.key] = { onChunk, onChunkComplete };
@@ -234,26 +270,25 @@ function defineConnectMessage(): {
           // Resolve the main promise with the constructed return value object.
           markReturnResolve({
             ...returnValue,
-            stop: ()=>{
-              console.log('mannual stop port.',port.name)
-              port.disconnect()
-            }
+            stop: () => {
+              console.log("mannual stop port.", port.name);
+              port.disconnect();
+            },
           });
-        } else if (msg.type === 'resolve') {
+        } else if (msg.type === "resolve") {
           // Handle the 'resolve' message, which resolves a promise in the response.
           returnValuePromiseMap[msg.key]!(msg.value);
-        } else if (msg.type === 'chunk') {
+        } else if (msg.type === "chunk") {
           // Handle the 'chunk' message, which sends a chunk of data for a streaming response.
           returnValueChunkFuncMap[msg.key]!(msg.value);
-        } else if (msg.type === 'chunkEnd') {
+        } else if (msg.type === "chunkEnd") {
           // Handle the 'chunkEnd' message, which signals the end of a chunked stream.
           returnValueChunkCompleteFuncMap[msg.key]!(msg.value);
-        } else if (msg.type === 'error') {
-          console.debug('[sendConnectMessage]onError', msg.value)
-          if(onErrorHook){
-            onErrorHook(msg.value)
-          }else{
-            throw msg.value
+        } else if (msg.type === "error") {
+          if (onErrorHook) {
+            onErrorHook(msg.value);
+          } else {
+            throw msg.value;
           }
         } else {
           throw new Error("Unexpected msg.type:" + msg.type);
@@ -274,8 +309,8 @@ function defineConnectMessage(): {
  * @returns An object containing onChunk, chunk, onChunkComplete, and chunkComplete functions.
  */
 function createChunkProcessor() {
-  let chunkCallback: (c: any) => void = () => { };
-  let chunkCompleteCallback: () => void = () => { };
+  let chunkCallback: (c: any) => void = () => {};
+  let chunkCompleteCallback: () => void = () => {};
   let isCompleted = false;
 
   // Producer uses this to set the callback function.  The producer is the sender of the chunks.
@@ -305,6 +340,6 @@ function createChunkProcessor() {
     onChunk,
     chunk,
     onChunkComplete,
-    chunkComplete
+    chunkComplete,
   };
 }

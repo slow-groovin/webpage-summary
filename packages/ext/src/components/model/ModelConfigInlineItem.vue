@@ -17,7 +17,7 @@ const maxContentLengthSnippet = (maxLen?: number) => maxLen ? `(${maxLen})` : ''
 <template>
 
   <div class="flex items-center gap-1">
-    <img v-if="modelProviderPresets[item.providerType as ProviderKey].icon"
+    <img v-if="modelProviderPresets[item.providerType as ProviderKey]?.icon"
       :src="calcIconUrl(modelProviderPresets[item.providerType as ProviderKey].icon!)" alt="Model Icon"
       class="w-4 h-4" />
 

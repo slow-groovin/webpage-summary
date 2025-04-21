@@ -27,16 +27,17 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { z } from 'zod'
 import ModelProviderSelect from './ModelProviderSelect.vue'
+import WebModelEditComponent from './WebModelEditComponent.vue'
 
 const { query } = useRoute()
-const { push,replace } = useRouter()
+const { push, replace } = useRouter()
 
 const { type } = query
 
 const { item } = defineProps<{
   item?: ModelConfigItem
 }>()
-const providerKey = (item?.providerType as ProviderKey)  ?? (type as ProviderKey) ?? 'openai'
+const providerKey = (item?.providerType as ProviderKey) ?? (type as ProviderKey) ?? 'openai'
 const providerType = ref<ProviderKey>(providerKey)
 const emit = defineEmits<{
   sumbit: [Omit<ModelConfigItem, 'id'>]
@@ -117,7 +118,7 @@ const onSubmit = handleSubmit(async (values) => {
 
   // console.log(values, values.maxContentLength, !!values.maxContentLength)
   emit('sumbit', {
-    apiKey: values.apiKey,
+    apiKey: values.apiKey ?? undefined,
     name: values.name,
     modelName: values.modelName,
     providerType: providerType.value,
@@ -135,7 +136,6 @@ const onSubmit = handleSubmit(async (values) => {
     inputTokenPrice: values.inputTokenPrice ?? undefined,
     outputTokenPrice: values.outputTokenPrice ?? undefined,
     priceUnit: values.priceUnit ?? undefined,
-
   })
 })
 
@@ -145,8 +145,10 @@ const onSubmit = handleSubmit(async (values) => {
   <div class="flex flex-col space-y-4 items-stretch w-fit">
     <ModelProviderSelect v-model:provider-type="providerType">
     </ModelProviderSelect>
-
-    <form @submit="onSubmit" class="mx-auto  w-fit  grid grid-cols-2  gap-4  rounded p-4 border">
+    <WebModelEditComponent v-if="provider.isWeb" :provider="provider" :provider-key="providerType" :item="item"
+      @sumbit="(v) => emit('sumbit', v)">
+    </WebModelEditComponent>
+    <form v-else @submit="onSubmit" class="mx-auto  w-fit  grid grid-cols-2  gap-4  rounded p-4 border">
       <FormField v-slot="{ componentField, meta }" name="name">
         <FormItem>
           <FormLabel>Config Name {{ meta.required ? "*" : '' }}</FormLabel>
@@ -159,7 +161,7 @@ const onSubmit = handleSubmit(async (values) => {
 
       <FormField v-slot="{ componentField }" name="modelName">
         <FormItem>
-          <FormLabel>Model Name  </FormLabel>
+          <FormLabel>Model Name </FormLabel>
           <FormControl>
             <Input type="text" :placeholder="'eg:  ' + draw(provider.sampleModelNames ?? [''])"
               v-bind="componentField" />
@@ -173,9 +175,10 @@ const onSubmit = handleSubmit(async (values) => {
         <FormItem>
           <FormLabel class="flex flex-row items-center gap-2">
             Max Content Length(input)
-            <HoverBadget title="?" :description="t('max_content_length_CALC_INFO')"/>
-            
-            <HoverBadget class="text-nowrap" :title="t('max_content_length_TOKENIZER_TITLE')" :description="t('max_content_length_TOKENIZER_INFO')" />
+            <HoverBadget title="?" :description="t('max_content_length_CALC_INFO')" />
+
+            <HoverBadget class="text-nowrap" :title="t('max_content_length_TOKENIZER_TITLE')"
+              :description="t('max_content_length_TOKENIZER_INFO')" />
 
           </FormLabel>
           <FormControl>

@@ -1,0 +1,56 @@
+[
+  {
+    "id": 2,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "operation": "set",
+          "header": "origin",
+          "value": "https://chatgpt.com"
+        },
+        {
+          "operation": "set",
+          "header": "referer",
+          "value": "https://chatgpt.com"
+        }
+      ]
+    },
+    "condition": {
+      "requestDomains": ["chatgpt.com"],
+      "resourceTypes": ["xmlhttprequest"],
+      "initiatorDomains": [
+        "jidechjgegiafmcmmhlifebacppcfboe",
+        "dhdnamkkepndgjimbpacmibkblndangk",
+        "gmocfpdecpokeafpiinlcohicgngmeni"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "operation": "set",
+          "header": "origin",
+          "value": "https://kimi.moonshot.cn"
+        },
+        {
+          "operation": "set",
+          "header": "referer",
+          "value": "https://kimi.moonshot.cn"
+        }
+      ]
+    },
+    "condition": {
+      "requestDomains": ["kimi.moonshot.cn"],
+      "resourceTypes": ["xmlhttprequest"],
+      "initiatorDomains": [
+        "jidechjgegiafmcmmhlifebacppcfboe",
+        "dhdnamkkepndgjimbpacmibkblndangk",
+        "gmocfpdecpokeafpiinlcohicgngmeni"
+      ]
+    }
+  }
+]
