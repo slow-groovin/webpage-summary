@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.4] - 2025-06-08
+## [0.3.5] - 2025-06-08
 fix chat boxt input being affected by single-key shortcuts in sites like github. 
 
 ## [0.3.3] - 2025-04-21
