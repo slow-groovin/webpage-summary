@@ -42,24 +42,31 @@ const textAreaRef = useTemplateRef('textareaRef')
 
 
 
-const handleEnterPress = (event: KeyboardEvent) => {
-  if (event.key === 'Enter' && event.shiftKey) {
+const keyinputListener = (e: KeyboardEvent) => {
+  if (e.key === 'Enter' && e.shiftKey) {
     //do nothing, will insert a newline
-
-  } else if (event.key === 'Enter' && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey) {
-    event.preventDefault()
+    return
+  } else if (e.key === 'Enter' && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    e.preventDefault()
     handleSubmit()
+    return
   }
+
+  // force capturing single-key (except comp-command Ctrl、Shift、Alt、Meta), in order to normal input in sites like github
+  if (!(e.ctrlKey || e.shiftKey || e.altKey || e.metaKey)) {
+    e.stopImmediatePropagation();
+  };
+
 }
 
 function focusin() {
-  textAreaRef.value?.addEventListener('keydown', handleEnterPress);
+  textAreaRef.value?.addEventListener('keydown', keyinputListener);
   isTextAreaFocus.value = true
 }
 
 function focusout() {
+  textAreaRef.value?.removeEventListener('keydown', keyinputListener);
   isTextAreaFocus.value = false
-
 }
 
 function adjustHeight(event: Event) {

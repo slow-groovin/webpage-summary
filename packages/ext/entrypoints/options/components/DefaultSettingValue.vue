@@ -4,10 +4,10 @@ defineProps<{
 }>()
 </script>
 <template>
-  <div class="text-xs font-extralight bg-neutral-500/20 rounded px-1">
-    DEFAULT:
+  <div class="text-xs font-extralight bg-neutral-500/30 rounded px-1">
+    DEFAULT:&nbsp;
     <span class="font-mono font-light">
-       {{ value }}
+      {{ value }}
     </span>
   </div>
 

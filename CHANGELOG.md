@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.4] - 2025-06-08
+fix chat boxt input being affected by single-key shortcuts in sites like github. 
+
+## [0.3.3] - 2025-04-21
+
+fix model name component error in web provider config
+
 ## [0.3.2] - 2025-04-20
 
 use dynamic rules to achive scecure declare.

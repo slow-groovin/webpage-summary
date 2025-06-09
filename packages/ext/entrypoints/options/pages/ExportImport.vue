@@ -31,7 +31,7 @@ const importSchema = z.object({
 
 const { name, version } = useExtInfo()
 const isLoading = ref(false)
-const isExportWithApiKeys=ref(false)
+const isExportWithApiKeys = ref(false)
 const viewData = ref<any>()
 const fileInput = useTemplateRef('fileInput')
 
@@ -117,11 +117,11 @@ async function exportConfig() {
   const items = await browser.storage.local.get(null);
 
   /* delete apiKey field */
-  if(items && !isExportWithApiKeys.value){
-    const key=MODEL_CONFIG_KEY.replace('local:','')
-    items[key]=(items[key] as ModelConfigItem[]).map(item=>{
-      const {apiKey,...other}=item
-      return {...other}
+  if (items && !isExportWithApiKeys.value) {
+    const key = MODEL_CONFIG_KEY.replace('local:', '')
+    items[key] = (items[key] as ModelConfigItem[]).map(item => {
+      const { apiKey, ...other } = item
+      return { ...other }
     })
   }
   isLoading.value = true
@@ -132,7 +132,7 @@ async function exportConfig() {
     exportDate: new Date().toLocaleString(),
     data: items
   }
-  
+
   exportJson(name + '-configs-export-' + version + '' + '.json', data)
   isLoading.value = false
 
@@ -157,7 +157,7 @@ async function handleFileSelect(event: any) {
   }
 }
 
-function alertAndToast(...args:Parameters<typeof toast>){
+function alertAndToast(...args: Parameters<typeof toast>) {
   alert(args[0].title)
   toast(...args)
 }
@@ -179,10 +179,10 @@ function alertAndToast(...args:Parameters<typeof toast>){
 
     <div class="flex flex-col gap-2 items-start">
       <h2>{{ t('Import') }}</h2>
-      <input type="file" class="" ref="fileInput" @change="handleFileSelect" />
+      <input type="file" class="" ref="fileInput" accept=".json" @change="handleFileSelect" />
       <span class="text-red-500">{{ t('Import_Alert') }}</span>
 
-      <Button @click="importConfigWrapper" :class="{'animate-bounce':!!viewData}">{{ t('Import') }}</Button>
+      <Button @click="importConfigWrapper" :class="{ 'animate-bounce': !!viewData }">{{ t('Import') }}</Button>
       <!-- view area -->
       <div v-if="viewData" class="border-t grid grid-cols-[auto,1fr] gap-2">
         <h2 class="col-span-2">View before exec import</h2>
