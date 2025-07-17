@@ -89,7 +89,7 @@ export function createVercelModel(config: ModelConfigItem) {
   if (config.use_search) {
     //@ts-ignore
     //prettier-ignore
-    return providerFactory(option).languageModel(config.modelName, {use_search: config.use_search,});
+    return providerFactory(option).languageModel(config.modelName, { use_search: config.use_search, });
   }
   return providerFactory(option).languageModel(config.modelName);
 }

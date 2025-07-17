@@ -2,7 +2,7 @@ import { defineContentScript } from "wxt/sandbox";
 import { storage } from "wxt/storage";
 
 export default defineContentScript({
-  matches: ["*://*.moonshot.cn/*"],
+  matches: ["*://*.kimi.com/*"],
   main() {
     // console.log("window.localStorage", window.localStorage);
     storage.setItem(

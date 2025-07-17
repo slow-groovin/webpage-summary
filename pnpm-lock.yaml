@@ -84,8 +84,8 @@ importers:
         specifier: ^14.1.0
         version: 14.1.0
       moonshot-web-ai-provider:
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       mustache:
         specifier: ^4.2.0
         version: 4.2.0
@@ -2195,8 +2195,8 @@ packages:
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
 
-  moonshot-web-ai-provider@0.3.0:
-    resolution: {integrity: sha512-cs1tfMxikJ7TbNFuQBEFIQvUL/eZPS7tJloHhXAqlmkNVv2F6ap3we8FKf3+0hTh9Ab/BpEzw98YvVYIA4aO+Q==}
+  moonshot-web-ai-provider@0.4.1:
+    resolution: {integrity: sha512-yfRKil6h4JuiEMVxMEc7n0WLFmxaWyky64bxU2jGE4BfzUIfIqy7qKnvQ7JSrB24PBUMfxxJsJzsnl50lzwkJw==}
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -5083,7 +5083,7 @@ snapshots:
   moment@2.30.1:
     optional: true
 
-  moonshot-web-ai-provider@0.3.0:
+  moonshot-web-ai-provider@0.4.1:
     dependencies:
       '@ai-sdk/provider': 1.0.7
       '@wxt-dev/storage': 1.1.1
