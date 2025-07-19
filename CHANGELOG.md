@@ -1,6 +1,9 @@
 # Changelog
+## [0.4.2] - 2025-07-18
+update moonshot-web-provider.
+delete chatgpt-web-provide because of the the official crackdown on such behavior.
 
-## [0.3.4] - 2025-06-08
+## [0.3.5] - 2025-06-08
 fix chat boxt input being affected by single-key shortcuts in sites like github. 
 
 ## [0.3.3] - 2025-04-21
