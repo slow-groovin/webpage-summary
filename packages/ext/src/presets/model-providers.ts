@@ -25,8 +25,7 @@ export type ProviderKey =
   | "deepinfra"
   | "ollama"
   | "lm-studio"
-  | "moonshot(web)"
-  | "chatgpt(web)";
+  | "moonshot(web)";
 
 export const modelProviderPresets: Record<ProviderKey, ModelPreset> = {
   "openai-compitable": {
@@ -53,7 +52,7 @@ export const modelProviderPresets: Record<ProviderKey, ModelPreset> = {
   "google-generative": {
     providerType: "google-generative",
     defaultApiBase: "https://generativelanguage.googleapis.com/v1beta",
-    sampleModelNames: ["gemini-1.5-pro-latest", "gemini-2.0-flash-latest"],
+    sampleModelNames: ["gemini-1.5-pro", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-2.5-flash"],
     icon: "/llm-icons/google.svg",
   },
   mistral: {
@@ -110,12 +109,6 @@ export const modelProviderPresets: Record<ProviderKey, ModelPreset> = {
     defaultApiBase: "",
     icon: "/llm-icons/lmstudio.svg",
     sampleModelNames: ["llama-3.2-1b"],
-  },
-  "chatgpt(web)": {
-    providerType: "chatgpt(web)",
-    icon: "/llm-icons/openai.svg",
-    sampleModelNames: ["chatgpt-4o", "chatgpt-4o-mini", "auto"],
-    isWeb: true,
   },
   "moonshot(web)": {
     providerType: "moonshot(web)",

@@ -72,6 +72,13 @@ function unpackStreamTextError(e: any) {
    * for  @ai-sdk/anthropic, it's a {error:Error} object
    */
   if (Object.keys(e).length === 1 && e.hasOwnProperty("error")) {
+    if (typeof e.error === 'string') {
+      return {
+        _message: e.error
+
+      }
+
+    }
     e = e.error;
     e["_message"] = e.message;
   }
