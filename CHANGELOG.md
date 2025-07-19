@@ -1,6 +1,6 @@
 # Changelog
 ## [0.4.0] - 2025-07-18
-update moonshot-web-provider version
+update moonshot-web-provider
 
 ## [0.3.5] - 2025-06-08
 fix chat boxt input being affected by single-key shortcuts in sites like github. 

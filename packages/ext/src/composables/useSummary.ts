@@ -125,6 +125,12 @@ export function useSummary() {
     return true
   }
 
+  function specialCaseCheck() {
+    if (currentModel.value?.providerType === "moonshot(web)" && ['kimi', 'k1'].includes(currentModel.value!.modelName)) {
+      toast({ variant: 'warning', title: 'kimi/k1 model has been deprecated by moonshot web. Please change to the newest model.', duration: 10000 })
+    }
+  }
+
   async function initMessages() {
     if (!currentModel.value || !currentPrompt.value) {
       throw new Error("Model or Prompt is not ready")
@@ -173,7 +179,7 @@ export function useSummary() {
   }
 
   async function copyMessages() {
-    const text=uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n')
+    const text = uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n')
     await writeTextToClipboard(text)
     // await navigator.clipboard.writeText()
     toast({ title: "copied to clipboard success!", variant: 'success' })
@@ -184,6 +190,8 @@ export function useSummary() {
     if (!verfiyReady()) {
       return
     }
+    specialCaseCheck()
+
     if (messages.value.length == 0) {
       await initMessages()
     }
