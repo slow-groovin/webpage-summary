@@ -230,12 +230,20 @@ export function useSummary() {
       }
     )
     // console.log(textStream)
-    textStream.onChunk((c) => {
-      uiMessages.value[uiMessages.value.length - 1].content += c
+    let onChunkHandler = (c: unknown) => {
+      uiMessages.value[uiMessages.value.length - 1].content += c as string
       event.emit('chunk', c)
-    })
+    }
+    textStream.onChunk(onChunkHandler)
+
+    stopFunction = () => {
+      stop()
+      onChunkHandler = () => { }
+    }
+
     textStream.onChunkComplete(async () => {
       isRunning.value = false
+      stopFunction = null
 
       /*push to messages */
       messages.value.push({ role: 'assistant', content: uiMessages.value[uiMessages.value.length - 1].content })
@@ -260,6 +268,7 @@ export function useSummary() {
       return
     }
     stopFunction()
+    stopFunction = null
   }
 
   async function resetMessages() {
