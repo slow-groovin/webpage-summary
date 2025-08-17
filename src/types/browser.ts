@@ -1,3 +1,3 @@
-import { Runtime } from "wxt/browser";
+import { Browser } from "wxt/browser";
 
-export type PortListener=(message:unknown,port:Runtime.Port)=>void
+export type PortListener = (message: unknown, port: Browser.runtime.Port) => void

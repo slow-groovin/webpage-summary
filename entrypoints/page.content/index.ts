@@ -1,6 +1,6 @@
 import '@/assets/tailwind.css';
-import { createShadowRootUi } from "wxt/client";
-import { defineContentScript } from "wxt/sandbox";
+import { createShadowRootUi } from "#imports";
+import { defineContentScript } from "#imports";
 
 
 // 1. Import the style
@@ -24,35 +24,35 @@ export default defineContentScript({
       name: 'webpage-summary',
       position: 'inline',
       anchor: 'body',
-  		append: "last",
+      append: "last",
       mode: 'open',  //enable document.select('webpage-summary').shadowRoot
-      
-    
+      inheritStyles: true,
+
 
       onMount: (container, _shadow, shadowHost) => {
         // console.log(container,_shadow,shadowHost,_shadow.ownerDocument)
 
-        shadowHost.style.visibility='visible'; //force visible. Prevent some websites (such as Reddit) from using selectors to force web components to be hidden.
+        shadowHost.style.visibility = 'visible'; //force visible. Prevent some websites (such as Reddit) from using selectors to force web components to be hidden.
 
         // applyPageHtmlFont(_shadow,  shadowHost)
         // Define how your UI will be mounted inside the container
-        
+
         //inject user-custom appearance css vars
-        getUserCustomStyle().then(style=>{
+        getUserCustomStyle().then(style => {
           injectUserSettingCssVariables(style)
         })
-        
+
 
 
         const app = createApp(App);
-        app.config.errorHandler = (err:any) => {
-          console.error('vue err',err)
+        app.config.errorHandler = (err: any) => {
+          console.error('vue err', err)
           // toast({ title: 'Error', description: err.message ,variant:'destructive'}); //don't run this line, it may affect user's browsering
         }
         app.mount(container);
         return app;
       },
-      
+
       onRemove: (app) => {
         // Unmount the app when the UI is removed
         app?.unmount();
@@ -70,7 +70,7 @@ export default defineContentScript({
  * @param shadowRoot 
  * @param shadowHost 
  */
-function applyPageHtmlFont(shadowRoot:ShadowRoot, shadowHost:HTMLElement){
+function applyPageHtmlFont(shadowRoot: ShadowRoot, shadowHost: HTMLElement) {
   const pageFont = window.getComputedStyle(document.body).fontFamily;
 
   const style = document.createElement('style');

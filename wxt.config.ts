@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from "node:url";
 // See https://wxt.dev/api/config.html
 // console.log(`fileURLToPath(new URL('./', import.meta.url))`,fileURLToPath(new URL('./', import.meta.url)))
 export default defineConfig({
-  extensionApi: "chrome",
+  // extensionApi: "chrome", // remove in wxt@0.20
   modules: ["@wxt-dev/module-vue"],
   imports: false,
   vite: (configEnv) => ({

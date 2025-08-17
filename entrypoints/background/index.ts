@@ -1,6 +1,6 @@
 import { sendMessage } from "@/messaging";
 import { browser } from "wxt/browser";
-import { defineBackground } from "wxt/sandbox";
+import { defineBackground } from "#imports";
 import { addContextMenus, registerControlMessages } from "./control";
 import { registerDebugMessages } from "./debug";
 import { registerLLMMessages } from "./llm";

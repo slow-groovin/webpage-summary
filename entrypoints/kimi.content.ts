@@ -1,5 +1,5 @@
-import { defineContentScript } from "wxt/sandbox";
-import { storage } from "wxt/storage";
+import { defineContentScript } from "#imports";
+import { storage } from "#imports";
 
 export default defineContentScript({
   matches: ["*://*.kimi.com/*"],

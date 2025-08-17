@@ -1,7 +1,7 @@
-import { defineAppConfig } from "wxt/sandbox";
+import { defineAppConfig } from "#imports";
 
 // Define types for your config
-declare module "wxt/sandbox" {
+declare module "#imports" {
   export interface WxtAppConfig {
     version: string;
   }

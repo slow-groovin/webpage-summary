@@ -1,6 +1,6 @@
 // management of model config items
 
-import { storage } from "wxt/storage";
+import { storage } from "#imports";
 import { DEFAULT_MODEL_ID_KEY, MODEL_CONFIG_KEY } from "../constants/storage-key";
 import { ModelConfigItem } from "../types/config/model"; // Assuming this type exists
 import { uid } from "radash";
@@ -98,10 +98,10 @@ export function useModelConfigStorage() {
       return { isSuc: false, msg: `item record not found` };
     }
 
-    
+
     // If a model with the same name and providerType already exists, return false.
-    const sameNameOne=await findByName(configItem.name)
-    if (sameNameOne && sameNameOne.id!==configItem.id) {
+    const sameNameOne = await findByName(configItem.name)
+    if (sameNameOne && sameNameOne.id !== configItem.id) {
       return { isSuc: false, msg: `name:<${configItem.name}> already exists` };
     }
     // Update the model configuration item in the list.

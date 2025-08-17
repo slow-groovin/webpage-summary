@@ -79,7 +79,7 @@ export function createVercelModel(config: ModelConfigItem) {
   }
 
   //for web ai provider
-  console.log("config", config);
+  // console.log("config", config);
   if (config.use_search) {
     //@ts-ignore
     //prettier-ignore

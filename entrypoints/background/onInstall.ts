@@ -1,7 +1,7 @@
 import { usePromptConfigStorage } from "@/src/composables/prompt";
 import { presetPrompts } from "@/src/presets/prompts";
 import { browser, Runtime } from "wxt/browser";
-import { storage } from "wxt/storage";
+import { storage } from "#imports";
 
 export function onInstallHook(detail: Runtime.OnInstalledDetailsType) {
   addDefaultPrompt()

@@ -1,7 +1,7 @@
 import { computed, onMounted, onUnmounted } from "vue";
-import { storage, StorageItemKey } from "wxt/storage";
+import { storage, StorageItemKey } from "#imports";
 
-import {useAsyncState, UseAsyncStateOptions} from '@vueuse/core'
+import { useAsyncState, UseAsyncStateOptions } from '@vueuse/core'
 
 /**
  * https://github.com/wxt-dev/examples/blob/main/examples/vue-storage-composable/entrypoints/popup/App.vue
@@ -19,8 +19,8 @@ export default function <T>(
 		execute: _, // Don't include "execute" in returned object
 		...asyncState
 	} = useAsyncState<T, [], true>(
-		() => storage.getItem(key,{fallback:initialValue}),
-		initialValue ,
+		() => storage.getItem(key, { fallback: initialValue }),
+		initialValue,
 		opts,
 	);
 

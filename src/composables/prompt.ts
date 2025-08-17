@@ -1,6 +1,6 @@
 // management of prompt config items
 
-import { storage } from "wxt/storage"
+import { storage } from "#imports"
 import { DEFAULT_PROMPT_ID_KEY, PROMPT_CONFIG_KEY } from "../constants/storage-key"
 import { PromptConfigItem } from "../types/config/prompt"
 import { uid } from "radash"
@@ -200,7 +200,7 @@ export function usePromptDefaultPreset() {
   }
 }
 
-export function usePromptPreset(key:string) {
+export function usePromptPreset(key: string) {
   const preset = presetPrompts[key]
   return {
     systemMessage: preset[0].content as string,
