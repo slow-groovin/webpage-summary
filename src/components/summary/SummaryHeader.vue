@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-start flex-wrap px-1 py-1 gap-1 border" ref="headerRef">
+  <div class="flex items-center justify-start flex-wrap px-1 py-1 gap-1 border-b" ref="headerRef">
     <slot name="before-icon-buttons"></slot>
 
     <img :src="icon" alt="Extension Icon" class="w-6 h-6 rounded select-none" draggable="false" />

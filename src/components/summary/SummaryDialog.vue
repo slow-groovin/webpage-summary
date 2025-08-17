@@ -1,7 +1,7 @@
 <template>
   <!-- Summary Dialog Component -->
 
-  <div class="relative border"><!-- wrapper  -->
+  <div class="relative"><!-- wrapper  -->
     <!-- top-right buttons -->
     <div class="sticky  top-1 w-full flex justify-end pr-1 flex-row gap-1">
       <slot name="top-right-buttons" />

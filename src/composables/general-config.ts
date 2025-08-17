@@ -1,5 +1,5 @@
 import { storage } from "#imports";
-import { SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL, ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, ENABLE_CREATE_NEW_PANEL_BUTTON } from "../constants/storage-key";
+import { SPOKEN_LANG_KEY as SUMMARY_LANG_KEY, USER_CUSTOM_STYLE_KEY, ENABLE_TOKAN_USAGE_VIEW, ENABLE_USER_CHAT_DEFAULT, ENABLE_AUTO_BEGIN_SUMMARY, ENABLE_SUMMARY_WINDOW_DEFAULT, SUMMARY_INPUT_EXCEED_BEHAVIOUR, POPUP_CLICK_TRIGGER as ENABLE_POPUP_CLICK_TRIGGER, ENABLE_FLOATING_BALL, ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, ENABLE_CREATE_NEW_PANEL_BUTTON, ENABLE_CHAT_INPUT_BOX } from "../constants/storage-key";
 import useWxtStorage from "./useWxtStorage";
 import { DefaultConfig } from "../constants/default-config";
 import { InputContentLengthExceededStrategy } from "../types/summary";
@@ -18,18 +18,20 @@ async function getAllExtConfigs() {
     { key: ENABLE_SUMMARY_WINDOW_DEFAULT, fallback: DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT },
     { key: SUMMARY_INPUT_EXCEED_BEHAVIOUR, fallback: DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR },
     { key: ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER, fallback: DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER },
+    { key: ENABLE_CHAT_INPUT_BOX, fallback: DefaultConfig.ENABLE_CHAT_INPUT_BOX },
 
   ]);
 
   return {
     summaryLanguage: result[0].value as string ?? DefaultConfig.SUMMARY_LANG,  //.getItems(...) has bugs: setting fallback has no effect
-    userCustomStyle: result[2].value as string ?? DefaultConfig.USER_CUSTOM_STYLE,
-    enableTokanUsageView: result[3].value as boolean ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
-    enableUserChatDefault: result[4].value as boolean ?? DefaultConfig.ENABLE_USER_CHAT_DEFAULT,
-    enableAutoBeginSummary: result[5].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY,
-    enableSummaryWindowDefault: result[6].value as boolean ?? DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT,
-    summaryInputExceedBehaviour: result[7].value as string ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR,
-    enableAutoBeginSummaryByActionOrContextTrigger: result[8].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER,
+    userCustomStyle: result[1].value as string ?? DefaultConfig.USER_CUSTOM_STYLE,
+    enableTokanUsageView: result[2].value as boolean ?? DefaultConfig.ENABLE_TOKAN_USAGE_VIEW,
+    enableUserChatDefault: result[3].value as boolean ?? DefaultConfig.ENABLE_USER_CHAT_DEFAULT,
+    enableAutoBeginSummary: result[4].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY,
+    enableSummaryWindowDefault: result[5].value as boolean ?? DefaultConfig.ENABLE_SUMMARY_WINDOW_DEFAULT,
+    summaryInputExceedBehaviour: result[6].value as string ?? DefaultConfig.SUMMARY_INPUT_EXCEED_BEHAVIOUR,
+    enableAutoBeginSummaryByActionOrContextTrigger: result[7].value as boolean ?? DefaultConfig.ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER,
+    enableChatInputBox: result[8].value as boolean ?? DefaultConfig.ENABLE_CHAT_INPUT_BOX,
   }
 }
 export function useGeneralConfig() {
@@ -70,6 +72,7 @@ export function useEnableTokenUsageView() {
 }
 
 /**
+ * @deprecated no use anymore
  * Reactive enable user chat default config.
  */
 export function useEnableUserChatDefault() {
@@ -155,4 +158,14 @@ export async function getEnableCreateNewPanelButton() {
   return await storage.getItem(ENABLE_CREATE_NEW_PANEL_BUTTON, { fallback: DefaultConfig.ENABLE_CREATE_NEW_PANEL_BUTTON })
 }
 
+/**
+ * Reactive enable chat input box config.
+ */
+export function useEnableChatInputBox() {
+  const { state: enableChatInputBox, ...other } = useWxtStorage(ENABLE_CHAT_INPUT_BOX, DefaultConfig.ENABLE_CHAT_INPUT_BOX)
+  return { enableChatInputBox, ...other }
+}
 
+export async function getEnableChatInputBox() {
+  return await storage.getItem(ENABLE_CHAT_INPUT_BOX, { fallback: DefaultConfig.ENABLE_CHAT_INPUT_BOX })
+}

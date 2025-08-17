@@ -9,7 +9,8 @@ export const DefaultConfig = {
   ENABLE_SUMMARY_WINDOW_DEFAULT: false,
   ENABLE_FLOATING_BALL: true,
   ENABLE_POPUP_CLICK_TRIGGER: false,
-  SUMMARY_INPUT_EXCEED_BEHAVIOUR: 'cut-preserve-front' as InputContentLengthExceededStrategy, 
+  SUMMARY_INPUT_EXCEED_BEHAVIOUR: 'cut-preserve-front' as InputContentLengthExceededStrategy,
   ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER: true,
-  ENABLE_CREATE_NEW_PANEL_BUTTON: true
+  ENABLE_CREATE_NEW_PANEL_BUTTON: true,
+  ENABLE_CHAT_INPUT_BOX: true,
 } as const

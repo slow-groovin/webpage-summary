@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Input from '@/src/components/ui/input/Input.vue';
 import Switch from '@/src/components/ui/switch/Switch.vue';
-import { useEnableAutoBeginSummary, useEnableAutoBeginSummaryByActionOrContextTrigger, useEnableCreateNewPanelButton, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
+import { useEnableAutoBeginSummary, useEnableAutoBeginSummaryByActionOrContextTrigger, useEnableCreateNewPanelButton, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle, useEnableChatInputBox } from '@/src/composables/general-config';
 import { DefaultConfig } from '@/src/constants/default-config';
 import DefaultSettingValue from '../components/DefaultSettingValue.vue';
 import { t } from '@/src/utils/extension';
@@ -12,9 +12,10 @@ const { enableSummaryWindowDefault } = useEnableSummaryWindowDefault()
 const { enableFloatingBall } = useEnableFloatingBall()
 const { enablePopupClickTrigger } = useEnablePopupClickTrigger()
 const { enableTokenUsageView } = useEnableTokenUsageView()
-const { enableUserChatDefault } = useEnableUserChatDefault()
+// const { enableUserChatDefault } = useEnableUserChatDefault()
 const { enableAutoBeginSummaryByActionOrContextTrigger } = useEnableAutoBeginSummaryByActionOrContextTrigger()
 const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
+const { enableChatInputBox } = useEnableChatInputBox()
 
 </script>
 <template>
@@ -123,7 +124,7 @@ const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
     </div>
 
 
-    <div class="line">
+    <!-- <div class="line">
       <div>
         <div class="title">{{ t('Always_expand_the_chat_box') }}</div>
         <div class="description">chat box(for user to ask llm after summary with summary context) in
@@ -133,7 +134,7 @@ const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
         <Switch v-model:checked="enableUserChatDefault" />
         <DefaultSettingValue :value="DefaultConfig.ENABLE_USER_CHAT_DEFAULT" />
       </div>
-    </div>
+    </div> -->
 
     <div class="line">
       <div>
@@ -153,6 +154,17 @@ const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
       <div class="setting">
         <Switch v-model:checked="enbaleCreateNewPanelButton" />
         <DefaultSettingValue :value="DefaultConfig.ENABLE_CREATE_NEW_PANEL_BUTTON" />
+      </div>
+    </div>
+
+    <div class="line">
+      <div>
+        <div class="title">{{ t('Enable_chat_input_box') }}</div>
+        <div class="description">enable chat input box in the summary panel</div>
+      </div>
+      <div class="setting">
+        <Switch v-model:checked="enableChatInputBox" />
+        <DefaultSettingValue :value="DefaultConfig.ENABLE_CHAT_INPUT_BOX" />
       </div>
     </div>
 

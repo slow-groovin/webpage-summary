@@ -13,7 +13,7 @@
       </span>
     </div>
 
-    <Button variant="ghost" size="sm-icon" @click="isViewContent = true">
+    <Button variant="ghost" size="sm-icon" @click="isViewContent = !isViewContent">
       <ScanEyeIcon class="w-6 h-6 text-gray-500/70" />
     </Button>
 
@@ -67,7 +67,7 @@
         <div class="relative max-w-[66vw] max-h-[66vh]  overflow-y-auto">
           <span class="">{{ webpagContent.textContent?.substring(0, sliderValue[0]) }}</span>
           <span class="text-green-500 underline">{{ webpagContent.textContent?.substring(sliderValue[0], sliderValue[1])
-            }}</span>
+          }}</span>
           <span class="">{{ webpagContent.textContent?.substring(sliderValue[1]) }}</span>
         </div>
       </div>
@@ -99,9 +99,9 @@ const { webpagContent, maxContentLength, class: clazz } = defineProps<{
   maxContentLength?: number,
   class?: HTMLAttributes['class']
 }>()
-const root=ref<ShadowRoot|null>()
+const root = ref<ShadowRoot | null>()
 
-getShadowRootAsync().then(r=>root.value=r)
+getShadowRootAsync().then(r => root.value = r)
 
 
 const length = webpagContent.textContent?.length ?? 0

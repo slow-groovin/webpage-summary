@@ -71,6 +71,9 @@
   "Enable_popup_click_trigger": {
     "message": "Enable action click trigger"
   },
+  "Enable_chat_input_box": {
+    "message": "Enable chat box(for subsequent chats after summarizing)"
+  },
   "Auto_begin_summary_by_action_or_context_trigger": {
     "message": "Auto begin summary when triggered by action or context menu"
   },

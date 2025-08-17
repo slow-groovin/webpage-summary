@@ -71,7 +71,9 @@
   "Enable_popup_click_trigger": {
     "message": "点击action时, 打开总结面板"
   },
-
+  "Enable_chat_input_box": {
+    "message": "开启 chat box(支持总结之后进行后续对话)"
+  },
   "Auto_begin_summary_by_action_or_context_trigger": {
     "message": "使用action或者右键菜单触发总结, 面板打开时自动开始总结"
   },

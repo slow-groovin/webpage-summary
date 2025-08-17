@@ -18,7 +18,7 @@ export default defineContentScript({
   cssInjectionMode: 'ui',
 
   async main(ctx) {
-    console.log('content script loaded: page.content');
+    // console.log('content script loaded: page.content');
     // 3. Define your UI
     const ui = await createShadowRootUi(ctx, {
       name: 'webpage-summary',

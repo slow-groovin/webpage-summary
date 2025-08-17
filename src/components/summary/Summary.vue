@@ -1,6 +1,6 @@
 <template>
   <template v-if="true">
-    <DraggableContainer class="w-[var(--webpage-summary-panel-width)]  bg-[--webpage-summary-panel-background] 
+    <DraggableContainer class="border w-[var(--webpage-summary-panel-width)]  bg-[--webpage-summary-panel-background] 
        rounded-t-xl rounded-b-xl shadow-2xl">
       <template #header>
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
@@ -73,25 +73,28 @@
         </SummaryDialog>
 
         <div class="w-full h-fit relative ">
-          <div class="absolute right-0 top-0 flex flex-row gap-1 ">
+          <div class="absolute top-[0.25rem] right-0 flex flex-row gap-1 ">
             <!-- enable ChaptInputBox  buttons -->
-            <Button v-show="!isChatDialogOpen" @click="() => isChatDialogOpen = !isChatDialogOpen" variant="github"
-              size="icon" class="rounded-none text-neutral-400 text-primary/50" title="continue chat">
+            <Button v-show="!expandChatInputBox && enableChatInputBox"
+              @click="() => expandChatInputBox = !expandChatInputBox" variant="github" size="icon"
+              class="p-1 rounded-none text-neutral-400 text-primary/50" title="continue chat">
               <MessageCirclePlusIcon />
             </Button>
           </div>
 
           <div class="absolute bottom-[-1rem] left-[50%] flex flex-row gap-1 ">
+
             <!-- hide  buttons -->
-            <Button v-show="isChatDialogOpen" @click="() => isChatDialogOpen = !isChatDialogOpen" variant="github"
-              size="icon" class="h-4 rounded-none text-gray-500">
+            <Button v-show="expandChatInputBox && enableChatInputBox"
+              @click="() => expandChatInputBox = !expandChatInputBox" variant="github" size="icon"
+              class="h-4 rounded-none text-gray-500">
               <ChevronUpIcon />
             </Button>
           </div>
 
 
-          <ChatInputBox v-show="isChatDialogOpen" @submit="submitUserInput" ref="chatInputBox"
-            :disabled="status !== 'ready'" class="rounded-b-xl" />
+          <ChatInputBox v-show="expandChatInputBox && enableChatInputBox" @submit="submitUserInput" ref="chatInputBox"
+            :disabled="status !== 'ready'" class="rounded-b-xl border-t" />
         </div>
 
 
@@ -107,7 +110,7 @@
 <script setup lang="ts">
 import StatusButton from '@/src/components/summary/StatusButton.vue';
 import SummaryHeader from '@/src/components/summary/SummaryHeader.vue';
-import { useEnableCreateNewPanelButton, useEnableTokenUsageView, useEnableUserChatDefault } from '@/src/composables/general-config';
+import { useEnableCreateNewPanelButton, useEnableTokenUsageView, useEnableChatInputBox } from '@/src/composables/general-config';
 import { useSummary } from '@/src/composables/useSummary';
 import { scrollToId } from '@/src/utils/document';
 import { ChevronUpIcon, CopyPlusIcon, MessageCirclePlusIcon, Minimize, Minimize2Icon, MinimizeIcon, MinusIcon, PlusIcon, SquareMinusIcon, SquarePlusIcon, XIcon } from 'lucide-vue-next';
@@ -122,8 +125,10 @@ import InputInspect from './InputInspect.vue';
 import TokenUsageItem from './TokenUsageItem.vue';
 import EventEmitter from 'eventemitter3';
 import clearAll from '~/assets/svg/clear-all.svg'
+import useWxtStorage from '@/src/composables/useWxtStorage';
+import { EXPAND_CHAT_INPUT_BOX } from '@/src/constants/storage-key';
 
-const isChatDialogOpen = ref(false)
+
 const chatInputText = ref('')
 const { closeOrHide = 'hide' } = defineProps<{
   closeOrHide?: 'close' | 'hide' //hide: first panel. close: panel created manually
@@ -143,8 +148,11 @@ const { chat, stop, error, status,
   webpageContent
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
-const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
+
 const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
+const { enableChatInputBox } = useEnableChatInputBox()
+const { state: expandChatInputBox } = useWxtStorage(EXPAND_CHAT_INPUT_BOX, false);
+// const{state:expandChatInputBox}=
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 const chatInputBox = useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 
@@ -161,9 +169,7 @@ defineExpose({
   on: (name: string, fn: Parameters<typeof event.on>[1]) => event.on(name, fn),
 })
 
-enableUserChatDefaultThen(() => {
-  isChatDialogOpen.value = enableUserChatDefault.value
-})
+
 
 onPrepareDone(() => {
   if (!currentModel.value) {

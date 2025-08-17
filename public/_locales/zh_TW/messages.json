@@ -71,7 +71,9 @@
   "Enable_popup_click_trigger": {
     "message": "點擊 action 時，開啟摘要面板"
   },
-
+  "Enable_chat_input_box": {
+    "message": "開啟聊天視窗（支援在總結之後進行後續對話）"
+  },
   "Auto_begin_summary_by_action_or_context_trigger": {
     "message": "使用 action 或是右鍵選單觸發摘要，面板開啟時自動開始摘要"
   },

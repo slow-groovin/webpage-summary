@@ -1,25 +1,12 @@
 <script setup lang="ts">
-import Input from '@/src/components/ui/input/Input.vue';
-import Switch from '@/src/components/ui/switch/Switch.vue';
-import { useEnableAutoBeginSummary, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
-import { DefaultConfig } from '@/src/constants/default-config';
-import DefaultSettingValue from '../components/DefaultSettingValue.vue';
-import { contentLengthExceededStrategys } from '@/src/presets/strategy';
 import Select from '@/src/components/custom-ui/select/Select.vue';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/src/components/ui/tabs';
+import { useEnableAutoBeginSummary, useEnableFloatingBall, useEnablePopupClickTrigger, useEnableSummaryWindowDefault, useEnableTokenUsageView, useEnableUserChatDefault, useSummaryInputExceedBehaviour, useSummaryLanguage, useUserCustomStyle } from '@/src/composables/general-config';
+import { contentLengthExceededStrategys } from '@/src/presets/strategy';
 import { t } from '@/src/utils/extension';
-import { CircleCheckBig, CircleCheckBigIcon } from 'lucide-vue-next';
-
-
-const { summaryLanguage } = useSummaryLanguage()
-const { enableAutoBeginSummary } = useEnableAutoBeginSummary()
-const { enableSummaryWindowDefault } = useEnableSummaryWindowDefault()
-const { enableFloatingBall } = useEnableFloatingBall()
-const { enablePopupClickTrigger } = useEnablePopupClickTrigger()
-const { enableTokenUsageView } = useEnableTokenUsageView()
-const { enableUserChatDefault } = useEnableUserChatDefault()
+import { CircleCheckBigIcon } from 'lucide-vue-next';
+import DefaultSettingValue from '../components/DefaultSettingValue.vue';
 const { summaryInputExceedBehaviour } = useSummaryInputExceedBehaviour()
-const { userCustomStyle } = useUserCustomStyle()
 
 
 
@@ -44,8 +31,8 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line mt-[-2em]">
       <div>
-        <div class="title">{{t('Extract_method')}}</div>
-                 <p class="description">how to get text content from .html file </p>
+        <div class="title">{{ t('Extract_method') }}</div>
+        <p class="description">how to get text content from .html file </p>
       </div>
       <div>
         <!-- just decoration -->
@@ -61,12 +48,13 @@ const { userCustomStyle } = useUserCustomStyle()
 
     <div class="line border rounded-xl p-2">
       <div>
-        <div class="title">{{t('Length_exceeding_behaviour')}}
-         
-        
+        <div class="title">{{ t('Length_exceeding_behaviour') }}
+
+
         </div>
         <p class="description">what to do when webpage content length exceeds the maxContentLength of model's config</p>
-        <p class="description text-amber-600">feel free to set, you can also adjust context window on the spot when bad response received.</p>
+        <p class="description text-amber-600">feel free to set, you can also adjust context window on the spot when bad
+          response received.</p>
 
         <Tabs v-model="summaryInputExceedBehaviour">
           <TabsList class="gap-4 p-4 bg-gray-300 items-stretch">
@@ -79,7 +67,7 @@ const { userCustomStyle } = useUserCustomStyle()
             </TabsTrigger>
 
             <TabsTrigger value="cut-preserve-middle" class="border ">
-                <img src="../../../assets/svg/cut-preserve-middle-intro.svg" class="" />
+              <img src="../../../assets/svg/cut-preserve-middle-intro.svg" class="" />
             </TabsTrigger>
 
             <TabsTrigger value="nothing" class="border ">
@@ -96,9 +84,9 @@ const { userCustomStyle } = useUserCustomStyle()
             class="border rounded p-1 w-48  hover:cursor-pointer active:outline-1 select-none shadow font-mono font-bold">
             {{ contentLengthExceededStrategys[summaryInputExceedBehaviour]?.name }}
           </div>
-          <div> {{ t((summaryInputExceedBehaviour.replaceAll('-','_')+'_DESC') as any )}}</div>
+          <div> {{ t((summaryInputExceedBehaviour.replaceAll('-', '_') + '_DESC') as any) }}</div>
         </div>
-        <DefaultSettingValue value="cut-preserve-front" class="w-fit"/>
+        <DefaultSettingValue value="cut-preserve-front" class="w-fit" />
 
 
       </div>

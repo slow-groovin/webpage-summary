@@ -15,6 +15,10 @@ export const ENABLE_USER_CHAT_DEFAULT = "local:enable-user-chat-default";
 export const ENABLE_CREATE_NEW_PANEL_BUTTON =
   "local:enable-create-new-panel-button";
 
+
+export const ENABLE_CHAT_INPUT_BOX = "local:enable-chat-input-box";
+export const EXPAND_CHAT_INPUT_BOX = "local:expand-chat-input-box";
+
 /* 
 Trigger Settings
  */
@@ -29,6 +33,7 @@ export const ENABLE_SUMMARY_WINDOW_DEFAULT =
 export const ENABLE_FLOATING_BALL = "local:enable-floating-ball";
 
 export const POPUP_CLICK_TRIGGER = "local:popup-click-trigger";
+
 
 /*
 Strategy Settings

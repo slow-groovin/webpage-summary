@@ -4,7 +4,7 @@
     @Prompt: An input box with a send button.
   -->
   <div
-    :class="cn('relative flex flex-row flex-nowrap items-end border p-2 h-fit', isTextAreaFocus ? 'border-primary' : '', props.class)">
+    :class="cn('relative flex flex-row flex-nowrap items-end p-2 h-fit', isTextAreaFocus ? 'border-primary' : '', props.class)">
     <!-- :class="{ 'border-primary': isTextAreaFocus }"> -->
     <!-- Input box -->
     <textarea v-model="inputText" ref="textareaRef"
