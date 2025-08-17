@@ -70,7 +70,7 @@ By default, the summary panel does not open automatically. You can open it in th
 
 1.  Click the floating ball in the lower right corner of the page (configurable: `Yes (default) / No` display)
 2.  Click the action (popup) button, then click the "Summarize" button on the page (configurable: clicking the action (popup) button can `Open the panel directly / Open the popup page (default)`)
-3.  Click "⚡ Summarize This Page" in the page's context menu
+3.  Click "Summarize This Page" in the page's context menu
 4.  (Manual configuration required) Configure a keyboard shortcut through the browser extension settings (not the plugin's options page). You can configure a shortcut trigger (recommended `Alt+S`)
 
 > You can also configure `Auto open summary panel on new tab`
@@ -107,12 +107,12 @@ Copying webpage content into a llm website, then entering prompts and viewing th
 
 Currently(*~2025.1), the following provide this functionality:
 
-| Type  | Product | Cost | Overview| Open Source | User Experience |
-| --- | --- | ---- | ---- | -------- | -------- |
-| Small company commercial products | sider.ai, briefy.ai, monica.ai | ≈10$/m| Want to create a complex all-in-one system, with endless telemetry | No | Good |
-| Large model vendor plugin ends | Doubao plugin, Kimi plugin | Completely free | Doubao: Wants to create a complex all-in-one system, laggy, endless telemetry, cannot even be put on the extension store | No | Good+ |
-| Products listed in the app store by individual developers | | Free or ≈4$/m | No maintenance, many are unavailable | No | Poor |
-| Open source |[chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | Free  | Supports multiple model configurations and has made specific website customizations | **Yes**| Good |
+| Type                                                      | Product                                                | Cost            | Overview                                                                                                                 | Open Source | User Experience |
+| --------------------------------------------------------- | ------------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- | --------------- |
+| Small company commercial products                         | sider.ai, briefy.ai, monica.ai                         | ≈10$/m          | Want to create a complex all-in-one system, with endless telemetry                                                       | No          | Good            |
+| Large model vendor plugin ends                            | Doubao plugin, Kimi plugin                             | Completely free | Doubao: Wants to create a complex all-in-one system, laggy, endless telemetry, cannot even be put on the extension store | No          | Good+           |
+| Products listed in the app store by individual developers |                                                        | Free or ≈4$/m   | No maintenance, many are unavailable                                                                                     | No          | Poor            |
+| Open source                                               | [chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | Free            | Supports multiple model configurations and has made specific website customizations                                      | **Yes**     | Good            |
 
 [chatGPTBox](https://github.com/josStorer/chatGPTBox) is the only open-source, fully functional webpage summary plugin I found. It is a great project. The interface design of this project is inspired by it, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
 

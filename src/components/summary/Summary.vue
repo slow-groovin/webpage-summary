@@ -5,6 +5,7 @@
       <template #header>
         <SummaryHeader v-model:current-model="currentModel" v-model:current-prompt="currentPrompt" class="rounded-t-xl"
           :token-usage="tokenUsage">
+
           <template #before-icon-buttons>
             <Button v-if="closeOrHide === 'close'" @click="$emit('closePanel')" variant="github" size="sm-icon"
               title="close this panel" class=" p-0 text-foreground/80 ">
@@ -20,8 +21,8 @@
 
 
 
-            <Button v-if="closeOrHide === 'hide' && enbaleCreateNewPanelButton" @click="$emit('createNewPanel')" variant="github" size="sm-icon"
-              title="create new panel" class=" p-0 text-foreground/50 ">
+            <Button v-if="closeOrHide === 'hide' && enbaleCreateNewPanelButton" @click="$emit('createNewPanel')"
+              variant="github" size="sm-icon" title="create new panel" class=" p-0 text-foreground/50 ">
               <CopyPlusIcon />
             </Button>
             <!-- minimize button -->
@@ -143,7 +144,7 @@ const { chat, stop, error, status,
 } = useSummary()
 const { enableTokenUsageView } = useEnableTokenUsageView()
 const { enableUserChatDefault, then: enableUserChatDefaultThen } = useEnableUserChatDefault()
-const {enbaleCreateNewPanelButton}=useEnableCreateNewPanelButton()
+const { enbaleCreateNewPanelButton } = useEnableCreateNewPanelButton()
 const summaryDialog = useTemplateRef<InstanceType<typeof SummaryDialog>>('summaryDialog')
 const chatInputBox = useTemplateRef<InstanceType<typeof ChatInputBox>>('chatInputBox')
 

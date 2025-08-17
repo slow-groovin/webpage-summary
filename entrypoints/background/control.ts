@@ -32,7 +32,7 @@ export async function addContextMenus() {
   // summrize trigger
   browser.contextMenus.create({
     id: "summarize-this-page",
-    title: t('summarize_this_page') + '⚡',
+    title: t('summarize_this_page') + '',
     contexts: import.meta.env.FIREFOX ? ["page", "page_action"] : ["page", "action"]  // add btn to page context menu
   });
 
@@ -46,8 +46,8 @@ export async function addContextMenus() {
   //add selection to chat
   browser.contextMenus.create({
     id: "add-to-chat",
-    title: t('add_selection_to_chat')+'📝',  
-    contexts: ["selection"] 
+    title: t('add_selection_to_chat') + '📝',
+    contexts: ["selection"]
   });
 
   //event handler for context memu click
@@ -65,7 +65,7 @@ export async function addContextMenus() {
       /*
        *  `selectionText` will never have newline `/n`
        */
-      sendMessage('addContentToChatDialog',info.selectionText??'',tab?.id)
+      sendMessage('addContentToChatDialog', info.selectionText ?? '', tab?.id)
     }
   });
 }
