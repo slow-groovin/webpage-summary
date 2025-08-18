@@ -8,6 +8,8 @@
 6. optimize appearance styles
 7. feature: provide config to enable/disable chatbox
 8. implement the logic for stopping summarize
+9. implenent whitelist/blacklist
+10. implement site custom selectors
 
 ## [0.4.2] - 2025-07-18
 update moonshot-web-provider.

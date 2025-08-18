@@ -111,8 +111,8 @@ const examples = [
 <template>
   <div class="relative p-1">
     <div class="pb-24">
-      <h1 class="text-2xl font-bold tracking-tight mb-6">
-        {{ t("Site_Customization") }} {{ t("Setting") }}
+      <h1 class="my-4 pl-0 text-3xl font-bold">
+        {{ t("Site_Customization") }}
       </h1>
 
       <div
