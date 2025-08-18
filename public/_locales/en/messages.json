@@ -218,12 +218,46 @@
   "Import": {
     "message": "Import"
   },
-
   "Import_Alert": {
     "message": "⚠ Import will TOTALLY OVERRIDE your config! "
   },
-
   "Commad_Open_Panel_DESC": {
     "message": "open/hide summary panel in current page"
+  },
+  "Whitelist": {
+    "message": "Whitelist"
+  },
+  "Blacklist": {
+    "message": "Blacklist"
+  },
+  "Saved": {
+    "message": "Saved!"
+  },
+  "Site_Custom_Patterns_Example": {
+    "message": "Patterns Example"
+  },
+  "Site_Custom_Whitelist_Description": {
+    "message": "When enabled, the plugin will only be activated if the page URL's host or host+path matches. (Higher priority than blacklist)"
+  },
+  "Site_Custom_Blacklist_Description": {
+    "message": "When enabled, the plugin will be disabled if the page URL's host or host+path matches. (Lower priority than whitelist)"
+  },
+  "Site_Custom_Description": {
+    "message": "Use the textContent extracted by custom selectors to replace the default @mozilla/readability"
+  },
+  "Site_Custom_Match_Pattern": {
+    "message": "Match Pattern"
+  },
+  "Site_Custom_Patterns": {
+    "message": "Patterns"
+  },
+  "Site_Custom_one_per_line": {
+    "message": "one per line"
+  },
+  "Site_Custom_Selectors": {
+    "message": "Selectors"
+  },
+  "Site_Custom_New_Rule": {
+    "message": "New Rule"
   }
 }

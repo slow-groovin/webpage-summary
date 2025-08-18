@@ -14,7 +14,11 @@ import { getEnableAutoBeginSummary, getSummaryLanguage } from './general-config'
 import { useModelConfigStorage } from './model-config';
 import { usePromptConfigStorage, usePromptDefaultPreset } from './prompt';
 import { writeTextToClipboard, onSpaRouteChange } from '../utils/document';
-import { simpleParseRead } from '../utils/page-read';
+import { simpleParseRead, textsBySelectors } from '../utils/page-read';
+import { storage } from '#imports';
+import { SITE_CUSTOMIZATION } from '../constants/storage-key';
+import { SiteCumstomizationItem } from '../types/config/site-rules';
+import { minimatch } from 'minimatch';
 
 
 
@@ -24,7 +28,7 @@ export function useSummary() {
     /*listen SPA change, update webpageContent
     */
     disconnectOnSPARouteChange = onSpaRouteChange(() => {
-      webpageContent.value = simpleParseRead()
+      initWebpageContent()
       stop();
       messages.value = [] //reset messages
       uiMessages.value = [] //reset ui messages
@@ -99,9 +103,8 @@ export function useSummary() {
     outputToken: 0,
   })
 
-  let webpageContent: Ref<WebpageContent | undefined> = ref(simpleParseRead())
-
-
+  let webpageContent: Ref<WebpageContent | undefined> = ref('')
+  initWebpageContent()//async process
 
 
   const event = new EventEmitter()
@@ -131,6 +134,26 @@ export function useSummary() {
     }
   }
 
+  async function initWebpageContent() {
+    storage.getItem<SiteCumstomizationItem[]>(SITE_CUSTOMIZATION).then(configs => {
+      const matchOne = configs?.find(c => c.enable
+        &&
+        (
+          minimatch(window.location.hostname, c.pattern)
+          ||
+          minimatch(window.location.hostname + window.location.pathname, c.pattern)
+        )
+      )
+      if (matchOne) {
+        webpageContent.value = textsBySelectors(matchOne.selectors)
+        // console.debug('match selectors', webpageContent.value.textContent?.length, toRaw(webpageContent.value));
+      } else {
+        webpageContent.value = simpleParseRead()
+      }
+    })
+  }
+
+
   async function initMessages() {
     if (!currentModel.value || !currentPrompt.value) {
       throw new Error("Model or Prompt is not ready")
@@ -142,6 +165,7 @@ export function useSummary() {
     /*
      * render and deal with content length exceed
      */
+
     if (webpageContent.value) {
       if (!webpageContent.value.textContent) webpageContent.value.textContent = ''
 
@@ -177,6 +201,7 @@ export function useSummary() {
     }
 
   }
+
 
   async function copyMessages() {
     const text = uiMessages.value.map(m => m.role + ':  ' + m.content).join('\n' + '-'.repeat(50) + '\n')

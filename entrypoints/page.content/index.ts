@@ -1,7 +1,8 @@
 import '@/assets/tailwind.css';
 import { createShadowRootUi } from "#imports";
 import { defineContentScript } from "#imports";
-
+import { storage } from "#imports";
+import { minimatch } from 'minimatch';
 
 // 1. Import the style
 // import './style.css';
@@ -9,6 +10,8 @@ import { getUserCustomStyle } from "@/src/composables/general-config";
 import { injectUserSettingCssVariables } from "@/src/utils/document";
 import { createApp } from 'vue';
 import App from './App.vue';
+import { BlackList, SiteCumstomizationItem, WhiteList } from '@/src/types/config/site-rules';
+import { BLACKLIST, SITE_CUSTOMIZATION, WHITELIST } from '@/src/constants/storage-key';
 
 export default defineContentScript({
   matches: [
@@ -18,6 +21,12 @@ export default defineContentScript({
   cssInjectionMode: 'ui',
 
   async main(ctx) {
+    // console.log('ctx', window.location.host + window.location.pathname, await isMatchUrl(window.location.hostname, window.location.pathname));
+
+    //match through whitelist & blacklist settings 
+    if (!await isMatchUrl(window.location.hostname, window.location.pathname)) {
+      return
+    }
     // console.log('content script loaded: page.content');
     // 3. Define your UI
     const ui = await createShadowRootUi(ctx, {
@@ -76,8 +85,40 @@ function applyPageHtmlFont(shadowRoot: ShadowRoot, shadowHost: HTMLElement) {
   const style = document.createElement('style');
   style.textContent = `
     html, :host {
-      font-family: ${pageFont}; /* test_j4571 */
+      font-family: ${pageFont}; /* test_20250818 */
     }
   `;
   shadowRoot.querySelector('head')?.appendChild(style);
+}
+
+async function getGlobConfigs() {
+  const whitelist = await storage.getItem<WhiteList>(WHITELIST);
+  const blacklist = await storage.getItem<BlackList>(BLACKLIST);
+  return { whitelist, blacklist };
+}
+
+async function isMatchUrl(hostname: string, path: string) {
+  const { whitelist, blacklist } = await getGlobConfigs();
+  if (whitelist?.enable) {
+    if (whitelist.patterns.some((p) => minimatch(hostname, p))) {
+      return true
+    }
+
+    if (whitelist.patterns.some((p) => minimatch(hostname + path, p))) {
+      return true
+    }
+    return false
+  }
+
+  if (blacklist?.enable) {
+    if (blacklist.patterns.some((p) => minimatch(hostname, p))) {
+      return false
+    }
+    if (blacklist.patterns.some((p) => minimatch(hostname + path, p))) {
+      return false
+    }
+    return true
+  }
+  return true
+
 }

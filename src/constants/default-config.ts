@@ -1,4 +1,5 @@
 import { browser } from "wxt/browser";
+import type { BlackList, SiteCumstomizationItem, WhiteList } from "../types/config/site-rules";
 import { InputContentLengthExceededStrategy } from "../types/summary";
 export const DefaultConfig = {
   SUMMARY_LANG: browser.i18n.getUILanguage(),
@@ -13,4 +14,13 @@ export const DefaultConfig = {
   ENABLE_AUTO_BEGIN_SUMMARY_BY_ACTION_OR_CONTEXT_TRIGGER: true,
   ENABLE_CREATE_NEW_PANEL_BUTTON: true,
   ENABLE_CHAT_INPUT_BOX: true,
+  WHITELIST: {
+    enable: false,
+    patterns: [],
+  } as WhiteList,
+  BLACKLIST: {
+    enable: true,
+    patterns: [],
+  } as BlackList,
+  SITE_CUSTOMIZATION: [] as SiteCumstomizationItem[],
 } as const

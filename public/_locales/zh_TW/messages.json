@@ -223,5 +223,41 @@
   },
   "Commad_Open_Panel_DESC": {
     "message": "(在當前頁面)開啟/隐藏摘要面板"
+  },
+  "Whitelist": {
+    "message": "白名單"
+  },
+  "Blacklist": {
+    "message": "黑名單"
+  },
+  "Saved": {
+    "message": "已儲存！"
+  },
+  "Site_Custom_Patterns_Example": {
+    "message": "匹配模式範例"
+  },
+  "Site_Custom_Whitelist_Description": {
+    "message": "啟用後，只有在頁面 URL 的主機或主機+路徑匹配時，才會啟用外掛功能（優先級高於黑名單）"
+  },
+  "Site_Custom_Blacklist_Description": {
+    "message": "啟用後，如果頁面 URL 的主機或主機+路徑匹配時，將禁用外掛功能（優先級低於白名單）"
+  },
+  "Site_Custom_Description": {
+    "message": "使用自訂選擇器對應的 text 作為 textContent，替換預設的 @mozilla/readability"
+  },
+  "Site_Custom_Match_Pattern": {
+    "message": "匹配模式"
+  },
+  "Site_Custom_Patterns": {
+    "message": "匹配模式"
+  },
+  "Site_Custom_one_per_line": {
+    "message": "每行一個"
+  },
+  "Site_Custom_Selectors": {
+    "message": "選擇器"
+  },
+  "Site_Custom_New_Rule": {
+    "message": "新規則"
   }
 }

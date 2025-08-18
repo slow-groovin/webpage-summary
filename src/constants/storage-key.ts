@@ -19,6 +19,11 @@ export const ENABLE_CREATE_NEW_PANEL_BUTTON =
 export const ENABLE_CHAT_INPUT_BOX = "local:enable-chat-input-box";
 export const EXPAND_CHAT_INPUT_BOX = "local:expand-chat-input-box";
 
+
+export const WHITELIST = "local:site-filter-whitelist";
+export const BLACKLIST = "local:site-filter-blacklist";
+export const SITE_CUSTOMIZATION = "local:site-customization-list";
+
 /* 
 Trigger Settings
  */

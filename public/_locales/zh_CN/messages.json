@@ -223,5 +223,41 @@
   },
   "Commad_Open_Panel_DESC": {
     "message": "(在当前页面)打开/最小化总结面板"
+  },
+  "Whitelist": {
+    "message": "白名单"
+  },
+  "Blacklist": {
+    "message": "黑名单"
+  },
+  "Saved": {
+    "message": "已保存！"
+  },
+  "Site_Custom_Patterns_Example": {
+    "message": "匹配模式示例"
+  },
+  "Site_Custom_Whitelist_Description": {
+    "message": "开启后, 只有在页面 url的 host 或者 host+path 匹配时,才会激活插件功能(优先级高于黑名单)"
+  },
+  "Site_Custom_Blacklist_Description": {
+    "message": "开启后, 如果页面 url的 host 或者 host+path 匹配时, 会禁用插件功能 (优先级低于白名单)"
+  },
+  "Site_Custom_Description": {
+    "message": "使用自定义selectors对应的text作为textContent, 替换默认的 @mozilla/readability"
+  },
+  "Site_Custom_Match_Pattern": {
+    "message": "匹配模式"
+  },
+  "Site_Custom_Patterns": {
+    "message": "匹配模式"
+  },
+  "Site_Custom_one_per_line": {
+    "message": "每行一个"
+  },
+  "Site_Custom_Selectors": {
+    "message": "选择器"
+  },
+  "Site_Custom_New_Rule": {
+    "message": "新规则"
   }
 }
