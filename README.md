@@ -1,8 +1,8 @@
-<h1 style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
+<h1 align="center" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
  <img src="./packages/ext/assets/16.png" width="26"/>
- <span> Webpage Summary</span>
+ <span> Webpage Summary </span>
 </h1>
-<p>Browser extension for summarizing webpage text content with AI (LLM Api)</p>
+<p align="center">Browser extension for summarizing webpage text content with AI (with your own Apikey)</p>
 
 
 
@@ -10,13 +10,34 @@
 [![wakatime](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7.svg)](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7)
 
 <p align="center">
-  <span>English</span>
-  <a href="./docs/README_zh.md">简体中文</a>
+[<a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp">
+  <img src="/docs/img/google-store.svg" alt="Chrome Webstore"> Chrome Webstore
+</a>]
+[<a href="https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe">
+  <img src="/docs/img/edge.svg" alt="Edge Addons"> Edge Addons
+</a>]
+[<a href="https://addons.mozilla.org/firefox/addon/webpage-summary/">
+  <img src="/docs/img/firefox.svg" alt="Firefox Addons"> Firefox Addons
+</a>]
+  <span>|<span>
+  [<a href="./README.md">English</a>]
+  [<a href="./docs/README_zh.md">简体中文</a>]
 </p>
 
-https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
+<details style="border:1px solid #ddd;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.08);max-width:480px;background:#fff;font-family:system-ui,sans-serif;">
+  <summary style="list-style:none;cursor:pointer;padding:14px 18px;font-size:1rem;font-weight:600;color:#333;display:flex;align-items:center;justify-content:space-between;">
+    👉 Demo GIFs & Videos
+    <span style="font-size:0.9rem;transition:transform 0.25s ease;">⌄</span>
+  </summary>
 
-![summary](/docs/img/summary-anim.webp)
+  https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
+
+  ![summary](/docs/img/summary-anim.webp)
+</details>
+
+<br/>
+<hr/>
+
 
 - [1. Features](#1-features)
 - [2. Install](#2-install)
@@ -32,17 +53,21 @@ https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
 
 ## 1. Features
 
-1.  Custom LLM Api provider configuration, use any provider you like
-2.  Custom prompt templates
-3.  Switch between different models or prompts on the page
-4.  Input context length adjustment/limit & token usage view
-5.  Multiple triggers for opening the panel: `Auto Open` / `Floating Ball` / `Context Menu` / `Keyboard Shortcut` / `Action Click`
-6.  Auto begin summary: `Enable/Disable`
-7.  Works with different site access permissions in the browser; can be started from the contextMenu without current tab's permission
-8.  Privacy without concerns, no telemetry/data collection/unrelated feature requests
-9.  (Future) Summary in popup / in-page side panel / side panel
-10. (Future) Site customization (glob, selector, trigger, whitelist, blacklist)
-11. (Future) Cross-site LLM request (using session requests from LLM websites)
+- 🔧 Custom LLM API
+- 📝 Custom prompt templates
+- ⚪ Simple, lightweight(1.5MB), no login, no service
+- 🔒 Privacy-first – no telemetry or data collection
+- ⚙ Configs
+  - 📏 Limit context length
+  - 🎛️ Multiple triggers: Auto Open / Floating Ball / Context Menu / Shortcut / Action Click
+  - ⚡ Auto-start summary (Enable/Disable)
+  - 🛠️ Site customization (glob, selectors, whitelist/blacklist)
+  - ......
+- 🌊Other
+  -  👀 Token usage view
+  -  🌐 Works with different site permissions setting
+
+
 
 ## 2. Install
 [![](/docs/img/google-store.svg) Chrome Webstore](https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp)
