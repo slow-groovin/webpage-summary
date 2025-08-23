@@ -1,22 +1,47 @@
 
-<h1 style="display: flex; flex-direction: row; align-items: center; gap:.25em;">
- <img src="../packages/ext/assets/16.png" width="26"/>
- <span> 网页总结 Webpage Summary</span>
+<h1 align="center" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
+ <img src="./assets/16.png" width="26"/>
+ <span> 网页总结 Webpage Summary </span>
 </h1>
-<p>使用AI(LLM Api)对网页内容进行总结的浏览器插件</p>
+<p align="center">使用AI对网页文本内容进行总结的浏览器扩展 (使用您自己的Apikey)</p>
 
 
 [![wakatime](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7.svg)](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7)
 
 <p align="center">
-  <a href="/README.md">English</a>
-  <span>简体中文</span>
+  [<a href="/README.md">English</a>]
+  [<span>简体中文</span>]
 </p>
+
+<p align="center">
+[<a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp">
+  <img src="/docs/img/google-store.svg" alt="Chrome Webstore"> Chrome Webstore
+</a>]
+[<a href="https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe">
+  <img src="/docs/img/edge.svg" alt="Edge Addons"> Edge Addons
+</a>]
+[<a href="https://addons.mozilla.org/firefox/addon/webpage-summary/">
+  <img src="/docs/img/firefox.svg" alt="Firefox Addons"> Firefox Addons
+</a>]
+</p>
+
+<img src="./docs/img/screenshot.png">
+
+<details>
+  <summary>
+    👉 Demo GIFs & Videos
+  </summary>
+
+  ![summary](/docs/img/summary-anim.webp)
+  
+  https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
+
+</details>
 
 - [1. Features](#1-features)
 - [2. Install](#2-install)
 - [3. Usage](#3-usage)
-  - [3.1. quick start](#31-quick-start)
+  - [3.1. Quick Start](#31-quick-start)
   - [3.2. trigger](#32-trigger)
   - [3.3. error inspect](#33-error-inspect)
   - [3.4. 让llm请求走proxy](#34-让llm请求走proxy)
@@ -28,20 +53,22 @@
 
 ## 1. Features
 
-1. 配置任何 AI(LLM Api)
-2. 自定义 prompt 模板
-3. 在页面中即时切换不同的模型/prompt
-4. 输入上下文长度调整/限制 & token 使用情况查看
-5. 多种触发方式打开面板：`自动打开` / `悬浮球` / `右键菜单` / `键盘快捷键` / `图标点击`
-6. 自动开始总结：`启用/禁用`
-7. 支持在浏览器不同`站点访问权限`下工作，可以在设置为`单击时`一步启动
-8. 隐私无顾虑, 没有任何遥测/数据收集/无关功能的请求
-9. (Future) 在 popup/in-page side面板/side面板中总结
-10. (Future) 站点自定义（glob, selector, trigger, whitelist, blacklist）
-11. (Future) 通过 llm网站的session请求
+- 🔧 自定义 LLM API
+- 📝 自定义 prompt 模板
+- ⚪ 简单、轻量 (1.9MB)、没有登录、没有远程后台服务
+- 🔒 隐私优先 – 无遥测或数据收集
+- ⚙ 配置
+  - 📏 限制上下文长度
+  - 🎛️ 多种触发方式：自动打开 / 悬浮球 / 右键菜单 / 快捷键 / 图标点击
+  - ⚡ 自动开始总结 (启用/禁用)
+  - 🛠️ 站点自定义 (glob, 选择器, 白名单/黑名单)
+  - ......
+- 🌊 其他
+  - 👀 查看Token使用情况
+  - 🌐 适用于不同的站点权限设置
 
 
-##  2. Install
+## 2. Install
 [![](/docs/img/google-store.svg) Chrome Webstore](https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp)
 
 [![](/docs//img/edge.svg) Edge Addons](https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe)
@@ -51,12 +78,13 @@
 或者手动下载安装 [Github Relases](https://github.com/slow-groovin/webpage-summary/releases)
 
 ## 3. Usage
-### 3.1. quick start
-1. 配置一个模型
+### 3.1. Quick Start
+
+1.  配置一个模型
 ![create model](/docs/img/create-model-anim.webp?width=500&height=300)
-2. 打开一个页面, 点击总结
+2.  打开一个页面，点击总结
 ![summary](/docs/img/summary-anim.webp)
-3. 继续聊天, 或者尝试调整配置
+3.  继续聊天，或者尝试调整配置
 
 
 

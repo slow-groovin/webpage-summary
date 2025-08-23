@@ -56,7 +56,7 @@
 
 - 🔧 Custom LLM API
 - 📝 Custom prompt templates
-- ⚪ Simple, lightweight(1.5MB), no login, no service
+- ⚪ Simple, lightweight(1.9MB), no login, no service
 - 🔒 Privacy-first – no telemetry or data collection
 - ⚙ Configs
   - 📏 Limit context length
