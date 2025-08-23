@@ -1,4 +1,16 @@
 # Changelog
+## [0.5.0] - 2025-08-17
+1. change project structure from monorepo workspace to regular.
+2. update wxt version from 0.19 to 0.20
+3. change pnpm to bun (required by wxt@0.20)
+4. fix: in some websites (reddit, bilibili, ...), responsive css font sizes to fail.
+5. remove some console logs
+6. optimize appearance styles
+7. feature: provide config to enable/disable chatbox
+8. implement the logic for stopping summarize
+9. implenent whitelist/blacklist
+10. implement site custom selectors
+
 ## [0.4.2] - 2025-07-18
 update moonshot-web-provider.
 delete chatgpt-web-provide because of the the official crackdown on such behavior.

@@ -15,7 +15,7 @@ Key Advantages:
 
 -----------------------------------------------------------------------
 ⏳repository: https://github.com/slow-groovin/webpage-summary
-📝quickstart: https://github.com/slow-groovin/webpage-summary/blob/main/docs/README.md#31-quick-start
+📝quickstart: https://github.com/slow-groovin/webpage-summary/blob/main/README.md#31-quick-start
 🔑privacy policy: https://github.com/slow-groovin/webpage-summary/blob/main/docs/webstore/privacy.md
 
 [Chinese]

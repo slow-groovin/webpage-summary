@@ -1,8 +1,8 @@
-<h1 style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
- <img src="./packages/ext/assets/16.png" width="26"/>
- <span> Webpage Summary</span>
+<h1 align="center" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
+ <img src="./assets/16.png" width="26"/>
+ <span> Webpage Summary </span>
 </h1>
-<p>Browser extension for summarizing webpage text content with AI (LLM Api)</p>
+<p align="center">Browser extension for summarizing webpage text content with AI (with your own Apikey)</p>
 
 
 
@@ -10,13 +10,35 @@
 [![wakatime](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7.svg)](https://wakatime.com/badge/user/6476bd96-6b6e-4943-b20d-e7f34889cb5a/project/34d281d5-2656-4ac2-a17c-4141f46d06f7)
 
 <p align="center">
-  <span>English</span>
-  <a href="./docs/README_zh.md">简体中文</a>
+  [<span>English</span>]
+  [<a href="./docs/README_zh.md">简体中文</a>]
 </p>
 
-https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
+<p align="center">
+[<a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp">
+  <img src="/docs/img/google-store.svg" alt="Chrome Webstore"> Chrome Webstore
+</a>]
+[<a href="https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe">
+  <img src="/docs/img/edge.svg" alt="Edge Addons"> Edge Addons
+</a>]
+[<a href="https://addons.mozilla.org/firefox/addon/webpage-summary/">
+  <img src="/docs/img/firefox.svg" alt="Firefox Addons"> Firefox Addons
+</a>]
+</p>
 
-![summary](/docs/img/summary-anim.webp)
+<img src="./docs/img/screenshot.png">
+
+<details>
+  <summary>
+    👉 Demo GIFs & Videos
+  </summary>
+
+  ![summary](/docs/img/summary-anim.webp)
+  
+  https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
+
+</details>
+
 
 - [1. Features](#1-features)
 - [2. Install](#2-install)
@@ -32,17 +54,21 @@ https://github.com/user-attachments/assets/2a610cb2-e268-46a5-ab06-064a2037abfe
 
 ## 1. Features
 
-1.  Custom LLM Api provider configuration, use any provider you like
-2.  Custom prompt templates
-3.  Switch between different models or prompts on the page
-4.  Input context length adjustment/limit & token usage view
-5.  Multiple triggers for opening the panel: `Auto Open` / `Floating Ball` / `Context Menu` / `Keyboard Shortcut` / `Action Click`
-6.  Auto begin summary: `Enable/Disable`
-7.  Works with different site access permissions in the browser; can be started from the contextMenu without current tab's permission
-8.  Privacy without concerns, no telemetry/data collection/unrelated feature requests
-9.  (Future) Summary in popup / in-page side panel / side panel
-10. (Future) Site customization (glob, selector, trigger, whitelist, blacklist)
-11. (Future) Cross-site LLM request (using session requests from LLM websites)
+- 🔧 Custom LLM API
+- 📝 Custom prompt templates
+- ⚪ Simple, lightweight(1.5MB), no login, no service
+- 🔒 Privacy-first – no telemetry or data collection
+- ⚙ Configs
+  - 📏 Limit context length
+  - 🎛️ Multiple triggers: Auto Open / Floating Ball / Context Menu / Shortcut / Action Click
+  - ⚡ Auto-start summary (Enable/Disable)
+  - 🛠️ Site customization (glob, selectors, whitelist/blacklist)
+  - ......
+- 🌊Other
+  -  👀 Token usage view
+  -  🌐 Works with different site permissions setting
+
+
 
 ## 2. Install
 [![](/docs/img/google-store.svg) Chrome Webstore](https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp)
@@ -70,7 +96,7 @@ By default, the summary panel does not open automatically. You can open it in th
 
 1.  Click the floating ball in the lower right corner of the page (configurable: `Yes (default) / No` display)
 2.  Click the action (popup) button, then click the "Summarize" button on the page (configurable: clicking the action (popup) button can `Open the panel directly / Open the popup page (default)`)
-3.  Click "⚡ Summarize This Page" in the page's context menu
+3.  Click "Summarize This Page" in the page's context menu
 4.  (Manual configuration required) Configure a keyboard shortcut through the browser extension settings (not the plugin's options page). You can configure a shortcut trigger (recommended `Alt+S`)
 
 > You can also configure `Auto open summary panel on new tab`
@@ -107,12 +133,12 @@ Copying webpage content into a llm website, then entering prompts and viewing th
 
 Currently(*~2025.1), the following provide this functionality:
 
-| Type  | Product | Cost | Overview| Open Source | User Experience |
-| --- | --- | ---- | ---- | -------- | -------- |
-| Small company commercial products | sider.ai, briefy.ai, monica.ai | ≈10$/m| Want to create a complex all-in-one system, with endless telemetry | No | Good |
-| Large model vendor plugin ends | Doubao plugin, Kimi plugin | Completely free | Doubao: Wants to create a complex all-in-one system, laggy, endless telemetry, cannot even be put on the extension store | No | Good+ |
-| Products listed in the app store by individual developers | | Free or ≈4$/m | No maintenance, many are unavailable | No | Poor |
-| Open source |[chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | Free  | Supports multiple model configurations and has made specific website customizations | **Yes**| Good |
+| Type                                                      | Product                                                | Cost            | Overview                                                                                                                 | Open Source | User Experience |
+| --------------------------------------------------------- | ------------------------------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- | --------------- |
+| Small company commercial products                         | sider.ai, briefy.ai, monica.ai                         | ≈10$/m          | Want to create a complex all-in-one system, with endless telemetry                                                       | No          | Good            |
+| Large model vendor plugin ends                            | Doubao plugin, Kimi plugin                             | Completely free | Doubao: Wants to create a complex all-in-one system, laggy, endless telemetry, cannot even be put on the extension store | No          | Good+           |
+| Products listed in the app store by individual developers |                                                        | Free or ≈4$/m   | No maintenance, many are unavailable                                                                                     | No          | Poor            |
+| Open source                                               | [chatGPTBox⚡](https://github.com/josStorer/chatGPTBox) | Free            | Supports multiple model configurations and has made specific website customizations                                      | **Yes**     | Good            |
 
 [chatGPTBox](https://github.com/josStorer/chatGPTBox) is the only open-source, fully functional webpage summary plugin I found. It is a great project. The interface design of this project is inspired by it, but it lacks prompt customization features. In addition, its technology stack (React) is different from mine, so I decided to develop a new webpage summary browser plugin with my own technology stack (Vue, [wxt](https://github.com/wxt-dev/wxt), [vercel-ai-sdk](https://sdk.vercel.ai/)).
 
