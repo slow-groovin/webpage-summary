@@ -16,17 +16,17 @@
 
 <p align="center">
 [<a href="https://chromewebstore.google.com/detail/dhdnamkkepndgjimbpacmibkblndangk?utm_source=item-share-cp">
-  <img src="/docs/img/google-store.svg" alt="Chrome Webstore"> Chrome Webstore
+  <img src="/docs/img/google-store.svg" alt="Chrome Webstore">Chrome Webstore
 </a>]
 [<a href="https://microsoftedge.microsoft.com/addons/detail/jidechjgegiafmcmmhlifebacppcfboe">
-  <img src="/docs/img/edge.svg" alt="Edge Addons"> Edge Addons
+  <img src="/docs/img/edge.svg" alt="Edge Addons">Edge Addons
 </a>]
 [<a href="https://addons.mozilla.org/firefox/addon/webpage-summary/">
-  <img src="/docs/img/firefox.svg" alt="Firefox Addons"> Firefox Addons
+  <img src="/docs/img/firefox.svg" alt="Firefox Addons">Firefox Addons
 </a>]
 </p>
 
-<img src="./docs/img/screenshot.png">
+<img src="/docs/img/screenshot.png">
 
 <details>
   <summary>
