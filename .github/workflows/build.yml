@@ -1,15 +1,14 @@
 name: Release
 
 on:
-    
   push:
     tags:
       - "*"
     # branches:
     #   - deploy-test
   workflow_dispatch:
-  
-permissions: 
+
+permissions:
   contents: write
 jobs:
   submit:
@@ -18,26 +17,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
+      - uses: oven-sh/setup-bun@v1
         with:
-          version: 10
+          bun-version: latest
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
         working-directory: packages/ext
 
       - name: Zip extensions
         run: |
-          pnpm zip
-          pnpm zip:edge
-          pnpm zip:firefox
+          bun run zip
+          bun run zip:edge
+          bun run zip:firefox
         working-directory: packages/ext
-  
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -47,5 +45,3 @@ jobs:
             packages/ext/.output/*-chrome.zip
             packages/ext/.output/*-edge.zip
             packages/ext/.output/*-firefox.zip
-
-
