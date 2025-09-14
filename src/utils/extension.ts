@@ -1,28 +1,27 @@
 import { sendMessage } from "@/messaging"
 import { sleep } from "radash"
-import { browser, Tabs } from "wxt/browser"
+import { browser, Browser } from "wxt/browser"
 
-export async function activePageAndInvokeSummary(tab:Tabs.Tab) {
-  if(!tab.id) return
+export async function activePageAndInvokeSummary(tab: Browser.tabs.Tab) {
+  if (!tab.id) return
   //1. query if shadow-root exists.
-  let shadowRootExist=false
-  for(let i=0;i<5;i++){
+  let shadowRootExist = false
+  for (let i = 0; i < 5; i++) {
     await sleep(100)
     const result = await browser.scripting.executeScript({
       target: { tabId: tab.id },
-      args: [tab.id],
+      args: [],
       func: () => {
-        console.log('[webpage-summary][trigger invoke summary]examine if shadowRoot exists.', !!document.querySelector('webpage-summary')?.shadowRoot)
+        console.debug('[webpage-summary][trigger invoke summary]examine if shadowRoot exists:', !!document.querySelector('webpage-summary')?.shadowRoot)
         return !!document.querySelector('webpage-summary')?.shadowRoot
       }
     })
-    shadowRootExist=result[0].result as boolean
-    
-    if(shadowRootExist){
+    shadowRootExist = result[0].result as boolean
+    if (shadowRootExist) {
       break
     }
   }
-  
+
   //2. inject content.js if not exist
   /**
    * this will lead to a double page.js injected only in productin mode.
@@ -36,13 +35,13 @@ export async function activePageAndInvokeSummary(tab:Tabs.Tab) {
   // }
 
   //3.
-  if(shadowRootExist){
+  if (shadowRootExist) {
     sendMessage('invokeSummary', undefined, { tabId: tab.id! })
-  }else{
+  } else {
     console.error("cannot find shadowRoot, please check if the extension is enabled on this page")
   }
 }
 
-export function t(messageName:Parameters<typeof browser.i18n.getMessage>[0]){
+export function t(messageName: Parameters<typeof browser.i18n.getMessage>[0]) {
   return browser.i18n.getMessage(messageName)
 }

@@ -42,7 +42,7 @@ export default defineContentScript({
         // console.log(container,_shadow,shadowHost,_shadow.ownerDocument)
 
         shadowHost.style.visibility = 'visible'; //force visible. Prevent some websites (such as Reddit) from using selectors to force web components to be hidden.
-
+        shadowHost.style.fontSize = '16px';
         // applyPageHtmlFont(_shadow,  shadowHost)
         // Define how your UI will be mounted inside the container
 
@@ -54,6 +54,7 @@ export default defineContentScript({
 
 
         const app = createApp(App);
+
         app.config.errorHandler = (err: any) => {
           console.error('vue err', err)
           // toast({ title: 'Error', description: err.message ,variant:'destructive'}); //don't run this line, it may affect user's browsering

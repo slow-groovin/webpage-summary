@@ -36,7 +36,7 @@
     --hover: 210 30% 97%;
     --active: 210 30% 95%;
 
-    --radius: 0.5rem;
+    --radius: 0.5em;
   }
 
   .dark {
@@ -83,8 +83,9 @@
   /* webpage-summary */
   :root {
     /*  */
-    --webpage-summary-panel-width: 30rem;
-    --webpage-summary-panel-dialog-max-height: 30rem;
+    --webpage-summary-panel-srem: 16px;
+    --webpage-summary-panel-width: 30em;
+    --webpage-summary-panel-dialog-max-height: 30em;
     --webpage-summary-panel-background: #ffffff;
     --webpage-summary-panel-top: 4em;
     --webpage-summary-panel-right: 4em;
@@ -93,7 +94,7 @@
     --webpage-summary-calc-scale: 100%;
     /* placed in markdown.css */
     /* --webpage-summary-markdown-font-size: inherit; */
-    /* --webpage-summary-markdown-line-height: inherit; */ 
+    /* --webpage-summary-markdown-line-height: inherit; */
   }
 }
 

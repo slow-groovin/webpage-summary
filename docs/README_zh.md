@@ -1,6 +1,6 @@
 
 <h1 align="center" style="display: flex; flex-direction: row;justify-content:center; align-items: center; gap:.25em;">
- <img src="./assets/16.png" width="26"/>
+ <img src="../assets/16.png" width="26"/>
  <span> 网页总结 Webpage Summary </span>
 </h1>
 <p align="center">使用AI对网页文本内容进行总结的浏览器扩展 (使用您自己的Apikey)</p>
