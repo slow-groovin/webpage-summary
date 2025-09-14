@@ -1,4 +1,8 @@
 # Changelog
+## [0.6.0] - 2025-09-14
+1. switch size unit from `rem` to `--webpage-summary-panel-srem`, avoid some sites' html root font-size setting to affect the style of shadow root.
+2. feature: add `currentSelection` prompt template variable.
+
 ## [0.5.0] - 2025-08-17
 1. change project structure from monorepo workspace to regular.
 2. update wxt version from 0.19 to 0.20
