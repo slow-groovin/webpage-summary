@@ -1,9 +1,9 @@
 import { usePromptConfigStorage } from "@/src/composables/prompt";
 import { presetPrompts } from "@/src/presets/prompts";
-import { browser, Runtime } from "wxt/browser";
+import { browser, Browser } from "wxt/browser";
 import { storage } from "#imports";
 
-export function onInstallHook(detail: Runtime.OnInstalledDetailsType) {
+export function onInstallHook(detail: Browser.runtime.InstalledDetails) {
   addDefaultPrompt()
   openWelcomeOnFirstInstall()
 }

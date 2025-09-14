@@ -174,7 +174,8 @@ export function useSummary() {
       }
       const summaryInput = {
         ...webpageContent.value,
-        summaryLanguage: await getSummaryLanguage()
+        summaryLanguage: await getSummaryLanguage(),
+        currentSelection: window.getSelection()?.toString(),
       }
       renderMessages(messages.value, summaryInput)
     } else {
