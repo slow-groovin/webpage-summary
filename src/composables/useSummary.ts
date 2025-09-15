@@ -191,9 +191,11 @@ export function useSummary() {
     }))
   }
 
-
   async function refreshSummary() {
     try {
+      if (messages.value.length && messages.value[messages.value.length - 1].role === 'assistant') {
+        messages.value.pop();
+      }
       chat('', 'assistant')
 
     } catch (e) {
