@@ -11,19 +11,12 @@ import {
 } from '@/lib/site-rules-storage';
 import { ContentEntrance } from './ContentEntrance';
 
+import { onMessage } from '@/lib/messaging';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('content:scope');
 
-type PingMessage = {
-  type: 'WEBPAGE_SUMMARY_PING';
-};
 
-type ExtractMessage = {
-  type: 'WEBPAGE_SUMMARY_EXTRACT_TEXT';
-};
-
-type IncomingMessage = PingMessage | ExtractMessage;
 
 function collectPageTextLength() {
   return document.body?.innerText.trim().length ?? 0;
@@ -72,49 +65,43 @@ export async function mountContentScope(ctx: ContentScriptContext) {
     // logger.info('[ContentScope] site rules blocked UI mount for', location.hostname);
   }
 
-  browser.runtime.onMessage.addListener((message: IncomingMessage) => {
-    if (message?.type === 'WEBPAGE_SUMMARY_PING') {
-      return Promise.resolve({
+  onMessage('ping', () => {
+    return Promise.resolve({
+      ok: true,
+      title: document.title || messages.content.untitledPage,
+      url: location.href,
+      textLength: collectPageTextLength(),
+    });
+  });
+
+  onMessage('extractText', async () => {
+    try {
+      const [settings, { siteCustomization }] = await Promise.all([
+        loadGeneralSettings(),
+        loadSiteRules(),
+      ]);
+
+      const matchedRule = findMatchingCustomization(location, siteCustomization);
+      // logger.info('matchedRule',matchedRule)
+      const extracted = matchedRule
+        ? textsBySelectors(
+            matchedRule.selectors,
+            {
+              shadowRootSelectors: matchedRule.shadowRootSelectors,
+              useShadowRoot: matchedRule.useShadowRoot,
+            },
+            document,
+          )
+        : parsePageContent(settings.pageTextExtractMethod, document);
+
+      return {
         ok: true,
         title: document.title || messages.content.untitledPage,
         url: location.href,
-        textLength: collectPageTextLength(),
-      });
+        text: extracted?.textContent ?? '',
+      };
+    } catch (e) {
+      return { ok: false, error: (e as Error)?.message ?? String(e) };
     }
-
-    if (message?.type === 'WEBPAGE_SUMMARY_EXTRACT_TEXT') {
-      return (async () => {
-        try {
-          const [settings, { siteCustomization }] = await Promise.all([
-            loadGeneralSettings(),
-            loadSiteRules(),
-          ]);
-
-          const matchedRule = findMatchingCustomization(location, siteCustomization);
-          // logger.info('matchedRule',matchedRule)
-          const extracted = matchedRule
-            ? textsBySelectors(
-                matchedRule.selectors,
-                {
-                  shadowRootSelectors: matchedRule.shadowRootSelectors,
-                  useShadowRoot: matchedRule.useShadowRoot,
-                },
-                document,
-              )
-            : parsePageContent(settings.pageTextExtractMethod, document);
-
-          return {
-            ok: true,
-            title: document.title || messages.content.untitledPage,
-            url: location.href,
-            text: extracted?.textContent ?? '',
-          };
-        } catch (e) {
-          return { ok: false, error: (e as Error)?.message ?? String(e) };
-        }
-      })();
-    }
-
-    return;
   });
 }

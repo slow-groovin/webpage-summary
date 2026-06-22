@@ -55,7 +55,7 @@ type UiMessages = {
     summary: string;
     reSummarize: string;
     untitledPage: string;
-    contentTokenCount: string;
+
     tokenViewerInfoTip: string;
     calculating: string;
   };
@@ -321,7 +321,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
       summary: 'Summary',
       reSummarize: 'Re-summarize',
       untitledPage: 'Untitled Page',
-      contentTokenCount: 'Content Tokens:',
+
       tokenViewerInfoTip: 'This interface is for visualising tokenisation only. Dragging the slider here does not change the actual text sent to the LLM.',
       calculating: 'Calculating...',
     },
@@ -657,7 +657,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
       summary: '总结',
       reSummarize: '重新总结',
       untitledPage: '未命名页面',
-      contentTokenCount: '内容 Token 数:',
+
       tokenViewerInfoTip: '此界面仅用于可视化分词效果。在此处的拖动调节不会改变实际发送给大语言模型的文本内容。',
       calculating: '计算中...',
     },
@@ -981,7 +981,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
       summary: '總結',
       reSummarize: '重新總結',
       untitledPage: '未命名頁面',
-      contentTokenCount: '內容 Token 數:',
+
       tokenViewerInfoTip: '此介面僅用於視覺化分詞效果。在此處的拖動調節不會改變實際發送給大語言模型的文本內容。',
       calculating: '計算中...',
     },
@@ -1112,7 +1112,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: 'ウェブページ要約', summary: '要約', reSummarize: '再要約', untitledPage: '無題のページ',
-      contentTokenCount: 'コンテンツトークン数:', tokenViewerInfoTip: 'このビューはトークン化を視覚化するためのものです。ここでの操作は、実際にLLMへ送信されるテキストには影響しません。', calculating: '計算中...',
+      tokenViewerInfoTip: 'このビューはトークン化を視覚化するためのものです。ここでの操作は、実際にLLMへ送信されるテキストには影響しません。', calculating: '計算中...',
     },
     general: {
       loadFailed: '設定の読み込みに失敗しました。', restoreDefaults: 'デフォルトに戻す', saveFailed: '保存に失敗しました。', savedToast: '設定を保存しました。',
@@ -1181,7 +1181,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: '웹페이지 요약', summary: '요약', reSummarize: '다시 요약', untitledPage: '제목 없는 페이지',
-      contentTokenCount: '콘텐츠 토큰 수:', tokenViewerInfoTip: '이 뷰어는 토큰화를 시각화하기 위한 것입니다. 여기서의 조작은 실제로 LLM에 전송되는 텍스트에 영향을 주지 않습니다.', calculating: '계산 중...',
+      tokenViewerInfoTip: '이 뷰어는 토큰화를 시각화하기 위한 것입니다. 여기서의 조작은 실제로 LLM에 전송되는 텍스트에 영향을 주지 않습니다.', calculating: '계산 중...',
     },
     general: {
       loadFailed: '설정 로드 실패.', restoreDefaults: '기본값 복원', saveFailed: '저장 실패.', savedToast: '설정이 저장되었습니다.',
@@ -1250,7 +1250,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: 'Resumo da página', summary: 'Resumo', reSummarize: 'Resumir novamente', untitledPage: 'Página sem título',
-      contentTokenCount: 'Tokens:', tokenViewerInfoTip: 'Esta interface serve apenas para visualizar a tokenização. Os ajustes aqui não alteram o texto real enviado ao modelo de linguagem.', calculating: 'Calculando...',
+      tokenViewerInfoTip: 'Esta interface serve apenas para visualizar a tokenização. Os ajustes aqui não alteram o texto real enviado ao modelo de linguagem.', calculating: 'Calculando...',
     },
     general: {
       loadFailed: 'Falha ao carregar.', restoreDefaults: 'Restaurar padrões', saveFailed: 'Falha ao salvar.', savedToast: 'Salvo.',
@@ -1319,7 +1319,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: 'Resumen de página', summary: 'Resumen', reSummarize: 'Volver a resumir', untitledPage: 'Página sin título',
-      contentTokenCount: 'Tokens:', tokenViewerInfoTip: 'Esta interfaz es solo para visualizar la tokenización. Los ajustes aquí no modifican el texto que se envía realmente al modelo de lenguaje.', calculating: 'Calculando...',
+      tokenViewerInfoTip: 'Esta interfaz es solo para visualizar la tokenización. Los ajustes aquí no modifican el texto que se envía realmente al modelo de lenguaje.', calculating: 'Calculando...',
     },
     general: {
       loadFailed: 'Fallo al cargar.', restoreDefaults: 'Restaurar', saveFailed: 'Fallo al guardar.', savedToast: 'Guardado.',
@@ -1388,7 +1388,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: 'Résumé de la page', summary: 'Résumé', reSummarize: 'Résumer à nouveau', untitledPage: 'Page sans titre',
-      contentTokenCount: 'Tokens :', tokenViewerInfoTip: 'Cette interface sert uniquement à visualiser la tokenisation. Les ajustements ici ne modifient pas le texte réellement envoyé au modèle de langage.', calculating: 'Calcul en cours...',
+      tokenViewerInfoTip: 'Cette interface sert uniquement à visualiser la tokenisation. Les ajustements ici ne modifient pas le texte réellement envoyé au modèle de langage.', calculating: 'Calcul en cours...',
     },
     general: {
       loadFailed: 'Échec du chargement.', restoreDefaults: 'Restaurer', saveFailed: 'Échec de la sauvegarde.', savedToast: 'Enregistré.',
@@ -1457,7 +1457,7 @@ const UI_MESSAGES: Record<UiLocale, UiMessages> = {
     },
     content: {
       badgeLabel: 'Webseiten-Zusammenfassung', summary: 'Zusammenfassung', reSummarize: 'Neu zusammenfassen', untitledPage: 'Unbenannte Seite',
-      contentTokenCount: 'Tokens:', tokenViewerInfoTip: 'Diese Ansicht dient nur zur Visualisierung der Tokenisierung. Anpassungen hier ändern nicht den tatsächlich an das Sprachmodell gesendeten Text.', calculating: 'Wird berechnet...',
+      tokenViewerInfoTip: 'Diese Ansicht dient nur zur Visualisierung der Tokenisierung. Anpassungen hier ändern nicht den tatsächlich an das Sprachmodell gesendeten Text.', calculating: 'Wird berechnet...',
     },
     general: {
       loadFailed: 'Laden fehlgeschlagen.', restoreDefaults: 'Zurücksetzen', saveFailed: 'Speichern fehlgeschlagen.', savedToast: 'Gespeichert.',

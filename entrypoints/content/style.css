@@ -50,6 +50,11 @@
     cursor: pointer;
   }
 
+  form {
+    margin: 0;
+    padding: 0;
+  }
+
   :host(.dark) {
     --background: 240 5.9% 10%;
     --foreground: 0 0% 98%;

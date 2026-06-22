@@ -250,20 +250,6 @@ export function ConfigManagerPage() {
                   <Button size="sm" onClick={handleConfirmImport} disabled={isLoading}>
                     {messages.exportImport.confirmImport}
                   </Button>
-                  <Button 
-                    size="sm" 
-                    className="bg-blue-600 hover:bg-blue-700 text-white" 
-                    onClick={() => setDiffItems(diffItems.map(i => ({ ...i, selected: true })))}
-                  >
-                    {messages.exportImport.acceptAll}
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="destructive"
-                    onClick={() => setDiffItems(diffItems.map(i => ({ ...i, selected: false })))}
-                  >
-                    {messages.exportImport.rejectAll}
-                  </Button>
                   <Button size="sm" variant="outline" onClick={() => setDiffItems(null)}>
                     {messages.exportImport.cancel}
                   </Button>
@@ -276,7 +262,27 @@ export function ConfigManagerPage() {
                       <th className="px-4 py-2 font-medium w-[200px]">{messages.exportImport.configItem}</th>
                       <th className="px-4 py-2 font-medium w-1/3">{messages.exportImport.oldValue}</th>
                       <th className="px-4 py-2 font-medium w-1/3">{messages.exportImport.newValue}</th>
-                      <th className="px-4 py-2 font-medium text-right w-[180px]">{messages.exportImport.action}</th>
+                      <th className="px-4 py-2 font-medium w-[220px]">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <span>{messages.exportImport.action}</span>
+                          <Button 
+                            size="sm"
+                            variant="outline"
+                            className="h-6 px-1.5 text-[10px] bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 hover:text-blue-700 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/50" 
+                            onClick={() => setDiffItems(diffItems.map(i => ({ ...i, selected: true })))}
+                          >
+                            {messages.exportImport.acceptAll}
+                          </Button>
+                          <Button 
+                            size="sm"
+                            variant="outline"
+                            className="h-6 px-1.5 text-[10px] bg-red-50 text-red-600 border-red-200 hover:bg-red-100 hover:text-red-700 dark:bg-red-900/30 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/50"
+                            onClick={() => setDiffItems(diffItems.map(i => ({ ...i, selected: false })))}
+                          >
+                            {messages.exportImport.rejectAll}
+                          </Button>
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y">

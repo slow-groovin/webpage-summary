@@ -19,6 +19,12 @@ export interface ProtocolMap {
   truncateByTokens(input: { text: string; maxTokens: number }): string;
   truncateByTokensWithTiming(input: { text: string; maxTokens: number }): import('./token-count').TruncateByTokensResult;
   splitTokensWithTiming(input: { text: string }): import('./token-count').SplitTokensResult;
+
+  /** Pings the content script to check if it's active */
+  ping(): Promise<{ ok: boolean; title: string; url: string; textLength: number }>;
+
+  /** Extracts text content from the current page */
+  extractText(): Promise<{ ok: boolean; title?: string; url?: string; text?: string; error?: string }>;
 }
 
 export const { sendMessage, onMessage } = defineExtensionMessaging<ProtocolMap>();

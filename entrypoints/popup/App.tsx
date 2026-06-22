@@ -74,9 +74,7 @@ function App() {
         if (!active || !tab?.id) return;
         setActiveTabId(tab.id);
         try {
-          await browser.tabs.sendMessage(tab.id, {
-            type: 'WEBPAGE_SUMMARY_PING',
-          });
+          await sendExtMessage('ping', undefined, { tabId: tab.id });
           if (active) setIsContentPage(true);
         } catch {
           if (active) setIsContentPage(false);
@@ -114,9 +112,7 @@ function App() {
     setCopying(true);
     try {
       logger.info('[popup] sending WEBPAGE_SUMMARY_EXTRACT_TEXT to tab', activeTabId);
-      const result = (await browser.tabs.sendMessage(activeTabId, {
-        type: 'WEBPAGE_SUMMARY_EXTRACT_TEXT',
-      })) as ExtractResult | undefined;
+      const result = await sendExtMessage('extractText', undefined, { tabId: activeTabId });
       logger.info('[popup] extract result', result);
 
       if (!result?.ok || !('text' in result) || !result.text) {

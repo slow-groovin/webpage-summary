@@ -50,6 +50,13 @@ import { UsageDisplay } from './UsageDisplay';
 import { ModelPromptSelector } from './ModelPromptSelector';
 import { getUiMessages } from '@/lib/i18n';
 
+const formatTokens = (val: number) => {
+  if (val >= 10000) {
+    return Math.round(val / 1000) + 'k';
+  }
+  return val.toString();
+};
+
 interface ContentAppFrameProps {
   onClose: () => void;
   isMain?: boolean;
@@ -200,8 +207,13 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
         >
           <div className="flex items-center rounded-lg underline decoration-dashed text-nowrap text-[10px] font-light bg-background/10 px-1.5 py-0.5 text-zinc-500 leading-tight">
             <div title="click the right eye button to View&Change">
-              {uiMessages.content.contentTokenCount}{' '}
-              <span>{pageContentTokenCount !== null ? pageContentTokenCount : uiMessages.content.calculating}</span>
+              <span>
+                {pageContentTokenCount !== null 
+                  ? (currentModel?.maxInputTokens && currentModel.maxInputTokens > 0 && pageContentTokenCount > currentModel.maxInputTokens)
+                    ? `Input Tokens: ${formatTokens(currentModel.maxInputTokens)}    |  Total: ${formatTokens(pageContentTokenCount)} `
+                    : `Input Tokens: ${formatTokens(pageContentTokenCount)}`
+                  : `Input Tokens: ${uiMessages.content.calculating}`}
+              </span>
             </div>
             <button
               className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-[10px] font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-3 [&_svg]:shrink-0 hover:bg-zinc-100 hover:text-foreground w-5 h-5 text-zinc-500 ml-1"
