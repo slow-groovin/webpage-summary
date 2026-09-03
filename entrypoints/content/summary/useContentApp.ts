@@ -9,6 +9,7 @@ import { loadPromptSettings, seedDefaultPromptIfNeeded } from '@/lib/prompt-sett
 import { loadGeneralSettings } from '@/lib/general-settings-storage';
 import { extractWebpageContent, type WebpageContent } from '@/lib/page-extraction';
 import { countInputTokens, truncateByTokens } from '@/lib/token-count';
+import { sendMessage as sendExtMessage } from '@/lib/messaging';
 import type { ModelConfigItem } from '@/constants/model-settings';
 import type { PromptConfigItem } from '@/constants/prompt-settings';
 import type { GeneralSettings } from '@/constants/general-settings';
@@ -54,7 +55,19 @@ export function useContentApp() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message || messagesI18n.common.unknownError);
+      const message = error.message || messagesI18n.common.unknownError;
+      if (message === 'No model config is available.') {
+        toast.error(message, {
+          action: {
+            label: messagesI18n.options.navigation.models,
+            onClick: () => {
+              void sendExtMessage('openOptionPage', '/options.html#/models');
+            },
+          },
+        });
+      } else {
+        toast.error(message);
+      }
     }
   }, [error]);
 
@@ -215,7 +228,7 @@ export function useContentApp() {
   };
 
   const handleMessageSubmit = async (message: { text?: string }) => {
-    if (!message.text) return;
+    if (!message.text || status === 'streaming' || status === 'submitted') return;
 
     setInputText('');
     await initContextMessage();

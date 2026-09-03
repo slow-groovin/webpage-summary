@@ -2,39 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes summary-running-dot {
-  0%, 12% {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  24%, 62% {
-    opacity: 1;
-  }
-  76%, 100% {
-    opacity: 0;
-    transform: translateX(10px);
-  }
-}
-
-@layer components {
-  .summary-running-indicator {
-    @apply flex h-[3px] shrink-0 items-center justify-center gap-[3px] overflow-hidden bg-muted/30;
-  }
-
-  .summary-running-indicator > span {
-    @apply block size-[3px] rounded-full bg-red-500;
-    animation: summary-running-dot 1.6s ease-in-out infinite;
-  }
-
-  .summary-running-indicator > span:nth-child(2) {
-    animation-delay: 120ms;
-  }
-
-  .summary-running-indicator > span:nth-child(3) {
-    animation-delay: 240ms;
-  }
-}
-
 @layer base {
   :host {
     color: #18181b;

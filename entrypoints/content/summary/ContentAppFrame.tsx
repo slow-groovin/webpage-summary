@@ -98,6 +98,23 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
 
   const isBusy = status === 'streaming' || status === 'submitted';
   const hasMessages = messages.length > 0;
+  const isMissingModelConfigError = error?.message === 'No model config is available.';
+
+  const showError = () => {
+    const message = error?.message || uiMessages.common.unknownError;
+    if (isMissingModelConfigError) {
+      toast.error(message, {
+        action: {
+          label: uiMessages.options.navigation.models,
+          onClick: () => {
+            void sendExtMessage('openOptionPage', '/options.html#/models');
+          },
+        },
+      });
+      return;
+    }
+    toast.error(message);
+  };
 
 
   return (
@@ -149,7 +166,7 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
             <button
               className="flex items-center justify-center text-red-500 hover:text-red-600 shrink-0 outline-none"
               title={error.message}
-              onClick={() => toast.error(error.message || uiMessages.common.unknownError)}
+              onClick={showError}
             >
               <Info size={16} strokeWidth={2.5} />
             </button>
@@ -205,14 +222,6 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
           </button>
         </div>
       </header>
-
-      {isBusy && (
-        <div className="summary-running-indicator" aria-label="Generating" role="status">
-          <span />
-          <span />
-          <span />
-        </div>
-      )}
 
       <div className="flex-1 relative min-h-0 flex flex-col">
         {/* 悬浮在右上角的工具栏 */}
@@ -350,6 +359,16 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
             <PromptInputBody>
               <PromptInputTextarea
                 onChange={(e) => setInputText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (
+                    isBusy &&
+                    e.key === 'Enter' &&
+                    !e.shiftKey &&
+                    !e.nativeEvent.isComposing
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
                 value={inputText}
                 placeholder="Type your message here... Enter to send, Shift+Enter to insert new line."
                 className="bg-background min-h-8"
