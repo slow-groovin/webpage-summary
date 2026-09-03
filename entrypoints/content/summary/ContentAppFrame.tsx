@@ -11,6 +11,7 @@ import {
   Copy,
   ChevronUp,
   ScanEye,
+  Square,
   X,
   RefreshCw,
   Info,
@@ -90,6 +91,7 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
     showBottom,
     setShowBottom,
     handleSummarize,
+    handleStop,
     handleMessageSubmit,
     handleCopyMessages,
   } = useContentApp();
@@ -117,12 +119,17 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
       >
         <div className="flex items-stretch gap-1.5 justify-start shrink-0 h-full">
           <button
-            className="flex items-center gap-0.5 px-1 bg-background border border-border rounded-lg text-xs hover:border-foreground/40 shadow-sm text-foreground shrink-0 transition-colors"
-            onClick={handleSummarize}
-            title={messages.length > 0 ? uiMessages.content.reSummarize : uiMessages.content.summary}
+            className={cn(
+              'flex items-center gap-0.5 px-1 border rounded-lg text-xs shadow-sm shrink-0 transition-colors',
+              isBusy
+                ? 'border-red-500/50 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/40 dark:text-red-400 dark:hover:bg-red-950/60'
+                : 'bg-background border-border hover:border-foreground/40 text-foreground',
+            )}
+            onClick={isBusy ? handleStop : handleSummarize}
+            title={isBusy ? 'Stop' : messages.length > 0 ? uiMessages.content.reSummarize : uiMessages.content.summary}
           >
             {isBusy ? (
-              <RefreshCw size={16} strokeWidth={1.5} className="animate-spin" />
+              <Square size={14} strokeWidth={1.5} fill="currentColor" />
             ) : messages.length > 0 ? (
               <RefreshCw size={16} strokeWidth={1.5} />
             ) : (
@@ -198,6 +205,14 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
           </button>
         </div>
       </header>
+
+      {isBusy && (
+        <div className="summary-running-indicator" aria-label="Generating" role="status">
+          <span />
+          <span />
+          <span />
+        </div>
+      )}
 
       <div className="flex-1 relative min-h-0 flex flex-col">
         {/* 悬浮在右上角的工具栏 */}
@@ -343,10 +358,17 @@ export function ContentAppFrame({ onClose, isMain = true, onAdd }: ContentAppFra
             <PromptInputFooter>
               <PromptInputTools />
               <PromptInputSubmit 
-                disabled={!inputText && !status} 
+                disabled={!isBusy && !inputText}
                 status={status as any} 
+                onStop={handleStop}
+                title={isBusy ? 'stop' : undefined}
                 variant="outline" 
-                className="bg-transparent border border-border text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-50" 
+                className={cn(
+                  'border disabled:opacity-50',
+                  isBusy
+                    ? 'border-red-500 bg-red-500 text-white hover:border-red-600 hover:bg-red-600 hover:text-white'
+                    : 'border-border bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground',
+                )}
               />
             </PromptInputFooter>
           </PromptInput>

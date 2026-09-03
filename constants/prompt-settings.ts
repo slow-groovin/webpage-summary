@@ -68,10 +68,7 @@ const EN_PRESETS: Record<PromptPresetKey, PromptPreset> = {
 2. Synthesize the key information rather than simply repeating it.
 3. Always reply in [{{summaryLanguage}}], regardless of the source language.
 4. If the user asks follow-up questions, engage naturally instead of repeating the summary.`,
-    userMessage: `Webpage URL:
-<Webpage URL>{{articleUrl}}</Webpage URL>
-
-Webpage content:
+    userMessage: `Webpage content:
 <Webpage Content>{{textContent}}</Webpage Content>`,
   },
   brief: {

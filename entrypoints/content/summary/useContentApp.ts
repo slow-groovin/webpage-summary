@@ -186,9 +186,14 @@ export function useContentApp() {
     ]);
   };
 
+  const handleStop = () => {
+    void stop();
+  };
+
   const handleSummarize = async () => {
     if (status === 'streaming' || status === 'submitted') {
-      stop();
+      handleStop();
+      return;
     }
 
     const texts = await getContextMessageTexts();
@@ -293,6 +298,7 @@ export function useContentApp() {
     setShowBottom,
     // handlers
     handleSummarize,
+    handleStop,
     handleMessageSubmit,
     handleCopyMessages,
   };

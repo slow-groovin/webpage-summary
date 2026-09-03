@@ -354,25 +354,31 @@ export function createEmptyModelDraft() {
 export async function fetchRemoteModels(
   draft: ModelDraft,
 ): Promise<RemoteModelInfo[]> {
-  const normalizedDraft = validateDraft(draft);
-  const provider = getModelProviderDefinition(normalizedDraft.providerId);
+  const provider = getModelProviderDefinition(draft.providerId);
 
   if (!provider.supportsModelFetch || !provider.modelsPath) {
     throw new Error('This provider does not expose a configured models endpoint.');
   }
 
+  const baseURL = provider.supportsBaseURL
+    ? cleanString(draft.baseURL) || provider.defaultBaseURL
+    : '';
+
+  if (!baseURL) {
+    throw new Error('Base URL is required.');
+  }
+
   const endpoint = new URL(
     provider.modelsPath.replace(/^\/+/, ''),
-    normalizedDraft.baseURL.endsWith('/')
-      ? normalizedDraft.baseURL
-      : `${normalizedDraft.baseURL}/`,
+    baseURL.endsWith('/') ? baseURL : `${baseURL}/`,
   );
   const headers: Record<string, string> = {
-    ...normalizedDraft.headers,
+    ...cleanHeaders(draft.headers),
   };
+  const apiKey = cleanString(draft.apiKey);
 
-  if (normalizedDraft.apiKey) {
-    headers.Authorization = headers.Authorization || `Bearer ${normalizedDraft.apiKey}`;
+  if (apiKey) {
+    headers.Authorization = headers.Authorization || `Bearer ${apiKey}`;
   }
 
   const response = await fetch(endpoint, { headers });
